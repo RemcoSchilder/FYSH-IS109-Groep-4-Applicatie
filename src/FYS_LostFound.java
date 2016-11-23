@@ -46,28 +46,13 @@ public class FYS_LostFound extends Application {
         gridR.setPadding(new Insets(25, 25, 25, 25));
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         Scene sceneR = new Scene(gridR, screenBounds.getWidth(), screenBounds.getHeight());
-        
-        //knop naar inlogscherm administrator
-//        Button btnR = new Button();
-//        btnR.setText("Administrator");
-//        btnR.setPrefSize(250, 200);
-//        btnR.setFont(Font.font("Tahoma", 20));
-//        btnR.setLayoutX(50);
-//        btnR.setLayoutY(25);
-        
+     
         Button btnR = new Button("Administrator");
         HBox hbBtnR = new HBox(10);
         hbBtnR.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtnR.getChildren().add(btnR);
         gridR.add(hbBtnR, 50, 20);
         
-//        //knop naar inlogscherm baliemedewerker
-//        Button btnT = new Button();
-//        btnT.setText("Counter assistant");
-//        btnT.setPrefSize(250, 200);
-//        btnT.setFont(Font.font("Tahoma", 20));
-//        btnT.setLayoutX(375);
-//        btnT.setLayoutY(450);
         
         Button btnt = new Button("Systeembeheerder");
         HBox hbBtnt = new HBox(10);
@@ -75,17 +60,14 @@ public class FYS_LostFound extends Application {
         hbBtnt.getChildren().add(btnt);
         gridR.add(hbBtnt, 50, 25);
         
-        //knop naar inlogscherm systeem manager
-        Button btnE = new Button();
-        btnE.setText("System management");
-        btnE.setPrefSize(250, 200);
-        btnE.setFont(Font.font("Tahoma", 20));
-        btnE.setLayoutX(550);
-        btnE.setLayoutY(220);
+      
+        Button btne = new Button("Systeembeheerder");
+        HBox hbBtne = new HBox(10);
+        hbBtne.setAlignment(Pos.BOTTOM_RIGHT);
+        hbBtne.getChildren().add(btne);
+        gridR.add(hbBtne, 50, 30);
         
-        
-        
-        Image image = new Image("http://www.corendonairlines.nl/corendon_logo.jpg", 600, 150, false, false);
+        Image image = new Image("http://www.corendonairlines.nl/corendon_logo.jpg", 600, 200, false, false);
         
         // Corendon afbeelding boven aan de app.
         ImageView iv1 = new ImageView(image);
@@ -307,7 +289,29 @@ public class FYS_LostFound extends Application {
         Rectangle2D screenBounds6 = Screen.getPrimary().getVisualBounds();
         Scene scene6 = new Scene(grid6, screenBounds6.getWidth(), screenBounds6.getHeight());
         
+        btnR.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                primaryStage.setScene(scene);
+
+            }
+        });
         
+       btnt.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                primaryStage.setScene(scene);
+
+            }
+        });
+        
+        btne.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                primaryStage.setScene(scene);
+
+            }
+        });
         
         loginBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
