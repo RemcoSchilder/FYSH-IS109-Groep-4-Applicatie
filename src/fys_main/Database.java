@@ -9,30 +9,34 @@ import java.sql.*;
 public class Database {
     
     /* Static connection variable */
-    static Connection conn = null;
+    private static Connection conn = null;
     
-    public void Database() {     
+    public void Database() { 
+        
+    }
+    
+    public static void setConn() {
         try {
-           // Register JDBC driver
-           Class.forName("com.mysql.jdbc.Driver");
+            // Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
 
-           // Open a connection
-           conn = DriverManager.getConnection("jdbc:mysql://localhost/sys", "root", "menno");
+            // Open a connection
+            conn = DriverManager.getConnection("jdbc:mysql://149.210.233.73:3306/menno_fys", "menno_fys", "FYSapp123");
         } catch(SQLException se) {
-           //Handle errors for JDBC
-           se.printStackTrace();
+            //Handle errors for JDBC
+            se.printStackTrace();
         } catch(Exception e) {
-           //Handle errors for Class.forName
-           e.printStackTrace();
+            //Handle errors for Class.forName
+            e.printStackTrace();
         } finally {
-           // Check connection
-           try {
-                if(conn!=null) {
-                    conn.close();
-                }
-           } catch(SQLException se) {
-                se.printStackTrace();
-           }
+            // Check connection
+            try {
+                 if(conn!=null) {
+                     conn.close();
+                 }
+            } catch(SQLException se) {
+                 se.printStackTrace();
+            }
         }
     }
         
@@ -44,9 +48,8 @@ public class Database {
             // Create query
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
-
+            
             // Close statement
-            rs.close();
             stmt.close();
         } catch(SQLException se) {
            //Handle errors for JDBC

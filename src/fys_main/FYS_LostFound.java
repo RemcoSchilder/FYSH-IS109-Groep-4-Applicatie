@@ -71,6 +71,13 @@ public class FYS_LostFound extends Application {
         hbBtne.getChildren().add(btne);
         gridR.add(hbBtne, 50, 30);
         
+      
+        Button sqlTest = new Button("Get gebruikers");
+        HBox sqlTestH = new HBox(10);
+        sqlTestH.setAlignment(Pos.BOTTOM_RIGHT);
+        sqlTestH.getChildren().add(sqlTest);
+        gridR.add(sqlTest, 50, 35);
+        
         Image image = new Image("http://www.corendonairlines.nl/corendon_logo.jpg", 600, 200, false, false);
         
         // Corendon afbeelding boven aan de app.
@@ -292,6 +299,35 @@ public class FYS_LostFound extends Application {
         grid6.setPadding(new Insets(25, 25, 25, 25));
         Rectangle2D screenBounds6 = Screen.getPrimary().getVisualBounds();
         Scene scene6 = new Scene(grid6, screenBounds6.getWidth(), screenBounds6.getHeight());
+        
+        
+        /* TEST*/
+       sqlTest.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Database db = new Database();
+                Database.setConn();
+                ResultSet gebruikers = db.doQuery("SELECT * FROM gebruikers");
+                
+                try {
+                    while(gebruikers.next()) {
+                        //Retrieve by column name
+                        int id  = gebruikers.getInt("id");
+                        String naam = gebruikers.getString("naam");
+                        String wachtwoord = gebruikers.getString("wachtwoord");
+
+                        //Display values
+                        System.out.println("ID: " + id);
+                        System.out.println("Naam: " + naam);
+                        System.out.println("Wachtwoord: " + wachtwoord);
+                    }
+                } catch(SQLException se) {
+                   //Handle errors for JDBC
+                   se.printStackTrace();
+                }
+            }
+        });
+       /* EIND TEST */
         
         btnR.setOnAction(new EventHandler<ActionEvent>() {
             @Override
