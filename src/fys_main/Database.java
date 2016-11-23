@@ -82,6 +82,18 @@ public class Database {
         System.out.println("Cijfer: " + cijfer);
         System.out.println("Datum: " + datum);
      }
+    
+    
+    Database hoi = new Database();
+    ResultSet result = hoi.doQuery("SELECT * FROM iets");
+    try {
+        while(result.next()) {
+
+        }
+    } catch(SQLException se) {
+       //Handle errors for JDBC
+       se.printStackTrace();
+    }
     */
     
 }

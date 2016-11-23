@@ -1,5 +1,7 @@
 package fys_main;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Random;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
