@@ -31,7 +31,7 @@ public class Database {
         } finally {
             // Check connection
             try {
-                 if(conn!=null) {
+                 if(conn==null) {
                      conn.close();
                  }
             } catch(SQLException se) {
@@ -48,9 +48,6 @@ public class Database {
             // Create query
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
-            
-            // Close statement
-            stmt.close();
         } catch(SQLException se) {
            //Handle errors for JDBC
            se.printStackTrace();
@@ -60,7 +57,7 @@ public class Database {
         } finally {
             // Check statement
             try {
-               if (stmt!=null) {
+               if (stmt==null) {
                    stmt.close();
                }
             } catch(SQLException se2) {
