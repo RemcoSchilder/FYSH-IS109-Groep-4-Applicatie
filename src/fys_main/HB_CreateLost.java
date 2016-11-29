@@ -6,8 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 /**
@@ -58,6 +56,18 @@ public class HB_CreateLost {
         Label lastNameL = new Label("Last name:");
         TextField lastNameT = new TextField();
         
+        Label streetL = new Label("Street:");
+        TextField streetT = new TextField();
+        
+        Label cityL = new Label("City:");
+        TextField cityT = new TextField();
+        
+        Label zipCodeL = new Label("Zip code:");
+        TextField zipCodeT = new TextField();
+        
+        Label countryL = new Label("Country:");
+        TextField countryT = new TextField();
+        
         
         
         /* Add everything to the grid */
@@ -68,6 +78,20 @@ public class HB_CreateLost {
         
         screen.add(lastNameL, 0, 2);
         screen.add(lastNameT, 1, 2);
+        
+        screen.add(mainAddress, 0, 4);
+        
+        screen.add(streetL, 0, 5);
+        screen.add(streetT, 1, 5);
+        
+        screen.add(cityL, 0, 6);
+        screen.add(cityT, 1, 6);
+        
+        screen.add(zipCodeL, 0, 7);
+        screen.add(zipCodeT, 1, 7);
+        
+        screen.add(countryL, 0, 8);
+        screen.add(countryT, 1, 8);
         
         
         
