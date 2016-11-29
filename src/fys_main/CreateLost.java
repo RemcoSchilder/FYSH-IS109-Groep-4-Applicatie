@@ -19,7 +19,7 @@ public class CreateLost {
         
     }
     
-    public GridPane getScreen() {
+    public static GridPane getScreen() {
         /* Create grid pane */
         GridPane screen = new GridPane();
         screen.setAlignment(Pos.CENTER);
