@@ -45,7 +45,7 @@ public class FYS_LostFound extends Application {
         Start startScherm = new Start();
         GridPane Scherm = startScherm.maakHetScherm();
         Scene scene = new Scene(Scherm, 1400, 800);
-        scene.getStylesheets().add("assets/style.css");
+        scene.getStylesheets().add("style.css");
         
         
         Button btnBalie = new Button("Baliemedewerker");
@@ -79,7 +79,7 @@ public class FYS_LostFound extends Application {
         Login loginScherm = new Login();
         GridPane Scherm2 = loginScherm.maakHetScherm();
         Scene scene2 = new Scene(Scherm2, 1400, 800);
-        scene2.getStylesheets().add("assets/style.css");
+        scene2.getStylesheets().add("style.css");
         
         Button loginBtn = new Button("log in");
         HBox hbBtn = new HBox();
@@ -111,7 +111,7 @@ public class FYS_LostFound extends Application {
         BorderPane Scherm3 = homeScherm.maakHetScherm();
         
         Scene scene3 = new Scene(Scherm3, 1400, 800);
-        scene3.getStylesheets().add("assets/style.css");
+        scene3.getStylesheets().add("style.css");
         
         Button lost = new Button("lost bagage");
         HBox center = new HBox(10);
@@ -119,19 +119,18 @@ public class FYS_LostFound extends Application {
         center.getChildren().add(lost);
         Scherm3.getChildren().add(center);
         
-        
-        
+       
         //homescreen systeembeheerder+buttons
         Homepage_Systeembeheer homeScherm_Systeembeheer = new Homepage_Systeembeheer();
         GridPane Scherm4 = homeScherm_Systeembeheer.maakHetScherm();
         Scene scene4 = new Scene(Scherm4, 1400, 800);
-        scene4.getStylesheets().add("assets/style.css");
+        scene4.getStylesheets().add("style.css");
         
         //homescreen manager+buttons
         Homepage_Manager homeScherm_Manager = new Homepage_Manager();
         GridPane Scherm5 = homeScherm_Manager.maakHetScherm();
         Scene scene5 = new Scene(Scherm5, 1400, 800);
-        scene5.getStylesheets().add("assets/style.css");
+        scene5.getStylesheets().add("style.css");
         
         
         thestage = primaryStage;
