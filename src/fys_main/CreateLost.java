@@ -2,6 +2,7 @@ package fys_main;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -40,6 +41,13 @@ public class CreateLost {
         
         Text contact = new Text("Contact:");
         contact.getStyleClass().add("subheading");
+        
+        
+        
+        /* Create buttons */
+        Button cancel = new Button("Cancel");
+        Button next = new Button("Next");
+        Button addLostLuggage = new Button("Add lost luggage");
         
         
         
