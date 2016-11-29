@@ -17,6 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
@@ -44,7 +45,9 @@ public class FYS_LostFound extends Application {
         Start startScherm = new Start();
         GridPane Scherm = startScherm.maakHetScherm();
         Scene scene = new Scene(Scherm, 1400, 800);
-
+        scene.getStylesheets().add("assets/style.css");
+        
+        
         Button btnBalie = new Button("Baliemedewerker");
         HBox hbBtnR = new HBox(10);
         hbBtnR.setAlignment(Pos.BOTTOM_RIGHT);
@@ -76,7 +79,8 @@ public class FYS_LostFound extends Application {
         Login loginScherm = new Login();
         GridPane Scherm2 = loginScherm.maakHetScherm();
         Scene scene2 = new Scene(Scherm2, 1400, 800);
-
+        scene2.getStylesheets().add("assets/style.css");
+        
         Button loginBtn = new Button("log in");
         HBox hbBtn = new HBox();
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
@@ -102,17 +106,32 @@ public class FYS_LostFound extends Application {
         hbBtn4.getChildren().add(systeemBeheerderBtn);
         Scherm2.add(hbBtn4, 52, 20);
         
+        //homescreen baliemedewerker+buttons
         Homepage_Baliemedewerker homeScherm = new Homepage_Baliemedewerker();
-        GridPane Scherm3 = homeScherm.maakHetScherm();
-        Scene scene3 = new Scene(Scherm3, 1400, 800);
+        BorderPane Scherm3 = homeScherm.maakHetScherm();
         
+        Scene scene3 = new Scene(Scherm3, 1400, 800);
+        scene3.getStylesheets().add("assets/style.css");
+        
+        Button lost = new Button("lost bagage");
+        HBox center = new HBox(10);
+        center.setAlignment(Pos.CENTER);
+        center.getChildren().add(lost);
+        Scherm3.getChildren().add(center);
+        
+        
+        
+        //homescreen systeembeheerder+buttons
         Homepage_Systeembeheer homeScherm_Systeembeheer = new Homepage_Systeembeheer();
         GridPane Scherm4 = homeScherm_Systeembeheer.maakHetScherm();
         Scene scene4 = new Scene(Scherm4, 1400, 800);
+        scene4.getStylesheets().add("assets/style.css");
         
+        //homescreen manager+buttons
         Homepage_Manager homeScherm_Manager = new Homepage_Manager();
         GridPane Scherm5 = homeScherm_Manager.maakHetScherm();
         Scene scene5 = new Scene(Scherm5, 1400, 800);
+        scene5.getStylesheets().add("assets/style.css");
         
         
         thestage = primaryStage;
@@ -143,13 +162,13 @@ public class FYS_LostFound extends Application {
             }
         });
         
-//        loginBtn.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                primaryStage.setScene(scene3);
-//
-//            }
-//        });
+        lost.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Scherm3.setCenter(HB_CreateLost.getScreen());
+
+            }
+        });
         
     }
 

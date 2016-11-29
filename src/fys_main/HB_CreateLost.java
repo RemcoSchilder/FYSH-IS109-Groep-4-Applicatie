@@ -14,9 +14,9 @@ import javafx.scene.text.Text;
  *
  * @author Menno
  */
-public class CreateLost {
+public class HB_CreateLost {
     
-    public CreateLost() {
+    public HB_CreateLost() {
         
     }
     
