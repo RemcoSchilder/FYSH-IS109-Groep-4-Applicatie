@@ -1,5 +1,8 @@
 package fys_main;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -16,23 +19,49 @@ import javafx.scene.text.Text;
  */
 public class HB_CreateLost {
     
-    public HB_CreateLost() {
-        
-    }
+    /* Create grid pane */
+    private static GridPane screen = new GridPane();
+    
+    /* Buttons */
+    private static Button cancel = new Button("Cancel");
+    private static Button previous = new Button("Previous");
+    private static Button next = new Button("Next");
+    private static Button addLostLuggage = new Button("Add lost luggage");
+    
     
     public static GridPane getScreen() {
-        GridPane screenOne = screenOne();
-        
-        return screenOne;
-    }
-    
-    public static GridPane screenOne() {
-        /* Create grid pane */
-        GridPane screen = new GridPane();
+        /* GridPane properties */
         screen.setAlignment(Pos.CENTER);
         screen.setHgap(10);
         screen.setVgap(10);
         screen.setPadding(new Insets(25, 25, 25, 25));
+        
+        /* Initialize screen one */
+        screenOne();
+        
+        /* Event handlers */
+        next.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                screenTwo();
+            }
+        });
+        
+        previous.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                screenOne();
+            }
+        });
+        
+        
+        return screen;
+    }
+    
+    
+    public static void screenOne() {
+        /* Clear Grid */
+        screen.getChildren().clear();
         
         
         /* Create all subheadings */
@@ -47,22 +76,6 @@ public class HB_CreateLost {
         
         Text contact = new Text("Contact:");
         contact.getStyleClass().add("subheading");
-        
-        
-        
-        /* Create buttons */
-        Button cancel = new Button("Cancel");
-        Button next = new Button("Next");
-        Button addLostLuggage = new Button("Add lost luggage");
-        
-        next.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                next.setText("Yeah");
-
-            }
-        });
-        
         
         
         /* Create all labels & inputs */
@@ -97,7 +110,6 @@ public class HB_CreateLost {
         
         Label telephoneL = new Label("Telephone:");
         TextField telephoneT = new TextField();
-        
         
         
         /* Add everything to the grid */
@@ -141,10 +153,50 @@ public class HB_CreateLost {
         screen.add(telephoneT, 1, 12);
         
         screen.add(next, 4, 14);
+    }
+    
+    
+    
+    public static void screenTwo() {
+        /* Clear Grid */
+        screen.getChildren().clear();
         
         
+        /* Create all subheadings */
+        Text lostInfo = new Text("Lost inforatmion:");
+        lostInfo.getStyleClass().add("subheading");
         
-        return screen;
+        Text labelInfo = new Text("Luggage label information:");
+        labelInfo.getStyleClass().add("subheading");
+        
+        Text luggageInfo = new Text("Luggage information:");
+        luggageInfo.getStyleClass().add("subheading");
+        
+        
+        /* Create all labels & inputs */
+        Label firstNameL = new Label("First name:");
+        TextField firstNameT = new TextField();
+        
+        Label lastNameL = new Label("Last name:");
+        TextField lastNameT = new TextField();
+        
+        
+        /* Get date */
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        
+        
+        /* Add everything to the grid */
+        screen.add(lostInfo, 0, 0);
+        
+        screen.add(firstNameL, 0, 1);
+        screen.add(firstNameT, 1, 1);
+        
+        screen.add(lastNameL, 0, 2);
+        screen.add(lastNameT, 1, 2);
+        
+        screen.add(previous, 0, 3);
+        screen.add(addLostLuggage, 1, 3);
     }
     
 }
