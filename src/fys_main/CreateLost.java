@@ -29,12 +29,38 @@ public class CreateLost {
         
         
         /* Create all subheadings */
-        Text scenetitle = new Text("Name");
-        scenetitle.setFont(Font.font("Calibri", FontWeight.BOLD, 16));
+        Text nameText = new Text("Name:");
+        nameText.getStyleClass().add("subheading");
+        
+        Text mainAddress = new Text("Main address:");
+        mainAddress.getStyleClass().add("subheading");
+        
+        Text mainAddress2 = new Text("2nd address (optional):");
+        mainAddress2.getStyleClass().add("subheading");
+        
+        Text contact = new Text("Contact:");
+        contact.getStyleClass().add("subheading");
         
         
+        
+        /* Create all labels & inputs */
         Label firstNameL = new Label("First name:");
         TextField firstNameT = new TextField();
+        
+        Label lastNameL = new Label("Last name:");
+        TextField lastNameT = new TextField();
+        
+        
+        
+        /* Add everything to the grid */
+        screen.add(nameText, 0, 0);
+        
+        screen.add(firstNameL, 0, 1);
+        screen.add(firstNameT, 1, 1);
+        
+        screen.add(lastNameL, 0, 2);
+        screen.add(lastNameT, 1, 2);
+        
         
         
         return screen;
