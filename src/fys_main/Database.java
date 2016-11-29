@@ -28,6 +28,15 @@ public class Database {
         } catch(Exception e) {
             //Handle errors for Class.forName
             e.printStackTrace();
+        } finally {
+            // Check connection
+            try {
+                 if(conn==null) {
+                     conn.close();
+                 }
+            } catch(SQLException se) {
+                 se.printStackTrace();
+            }
         }
     }
         
@@ -45,6 +54,15 @@ public class Database {
         } catch(Exception e) {
            //Handle errors for Class.forName
            e.printStackTrace();
+        } finally {
+            // Check statement
+            try {
+               if (stmt==null) {
+                   stmt.close();
+               }
+            } catch(SQLException se2) {
+                // Kapot
+            }
         }
         
         return rs;
