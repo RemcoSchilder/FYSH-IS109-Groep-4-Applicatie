@@ -43,7 +43,7 @@ public class FYS_LostFound extends Application {
         //Startpagina+buttons
         Start startScherm = new Start();
         GridPane Scherm = startScherm.maakHetScherm();
-        Scene scene = new Scene(Scherm, 9000, 1000);
+        Scene scene = new Scene(Scherm, 1400, 800);
 
         Button btnAdmin = new Button("Administrator");
         HBox hbBtnR = new HBox(10);
@@ -75,7 +75,7 @@ public class FYS_LostFound extends Application {
         //LoginScherm+buttons
         Login loginScherm = new Login();
         GridPane Scherm2 = loginScherm.maakHetScherm();
-        Scene scene2 = new Scene(Scherm2, 9000, 1000);
+        Scene scene2 = new Scene(Scherm2, 1400, 800);
 
         Button loginBtn = new Button("log in");
         HBox hbBtn = new HBox();
@@ -104,7 +104,7 @@ public class FYS_LostFound extends Application {
         
         Homepage homeScherm = new Homepage();
         GridPane Scherm3 = homeScherm.maakHetScherm();
-        Scene scene3 = new Scene(Scherm3, 9000, 1000);
+        Scene scene3 = new Scene(Scherm3, 1400, 800);
         
         
         
@@ -113,6 +113,8 @@ public class FYS_LostFound extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+        
+        //eventhandlers voor button functies
         btnAdmin.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
