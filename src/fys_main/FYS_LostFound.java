@@ -45,10 +45,10 @@ public class FYS_LostFound extends Application {
         GridPane Scherm = startScherm.maakHetScherm();
         Scene scene = new Scene(Scherm, 1400, 800);
 
-        Button btnAdmin = new Button("Administrator");
+        Button btnBalie = new Button("Baliemedewerker");
         HBox hbBtnR = new HBox(10);
         hbBtnR.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtnR.getChildren().add(btnAdmin);
+        hbBtnR.getChildren().add(btnBalie);
         Scherm.add(hbBtnR, 50, 20);
         
         
@@ -84,10 +84,10 @@ public class FYS_LostFound extends Application {
         Scherm2.add(hbBtn, 50, 27);
 
 
-        Button adminBtn = new Button("Admin");
+        Button balieBtn = new Button("Baliemedewerker");
         HBox hbBtn2 = new HBox(10);
         hbBtn2.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn2.getChildren().add(adminBtn);
+        hbBtn2.getChildren().add(balieBtn);
         Scherm2.add(hbBtn2, 50, 20);
 
         Button balieMederwerkerBtn = new Button("Baliemedewerker");
@@ -102,11 +102,17 @@ public class FYS_LostFound extends Application {
         hbBtn4.getChildren().add(systeemBeheerderBtn);
         Scherm2.add(hbBtn4, 52, 20);
         
-        Homepage homeScherm = new Homepage();
+        Homepage_Baliemedewerker homeScherm = new Homepage_Baliemedewerker();
         GridPane Scherm3 = homeScherm.maakHetScherm();
         Scene scene3 = new Scene(Scherm3, 1400, 800);
         
+        Homepage_Systeembeheer homeScherm_Systeembeheer = new Homepage_Systeembeheer();
+        GridPane Scherm4 = homeScherm_Systeembeheer.maakHetScherm();
+        Scene scene4 = new Scene(Scherm4, 1400, 800);
         
+        Homepage_Manager homeScherm_Manager = new Homepage_Manager();
+        GridPane Scherm5 = homeScherm_Manager.maakHetScherm();
+        Scene scene5 = new Scene(Scherm5, 1400, 800);
         
         
         thestage = primaryStage;
@@ -115,34 +121,35 @@ public class FYS_LostFound extends Application {
 
         
         //eventhandlers voor button functies
-        btnAdmin.setOnAction(new EventHandler<ActionEvent>() {
+        btnBalie.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                primaryStage.setScene(scene2);
+                primaryStage.setScene(scene3);
             }
         });
         
         btnSysteem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                primaryStage.setScene(scene2);
+                primaryStage.setScene(scene4);
 
             }
         });
         btnManager.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                primaryStage.setScene(scene2);
+                primaryStage.setScene(scene5);
 
             }
         });
-        loginBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                primaryStage.setScene(scene3);
-
-            }
-        });
+        
+//        loginBtn.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                primaryStage.setScene(scene3);
+//
+//            }
+//        });
         
     }
 

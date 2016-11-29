@@ -40,7 +40,7 @@ import javafx.stage.Stage;
  *
  * @author Thijs Timmermans
  */
-public class Homepage {
+public class Homepage_Baliemedewerker {
     
     
     private TableView table = new TableView();
@@ -65,7 +65,8 @@ public class Homepage {
     GridPane grid = new GridPane();
     grid.getChildren().add(table);
    
-
+    Label label = new Label("Baliemedewerker");
+    grid.add(label, 50,50);
 
         
         return grid;
