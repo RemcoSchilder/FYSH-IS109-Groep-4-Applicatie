@@ -18,6 +18,17 @@ public class Homepage_Baliemedewerker {
 
     public static GridPane getScreen() {
 
+//        Button pagina1 = new Button("Pagina1");
+//        pagina1.setPrefWidth(200);
+//        pagina1.setPrefHeight(50);
+//
+//
+//        Button pagina2 = new Button("Pagina2");
+//        pagina2.setPrefWidth(200);
+//        pagina2.setPrefHeight(50);
+//
+//        VBox root = new VBox();
+//        root.getChildren().addAll(pagina1, pagina2);
        
         menu.getChildren().addAll(lost);
         pane.getChildren().add(menu);
@@ -30,11 +41,6 @@ public class Homepage_Baliemedewerker {
 
             }
         });
-
         return pane;
     }
-
-    
-
-   
 }
