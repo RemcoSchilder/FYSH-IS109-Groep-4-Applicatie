@@ -69,7 +69,7 @@ public class Start {
             @Override
             public void handle(ActionEvent event) {
                 pane.getChildren().clear();
-                pane.getChildren().add(Login.getScreen());
+                pane.getChildren().add(Login.getScreenOne());
             }
         });
         
@@ -77,7 +77,7 @@ public class Start {
             @Override
             public void handle(ActionEvent event) {
                 pane.getChildren().clear();
-                pane.getChildren().add(Login.getScreen());
+                pane.getChildren().add(Login.getScreenTwo());
             }
         });
         
@@ -85,7 +85,7 @@ public class Start {
             @Override
             public void handle(ActionEvent event) {
                pane.getChildren().clear();
-               pane.getChildren().add( Homepage_Manager.getScreen());
+               pane.getChildren().add(Login.getScreenThree());
             }
         });
         

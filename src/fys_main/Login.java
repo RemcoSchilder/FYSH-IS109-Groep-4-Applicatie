@@ -30,7 +30,7 @@ public class Login {
     private static Label pw = new Label("Password:");
     private static PasswordField pwBox = new PasswordField();
     
-    public static BorderPane getScreen() {
+    public static BorderPane getScreenOne() {
 
         GridPane grid = new GridPane();
         grid.setMinSize(150, 150);
@@ -61,4 +61,67 @@ public class Login {
         return pane;
     }
 
+    
+    public static BorderPane getScreenTwo() {
+        
+        GridPane grid = new GridPane();
+        grid.setMinSize(150, 150);
+        grid.setHgap(5);
+        grid.setVgap(5);
+        grid.setPadding(new Insets(200, 200, 200, 200));
+        
+        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        grid.add(scenetitle, 50, 20, 40, 20);
+        grid.add(userName, 50, 25, 40, 25);
+        grid.add(userTextField, 70, 25, 40, 30);
+        grid.add(pw, 50, 30, 40, 35);
+        grid.add(pwBox, 70, 30, 40, 40);
+        grid.add(btnLogin, 50, 35, 40, 45);
+        
+        pane.setCenter(grid);
+        
+        
+        btnLogin.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                pane.getChildren().clear();
+                pane.getChildren().add(Homepage_Systeem.getScreen());
+             
+            }
+        });
+        
+        return pane;
+    }
+    
+    public static BorderPane getScreenThree() {
+        
+        GridPane grid = new GridPane();
+        grid.setMinSize(150, 150);
+        grid.setHgap(5);
+        grid.setVgap(5);
+        grid.setPadding(new Insets(200, 200, 200, 200));
+        
+        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        grid.add(scenetitle, 50, 20, 40, 20);
+        grid.add(userName, 50, 25, 40, 25);
+        grid.add(userTextField, 70, 25, 40, 30);
+        grid.add(pw, 50, 30, 40, 35);
+        grid.add(pwBox, 70, 30, 40, 40);
+        grid.add(btnLogin, 50, 35, 40, 45);
+        
+        pane.setCenter(grid);
+        
+        
+        btnLogin.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                pane.getChildren().clear();
+                pane.getChildren().add(Homepage_Manager.getScreen());
+             
+            }
+        });
+        
+        return pane;
+    }
 }
+
