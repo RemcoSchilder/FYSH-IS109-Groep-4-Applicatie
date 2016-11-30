@@ -40,7 +40,7 @@ public class Database {
         }
     }
         
-    public ResultSet doQuery(String query) {
+    public ResultSet getQuery(String query) {
         Statement stmt = null;
         ResultSet rs = null;
         
@@ -66,6 +66,31 @@ public class Database {
         }
         
         return rs;
+    }
+    
+    public void setQuery(String query) {
+        Statement stmt = null;
+        
+        try {
+            // Create query
+            stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+        } catch(SQLException se) {
+           //Handle errors for JDBC
+           se.printStackTrace();
+        } catch(Exception e) {
+           //Handle errors for Class.forName
+           e.printStackTrace();
+        } finally {
+            // Check statement
+            try {
+               if (stmt==null) {
+                   stmt.close();
+               }
+            } catch(SQLException se2) {
+                // Kapot
+            }
+        }     
     }
     
     /*
