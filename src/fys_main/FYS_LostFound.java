@@ -42,15 +42,20 @@ public class FYS_LostFound extends Application {
 
         thestage = primaryStage;
         primaryStage.setTitle("FYS Lost & Found");
+        primaryStage.getIcons().add(new Image("https://www.corendon.be/apple-touch-icon-152x152.png"));
 
-        //Startpagina+buttons
+        Scene scene = new Scene(Start.getScreen(), 1400, 800);
+        scene.getStylesheets().add(css);
+
+        thestage = primaryStage;
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+//Startpagina+buttons
 //        Start startScherm = new Start();
 //        GridPane Scherm = startScherm.getScreen();
 //        Scene scene = new Scene(Scherm, 1400, 800);
 //        scene.getStylesheets().add(css);
-//        
-          Scene scene = new Scene(Start.getScreen(), 1400, 800);
-          scene.getStylesheets().add(css);
 //        
 //        Button btnBalie = new Button("Baliemedewerker");
 //        HBox hbBtnR = new HBox(10);
@@ -109,7 +114,6 @@ public class FYS_LostFound extends Application {
 //        hbBtn4.setAlignment(Pos.BOTTOM_RIGHT);
 //        hbBtn4.getChildren().add(systeemBeheerderBtn);
 //        Scherm2.add(hbBtn4, 52, 20);
-
         //homescreen baliemedewerker
 //        Scene scene3 = new Scene(Homepage_Baliemedewerker.getScreen(), 1400, 800);
 //        scene3.getStylesheets().add(css);
@@ -126,11 +130,6 @@ public class FYS_LostFound extends Application {
 //        GridPane Scherm5 = homeScherm_Manager.maakHetScherm();
 //        Scene scene5 = new Scene(Scherm5, 1400, 800);
 //        scene5.getStylesheets().add(css);
-
-        thestage = primaryStage;
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
         //eventhandlers voor button functies
 //        btnBalie.setOnAction(new EventHandler<ActionEvent>() {
 //            @Override
@@ -153,7 +152,6 @@ public class FYS_LostFound extends Application {
 //
 //            }
 //        });
-
     }
 
 }

@@ -38,8 +38,16 @@ public class Start {
         btnBalie.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-               pane.getChildren().clear();
-               pane.getChildren().add(Login.getScreen());
+                pane.getChildren().clear();
+                pane.getChildren().add(Login.getScreen());
+            }
+        });
+        
+        btnSysteem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                pane.getChildren().clear();
+                pane.getChildren().add(Login.getScreen());
             }
         });
         
@@ -67,7 +75,7 @@ public class Start {
         box.getChildren().add(iv1);
         pane.getChildren().add(box);
 //
-//        //primaryStage.getIcons().add(new Image("https://www.corendon.be/apple-touch-icon-152x152.png"));
+//        primaryStage.getIcons().add(new Image("https://www.corendon.be/apple-touch-icon-152x152.png"));
         return pane;
     }
 }
