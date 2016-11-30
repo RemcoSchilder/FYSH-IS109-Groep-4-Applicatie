@@ -121,4 +121,12 @@ public class Database {
     }
     */
     
+    
+    
+    /*
+    Database test = new Database();
+    test.setConn();
+    test.setQuery("QUERY");
+    */
+    
 }
