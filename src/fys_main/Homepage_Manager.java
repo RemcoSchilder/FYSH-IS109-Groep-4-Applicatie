@@ -17,10 +17,10 @@ import javafx.scene.layout.GridPane;
  */
 public class Homepage_Manager {
     
-    private TableView<TableLuggage> table = new TableView<>();
-    private ObservableList<TableLuggage> data = FXCollections.observableArrayList();
+    private static TableView<TableLuggage> table = new TableView<>();
+    private static ObservableList<TableLuggage> data = FXCollections.observableArrayList();
     
-    public GridPane maakHetScherm(){
+    public static GridPane getScreen(){
         
         table.setEditable(true);
         

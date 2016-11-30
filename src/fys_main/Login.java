@@ -55,34 +55,12 @@ public class Login {
         btnLogin.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-          pane.getChildren().add(Homepage_Baliemedewerker.getScreen());
+                pane.getChildren().clear();
+                pane.getChildren().add(Homepage_Baliemedewerker.getScreen());
              
             }
         });
         
-        
-        
-        
-        
-        
-        
-        
-
-
-      
-
-//        Button loginBtn = new Button("log in");
-//        HBox hbBtn = new HBox();
-//        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-//        hbBtn.getChildren().add(loginBtn);
-//        pane.add(hbBtn, 50, 27);
-
-
-
-
-//        final Text actiontarget = new Text();
-//        pane.add(actiontarget, 1, 6);
-
         return pane;
     }
 

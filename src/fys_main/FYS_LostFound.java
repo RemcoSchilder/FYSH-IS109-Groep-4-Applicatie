@@ -1,9 +1,26 @@
 package fys_main;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
@@ -25,12 +42,43 @@ public class FYS_LostFound extends Application {
 
         thestage = primaryStage;
         primaryStage.setTitle("FYS Lost & Found");
-        primaryStage.getIcons().add(new Image("https://www.corendon.be/apple-touch-icon-152x152.png"));
-        
-        //Startpagina
-        Scene scene = new Scene(Start.getScreen(), 1400, 800);
-        scene.getStylesheets().add(css);
 
+        //Startpagina+buttons
+//        Start startScherm = new Start();
+//        GridPane Scherm = startScherm.getScreen();
+//        Scene scene = new Scene(Scherm, 1400, 800);
+//        scene.getStylesheets().add(css);
+//        
+          Scene scene = new Scene(Start.getScreen(), 1400, 800);
+          scene.getStylesheets().add(css);
+//        
+//        Button btnBalie = new Button("Baliemedewerker");
+//        HBox hbBtnR = new HBox(10);
+//        hbBtnR.setAlignment(Pos.BOTTOM_RIGHT);
+//        hbBtnR.getChildren().add(btnBalie);
+//        Scherm.add(hbBtnR, 50, 20);
+//        
+//        
+//        Button btnSysteem = new Button("Systeembeheerder");
+//        HBox hbBtnt = new HBox(10);
+//        hbBtnt.setAlignment(Pos.BOTTOM_RIGHT);
+//        hbBtnt.getChildren().add(btnSysteem);
+//        Scherm.add(hbBtnt, 50, 25);
+//        
+//      
+//        Button btnManager = new Button("Manager");
+//        HBox hbBtne = new HBox(10);
+//        hbBtne.setAlignment(Pos.BOTTOM_RIGHT);
+//        hbBtne.getChildren().add(btnManager);
+//        Scherm.add(hbBtne, 50, 30);
+//        
+//      
+//        Button sqlTest = new Button("Get gebruikers");
+//        HBox sqlTestH = new HBox(10);
+//        sqlTestH.setAlignment(Pos.BOTTOM_RIGHT);
+//        sqlTestH.getChildren().add(sqlTest);
+//        Scherm.add(sqlTest, 50, 35);
+//
 //        //LoginScherm+buttons
 //        Login loginScherm = new Login();
 //        GridPane Scherm2 = loginScherm.maakHetScherm();
@@ -61,22 +109,23 @@ public class FYS_LostFound extends Application {
 //        hbBtn4.setAlignment(Pos.BOTTOM_RIGHT);
 //        hbBtn4.getChildren().add(systeemBeheerderBtn);
 //        Scherm2.add(hbBtn4, 52, 20);
-       
+
         //homescreen baliemedewerker
-        Scene scene3 = new Scene(Homepage_Baliemedewerker.getScreen(), 1400, 800);
-        scene3.getStylesheets().add(css);
-
-        //homescreen systeembeheerder+buttons
-        Homepage_Systeembeheer homeScherm_Systeembeheer = new Homepage_Systeembeheer();
-        GridPane Scherm4 = homeScherm_Systeembeheer.maakHetScherm();
-        Scene scene4 = new Scene(Scherm4, 1400, 800);
-        scene4.getStylesheets().add(css);
-
-        //homescreen manager+buttons
-        Homepage_Manager homeScherm_Manager = new Homepage_Manager();
-        GridPane Scherm5 = homeScherm_Manager.maakHetScherm();
-        Scene scene5 = new Scene(Scherm5, 1400, 800);
-        scene5.getStylesheets().add(css);
+//        Scene scene3 = new Scene(Homepage_Baliemedewerker.getScreen(), 1400, 800);
+//        scene3.getStylesheets().add(css);
+//
+//
+//        homescreen systeembeheerder+buttons
+//        Homepage_Systeembeheer homeScherm_Systeembeheer = new Homepage_Systeembeheer();
+//        GridPane Scherm4 = homeScherm_Systeembeheer.maakHetScherm();
+//        Scene scene4 = new Scene(Scherm4, 1400, 800);
+//        scene4.getStylesheets().add(css);
+//
+//        homescreen manager+buttons
+//        Homepage_Manager homeScherm_Manager = new Homepage_Manager();
+//        GridPane Scherm5 = homeScherm_Manager.maakHetScherm();
+//        Scene scene5 = new Scene(Scherm5, 1400, 800);
+//        scene5.getStylesheets().add(css);
 
         thestage = primaryStage;
         primaryStage.setScene(scene);
@@ -104,6 +153,7 @@ public class FYS_LostFound extends Application {
 //
 //            }
 //        });
+
     }
 
 }

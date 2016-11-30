@@ -23,35 +23,51 @@ public class Start {
     private static Button btnSysteem = new Button("Systemeebeheer");
     private static Button btnManager = new Button("Manager");
     private static HBox start = new HBox(10);
-    private static Image image = new Image("http://www.corendonairlines.nl/corendon_logo.jpg", 600, 200, false, false);
-    private static ImageView iv1 = new ImageView(image);
+    
+            
 
     public static GridPane getScreen() {
 
         pane.setAlignment(Pos.CENTER);
         pane.setHgap(10);
         pane.setVgap(10);
-        pane.setPadding(new Insets(25, 25, 25, 25));
-        pane.add(start, 40, 40);
         
+        start.getChildren().addAll(btnBalie, btnSysteem, btnManager);
+        pane.add(start, 50, 50);
+        
+        btnBalie.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+               pane.getChildren().clear();
+               pane.getChildren().add(Login.getScreen());
+            }
+        });
+        
+        btnManager.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+               pane.getChildren().clear();
+               pane.getChildren().add( Homepage_Manager.getScreen());
+            }
+        });
+        
+
+
+        Image image = new Image("http://www.corendonairlines.nl/corendon_logo.jpg", 600, 200, false, false);
+
+        ImageView iv1 = new ImageView(image);
         iv1.setImage(image);
         iv1.setPreserveRatio(true);
         iv1.setSmooth(true);
         iv1.setCache(true);
 
-       start.getChildren().addAll(btnBalie, btnSysteem, btnManager, iv1);
-        
-        
-        
-        btnBalie.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                pane.getChildren().add(Login.getScreen());
-            }
-        });
-
-        
-
+        //sceneR.setFill(Color.WHITE);
+        VBox box = new VBox();
+        box.setAlignment(Pos.TOP_CENTER);
+        box.getChildren().add(iv1);
+        pane.getChildren().add(box);
+//
+//        //primaryStage.getIcons().add(new Image("https://www.corendon.be/apple-touch-icon-152x152.png"));
         return pane;
     }
 }
