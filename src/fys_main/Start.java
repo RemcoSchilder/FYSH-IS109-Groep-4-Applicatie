@@ -47,7 +47,7 @@ public class Start {
             @Override
             public void handle(ActionEvent event) {
                 pane.getChildren().clear();
-                pane.getChildren().add(Login.getScreen());
+                pane.getChildren().add(SysM_Homepage.getScreen());
             }
         });
         

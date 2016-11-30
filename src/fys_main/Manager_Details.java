@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  *
@@ -24,6 +25,10 @@ public class Manager_Details {
     //moet allemaal nog gefixt worden
     
         GridPane grid = new GridPane();
+        private Stage primaryStage;
+        
+        
+        public void VerzinEenNaam() {
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
@@ -109,6 +114,6 @@ public class Manager_Details {
         grid.add(hbBtn7, 22, 21);
 
         primaryStage.show();
-    
+        }
     
 }
