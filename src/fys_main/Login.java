@@ -1,5 +1,7 @@
 package fys_main;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -18,56 +20,70 @@ import javafx.scene.text.Text;
  */
 public class Login {
 
-    public GridPane maakHetScherm() {
+    
+    private static GridPane pane = new GridPane();
+    private static Button btnLogin= new Button("Log in");
+    private static HBox start = new HBox(10);
+    
+    public static GridPane getScreen() {
 
-        GridPane grid = new GridPane();
-        grid.setMinSize(300, 300);
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 25, 25));
-
+         pane.setAlignment(Pos.CENTER);
+         pane.setMinSize(300, 300);
+         pane.setHgap(10);
+         pane.setVgap(10);
+         pane.setPadding(new Insets(25, 25, 25, 25));
+        
+        start.getChildren().addAll(btnLogin);
+        pane.add(start, 50, 50);
+        
         Text scenetitle = new Text("Welcome");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        grid.add(scenetitle, 50, 24, 40, 20);
+        pane.add(scenetitle, 50, 24, 40, 20);
 
         Label userName = new Label("User Name:");
-        grid.add(userName, 50, 25);
+        pane.add(userName, 50, 21, 40, 20);
         TextField userTextField = new TextField();
-        grid.add(userTextField, 51, 25);
+        pane.add(userTextField, 55, 21, 40, 20);
 
         Label pw = new Label("Password:");
-        grid.add(pw, 50, 26);
+        pane.add(pw, 50, 22, 40, 20);
         PasswordField pwBox = new PasswordField();
-        grid.add(pwBox, 51, 26);
+        pane.add(pwBox, 55, 22, 40, 20);
+        
+        pane.add(btnLogin, 50, 27, 40, 20);
+        
+        btnLogin.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+          pane.getChildren().add(Homepage_Baliemedewerker.getScreen());
+             
+            }
+        });
+        
+        
+        
+        
+        
+        
+        
+        
 
-        Button loginBtn = new Button("log in");
-        HBox hbBtn = new HBox();
-        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn.getChildren().add(loginBtn);
-        grid.add(hbBtn, 50, 27);
 
-        Button adminBtn = new Button("Admin");
-        HBox hbBtn2 = new HBox(10);
-        hbBtn2.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn2.getChildren().add(adminBtn);
-        grid.add(hbBtn2, 50, 20);
+      
 
-        Button balieMederwerkerBtn = new Button("Baliemedewerker");
-        HBox hbBtn3 = new HBox();
-        hbBtn3.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn3.getChildren().add(balieMederwerkerBtn);
-        grid.add(hbBtn3, 51, 20);
+//        Button loginBtn = new Button("log in");
+//        HBox hbBtn = new HBox();
+//        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
+//        hbBtn.getChildren().add(loginBtn);
+//        pane.add(hbBtn, 50, 27);
 
-        Button systeemBeheerderBtn = new Button("Systeem Beheerder");
-        HBox hbBtn4 = new HBox();
-        hbBtn4.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn4.getChildren().add(systeemBeheerderBtn);
-        grid.add(hbBtn4, 52, 20);
 
-        final Text actiontarget = new Text();
-        grid.add(actiontarget, 1, 6);
 
-        return grid;
+
+//        final Text actiontarget = new Text();
+//        pane.add(actiontarget, 1, 6);
+
+        return pane;
     }
 
 }
