@@ -1,7 +1,10 @@
 package fys_main;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
@@ -12,33 +15,39 @@ import javafx.scene.layout.VBox;
  */
 public class Homepage_Baliemedewerker {
 
-    private static GridPane pane = new GridPane();
-    private static VBox menu = new VBox(10);
+    private static BorderPane pane = new BorderPane();
+    
     private static Button lost = new Button("Lost bagage");
+    private static Button found = new Button("Found bagage");
+    private static Label create = new Label("Create");
+    
+    public static BorderPane getScreen() {
 
-    public static GridPane getScreen() {
+        GridPane grid = new GridPane();
+        grid.setMinSize(150, 150);
+        grid.setHgap(5);
+        grid.setVgap(5);
+        grid.setPadding(new Insets(50, 50, 50, 50));
+        
+        
+        lost.setPrefWidth(200);
+        lost.setPrefHeight(50);
+        found.setPrefWidth(200);
+        found.setPrefHeight(50);
 
-//        Button pagina1 = new Button("Pagina1");
-//        pagina1.setPrefWidth(200);
-//        pagina1.setPrefHeight(50);
-//
-//
-//        Button pagina2 = new Button("Pagina2");
-//        pagina2.setPrefWidth(200);
-//        pagina2.setPrefHeight(50);
-//
-//        VBox root = new VBox();
-//        root.getChildren().addAll(pagina1, pagina2);
+        grid.add(create, 6, 1, 40, 20);
+        grid.add(lost, 5, 10, 40, 20); 
+        grid.add(found, 5, 20, 40, 20); 
+        
+        pane.setLeft(grid);
+        
        
-        menu.getChildren().addAll(lost);
-        pane.getChildren().add(menu);
         
         lost.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                pane.getChildren().clear();
-                pane.getChildren().add(HB_CreateLost.getScreen());
-
+               
+                pane.setCenter(HB_CreateLost.getScreen());
             }
         });
         return pane;

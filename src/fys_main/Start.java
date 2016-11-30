@@ -23,29 +23,23 @@ public class Start {
     private static Button btnBalie = new Button("Baliemedewerker");
     private static Button btnSysteem = new Button("Systemeebeheer");
     private static Button btnManager = new Button("Manager");
-    private static HBox start = new HBox(10);
+   
     
             
 
     public static BorderPane getScreen() {
 
-//       pane.getChildren().setAlignment(Pos.CENTER);
-//       pane.setHgap(10);
-//        pane.setVgap(10);
 
 
-      
-
-        
         GridPane grid = new GridPane();
         grid.setMinSize(150, 150);
         grid.setHgap(5);
         grid.setVgap(5);
         grid.setPadding(new Insets(200, 200, 200, 200));
         
-        grid.add(btnBalie, 30, 20);
-        grid.add(btnSysteem, 30, 25);
-        grid.add(btnManager, 30, 30);
+        grid.add(btnBalie, 40, 0);
+        grid.add(btnSysteem, 50, 0);
+        grid.add(btnManager, 60, 0);
        
         
         
@@ -63,11 +57,9 @@ public class Start {
         iv1.setSmooth(true);
         iv1.setCache(true);
 
+        grid2.add(iv1, 50, 20);
         
-        VBox box = new VBox();
-        box.setAlignment(Pos.TOP_CENTER);
-        box.getChildren().add(iv1);
-        grid2.getChildren().add(box);
+        
         
         pane.setCenter(grid);
         pane.setTop(grid2);
@@ -85,7 +77,7 @@ public class Start {
             @Override
             public void handle(ActionEvent event) {
                 pane.getChildren().clear();
-                pane.getChildren().add(SysM_Homepage.getScreen());
+                pane.getChildren().add(Login.getScreen());
             }
         });
         

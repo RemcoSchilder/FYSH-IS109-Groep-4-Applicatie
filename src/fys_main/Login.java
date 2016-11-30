@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
@@ -21,36 +22,32 @@ import javafx.scene.text.Text;
 public class Login {
 
     
-    private static GridPane pane = new GridPane();
+    private static BorderPane pane = new BorderPane();
     private static Button btnLogin= new Button("Log in");
-    private static HBox start = new HBox(10);
+    private static Text scenetitle = new Text("Welcome");
+    private static Label userName = new Label("User Name:");
+    private static TextField userTextField = new TextField();
+    private static Label pw = new Label("Password:");
+    private static PasswordField pwBox = new PasswordField();
     
-    public static GridPane getScreen() {
+    public static BorderPane getScreen() {
 
-         pane.setAlignment(Pos.CENTER);
-         pane.setMinSize(300, 300);
-         pane.setHgap(10);
-         pane.setVgap(10);
-         pane.setPadding(new Insets(25, 25, 25, 25));
+        GridPane grid = new GridPane();
+        grid.setMinSize(150, 150);
+        grid.setHgap(5);
+        grid.setVgap(5);
+        grid.setPadding(new Insets(200, 200, 200, 200));
         
-        start.getChildren().addAll(btnLogin);
-        pane.add(start, 50, 50);
-        
-        Text scenetitle = new Text("Welcome");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        pane.add(scenetitle, 50, 24, 40, 20);
-
-        Label userName = new Label("User Name:");
-        pane.add(userName, 50, 21, 40, 20);
-        TextField userTextField = new TextField();
-        pane.add(userTextField, 55, 21, 40, 20);
-
-        Label pw = new Label("Password:");
-        pane.add(pw, 50, 22, 40, 20);
-        PasswordField pwBox = new PasswordField();
-        pane.add(pwBox, 55, 22, 40, 20);
+        grid.add(scenetitle, 50, 20, 40, 20);
+        grid.add(userName, 50, 25, 40, 25);
+        grid.add(userTextField, 70, 25, 40, 30);
+        grid.add(pw, 50, 30, 40, 35);
+        grid.add(pwBox, 70, 30, 40, 40);
+        grid.add(btnLogin, 50, 35, 40, 45);
         
-        pane.add(btnLogin, 50, 27, 40, 20);
+        pane.setCenter(grid);
+        
         
         btnLogin.setOnAction(new EventHandler<ActionEvent>() {
             @Override
