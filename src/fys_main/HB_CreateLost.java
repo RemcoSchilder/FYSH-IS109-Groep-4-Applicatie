@@ -157,8 +157,6 @@ public class HB_CreateLost {
         screen.add(next, 4, 14);
     }
     
-    
-    
     public static void screenTwo() {
         /* Clear Grid */
         screen.getChildren().clear();
@@ -217,7 +215,6 @@ public class HB_CreateLost {
         Date date = new Date();
         
         
-        
         /* Add everything to the grid */
         screen.add(NameInfo, 10, 5);
         
@@ -259,7 +256,6 @@ public class HB_CreateLost {
         
         screen.add(previous, 0, 15);
         screen.add(addLostLuggage, 1, 15);
-        
         
         // all event handlers from screen two
         addLostLuggage.setOnAction(new EventHandler<ActionEvent>() {
