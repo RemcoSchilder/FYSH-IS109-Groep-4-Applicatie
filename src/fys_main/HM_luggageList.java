@@ -17,7 +17,7 @@ import javafx.scene.text.Text;
  */
 public class HM_luggageList {
     
-    private static GridPane screen;
+    private static GridPane screen = new GridPane();
     private static TableView<TableLuggage> table = new TableView<>();
     private static ObservableList<TableLuggage> data = FXCollections.observableArrayList();
     
@@ -84,11 +84,10 @@ public class HM_luggageList {
         
     
     
-        GridPane grid = new GridPane();
-        grid.add(table, 0, 0);
-        grid.add(searchLuggage, 0, 1);
+        screen.add(table, 0, 0);
+        screen.add(searchLuggage, 0, 1);
     
-        return grid;
+        return screen;
     }
     
     
