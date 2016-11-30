@@ -34,7 +34,7 @@ public class Start {
 //        pane.setVgap(10);
 
 
-        //       dit moet er nog staan na de pull
+      
 
         
         GridPane grid = new GridPane();
