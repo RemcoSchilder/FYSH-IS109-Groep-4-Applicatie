@@ -31,31 +31,8 @@ public class Homepage_Manager {
     
     table.getColumns().addAll( lostFound, labelNumber, type, brand, color, match, status);
     
-    Database hoi = new Database();
-        
-        ResultSet result = hoi.doQuery("SELECT * FROM lostLuggage");
-        try {
-            while(result.next()) {
-                String Date  = result.getString("date");
-                int Labelnumber = result.getInt("label_number");
-                String Type = result.getString("type");
-                String Brand = result.getString("brand");
-                String Color = result.getString("color");
-                String Status = result.getString("status");
-                
-                System.out.println("ID: " + Date);
-                System.out.println("Datum: " + Labelnumber);
-                System.out.println("Datum: " + Type);
-                System.out.println("Datum: " + Brand);
-                System.out.println("Datum: " + Color);
-                System.out.println("Cijfer: " + Status);
-                
-            }
-        } catch(SQLException se) {
-           //Handle errors for JDBC
-           se.printStackTrace();
-        }
-
+    
+    
     GridPane grid = new GridPane();
     grid.getChildren().add(table);
    
