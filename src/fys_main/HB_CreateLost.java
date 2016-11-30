@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
@@ -53,6 +54,7 @@ public class HB_CreateLost {
                 screenOne();
             }
         });
+        
         
         
         return screen;
@@ -163,7 +165,7 @@ public class HB_CreateLost {
         
         
         /* Create all subheadings */
-        Text lostInfo = new Text("Lost inforatmion:");
+        Text lostInfo = new Text("Lost information:");
         lostInfo.getStyleClass().add("subheading");
         
         Text labelInfo = new Text("Luggage label information:");
@@ -172,31 +174,104 @@ public class HB_CreateLost {
         Text luggageInfo = new Text("Luggage information:");
         luggageInfo.getStyleClass().add("subheading");
         
+        Text NameInfo = new Text("Name traveller:");
+        NameInfo.getStyleClass().add("subheading");
+        
         
         /* Create all labels & inputs */
-        Label firstNameL = new Label("First name:");
-        TextField firstNameT = new TextField();
+        Label dateL = new Label("Date:");
+        TextField dateT = new TextField();
         
-        Label lastNameL = new Label("Last name:");
-        TextField lastNameT = new TextField();
+        Label timeL = new Label("Time:");
+        TextField timeT = new TextField();
+        
+        Label airportL = new Label("Airport:");
+        TextField airportT = new TextField();
+        
+        Label labelnrL = new Label("Lable number:");
+        TextField labelnrT = new TextField();
+        
+        Label flightnrL = new Label("Flight number:");
+        TextField flightnrT = new TextField();
+        
+        Label destinationL = new Label("Destination:");
+        TextField destinationT = new TextField();
+        
+        Label brandL = new Label("Brand:");
+        TextField brandT = new TextField();
+        
+        Label colorL = new Label("Color:");
+        TextField colorT = new TextField();
+        
+        Label typeL = new Label("Type:");
+        TextField typeT = new TextField();
+        
+        Label characteristicsL = new Label("Characteristics:");
+        TextArea characteristicsT = new TextArea();
+        characteristicsT.setPrefWidth(250);
+        characteristicsT.setPrefHeight(100);
         
         
         /* Get date */
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
         Date date = new Date();
         
         
+        
         /* Add everything to the grid */
+        screen.add(NameInfo, 10, 5);
+        
         screen.add(lostInfo, 0, 0);
         
-        screen.add(firstNameL, 0, 1);
-        screen.add(firstNameT, 1, 1);
+        screen.add(dateL, 0, 1);
+        screen.add(dateT, 1, 1);
         
-        screen.add(lastNameL, 0, 2);
-        screen.add(lastNameT, 1, 2);
+        screen.add(timeL, 0, 2);
+        screen.add(timeT, 1, 2);
         
-        screen.add(previous, 0, 3);
-        screen.add(addLostLuggage, 1, 3);
+        screen.add(airportL, 0, 3);
+        screen.add(airportT, 1, 3);
+        
+        screen.add(labelInfo, 0, 5);
+        
+        screen.add(labelnrL, 0, 6);
+        screen.add(labelnrT, 1, 6);
+        
+        screen.add(flightnrL, 0, 7);
+        screen.add(flightnrT, 1, 7);
+        
+        screen.add(destinationL, 0, 8);
+        screen.add(destinationT, 1, 8);
+        
+        screen.add(luggageInfo, 0, 10);
+        
+        screen.add(brandL, 0, 11);
+        screen.add(brandT, 1, 11);
+        
+        screen.add(colorL, 0, 12);
+        screen.add(colorT, 1, 12);
+        
+        screen.add(typeL, 0, 13);
+        screen.add(typeT, 1, 13);
+        
+        screen.add(characteristicsL, 0, 14);
+        screen.add(characteristicsT, 1, 14);
+        
+        screen.add(previous, 0, 15);
+        screen.add(addLostLuggage, 1, 15);
+        
+        
+        // all event handlers from screen two
+        addLostLuggage.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String status = "Open";
+                
+                Database test = new Database();
+                test.setConn();
+                test.setQuery("INSERT INTO lostLuggage (date, label_number, type, brand, color, status) VALUES ('" + dateT.getText() + "', '" + labelnrT.getText() + "', '" + typeT.getText() + "', '" + brandT.getText() + "', '" + colorT.getText() + "', '" + status + "')");
+            }
+        });
     }
     
 }
