@@ -20,7 +20,7 @@ import javafx.scene.text.Text;
  *
  * @author freek
  */
-public class SysM_ViewTable {
+public class HS_ViewTable {
     
     private static GridPane screen = new GridPane();
     private static TableView<TableUsers> table = new TableView<>();
