@@ -1,5 +1,7 @@
 package fys_main;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 
 import javafx.scene.control.Button;
@@ -19,6 +21,8 @@ import javafx.scene.text.Text;
 public class Homepage_Systeem {
     
     private static BorderPane screen = new BorderPane();
+    private static Button logout = new Button("logout");
+    
     
     public static VBox vbox() {
         VBox vbox = new VBox();
@@ -29,7 +33,7 @@ public class Homepage_Systeem {
         Text title = new Text("Create");
         Button user = new Button("user");
         user.setMinSize(230, 48);
-        Button logout = new Button("logout");
+        
         logout.setMinSize(230, 48);
 
         //alles wordt in de vbox gestopt
@@ -59,11 +63,21 @@ public class Homepage_Systeem {
         return table;
     }
 
-    public static BorderPane homepage() {
+    public static BorderPane getScreen() {
         BorderPane homepage = new BorderPane();
         homepage.setTop(hbox());
         homepage.setLeft(vbox());
         homepage.setCenter(table());
+        
+       //eventhandler terug naar start
+        logout.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+              homepage.getChildren().clear();
+              homepage.getChildren().add(Start.getScreen());
+               
+            }
+        });
         
         return homepage;
     }
@@ -72,15 +86,7 @@ public class Homepage_Systeem {
 
     
         
-        /*
         
-        //eventhandler terug naar start
-        logout.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-               
-               pane.getChildren().add(Start.getScreen());
-               
-            }
-        });
-        */
+        
+        
+        

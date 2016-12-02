@@ -1,6 +1,7 @@
 package fys_main;
 
-import static fys_main.Homepage_Systeem.pane;
+//import static fys_main.Homepage_Systeem.pane;
+import static fys_main.Homepage_Baliemedewerker.vbox;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -8,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 /**
  *
@@ -26,33 +28,31 @@ public class Homepage_Manager {
     private static Button found = new Button("Found");
     private static Button logout = new Button("Log out");
 
-    //methode voor het scherm
+   //methode voor het scherm
+    public static VBox vbox() {
+        VBox vbox = new VBox();
+        //image
+
+        //buttons
+        bagageLijst.setMinSize(230, 48);
+        lost.setMinSize(230, 48);
+        found.setMinSize(230, 48);
+        logout.setMinSize(230, 48);
+
+        //alles wordt in de vbox gestopt
+        vbox.getChildren().addAll(see, bagageLijst, graph, lost, found, logout);
+
+        //style voor de vbox
+        vbox.getStyleClass().add("vbox");
+        VBox.setMargin(logout, new Insets(566, 0, 0, 0));
+
+        return vbox;
+    }
+    
+//methode voor het scherm
     public static BorderPane getScreen() {
 
-        //gridpane voor left side van de borderpane
-        GridPane grid = new GridPane();
-        grid.setMinSize(150, 150);
-        grid.setHgap(5);
-        grid.setVgap(5);
-        grid.setPadding(new Insets(50, 50, 50, 50));
-
-        bagageLijst.setPrefWidth(200);
-        bagageLijst.setPrefHeight(50);
-        lost.setPrefWidth(200);
-        lost.setPrefHeight(50);
-        found.setPrefWidth(200);
-        found.setPrefHeight(50);
-        logout.setPrefWidth(200);
-        logout.setPrefHeight(50);
-        
-        grid.add(see, 6, 1, 40, 20);
-        grid.add(bagageLijst, 5, 10, 40, 20);
-        grid.add(graph, 6, 40, 40, 20);
-        grid.add(lost, 6, 50, 40, 20);
-        grid.add(found, 6, 60, 40, 20);
-        grid.add(logout, 5, 120, 40, 20);
-        
-        pane.setLeft(grid);
+        pane.setLeft(vbox());
 
         //eventhandler knop bagagelijst opent bagagelijst info
         bagageLijst.setOnAction(new EventHandler<ActionEvent>() {
