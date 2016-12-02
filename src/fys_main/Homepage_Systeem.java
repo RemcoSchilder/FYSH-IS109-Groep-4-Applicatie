@@ -1,12 +1,16 @@
 package fys_main;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 /**
  *
@@ -14,59 +18,69 @@ import javafx.scene.layout.GridPane;
  */
 public class Homepage_Systeem {
     
-    //aanmaken allover borderpane
-    public static BorderPane pane = new BorderPane();
+    private static BorderPane screen = new BorderPane();
     
-    //aanmaken sidebar menu, buttons en label
-    private static Button user = new Button("User");
-    private static Label create = new Label("Create");
-    private static Button logout = new Button("Log out");
+    public static VBox vbox() {
+        VBox vbox = new VBox();
+        //image
+        
+        
+        //buttons
+        Text title = new Text("Create");
+        Button user = new Button("user");
+        user.setMinSize(230, 48);
+        Button logout = new Button("logout");
+        logout.setMinSize(230, 48);
+
+        //alles wordt in de vbox gestopt
+        vbox.getChildren().addAll(title, user, logout);
+        
+        //style voor de vbox
+        vbox.getStyleClass().add("vbox");
+        VBox.setMargin(logout, new Insets(608, 0, 0, 0));
+ 
+        return vbox;
+    }
     
-    //methode voor scherm
-    public static BorderPane getScreen() {
+    public static HBox hbox() {
+        HBox hbox = new HBox();
+        Image image = new Image("https://www.corendon.be/apple-touch-icon-152x152.png", 1400, 80, false, false);
+        ImageView v1 = new ImageView();
+        v1.setImage(image);
+         hbox.getChildren().add(v1);
+         
+         return hbox;
+    }
+    
+    public static GridPane table() {
+        GridPane table = new GridPane();
+        table.getChildren().add(HS_ViewTable.Datatable());
         
-        //gridpane voor left side van de borderpane
-        GridPane grid = new GridPane();
-        grid.setMinSize(150, 150);
-        grid.setHgap(5);
-        grid.setVgap(5);
-        grid.setPadding(new Insets(50, 50, 50, 50));
+        return table;
+    }
+
+    public static BorderPane homepage() {
+        BorderPane homepage = new BorderPane();
+        homepage.setTop(hbox());
+        homepage.setLeft(vbox());
+        homepage.setCenter(table());
         
-        user.setPrefWidth(200);
-        user.setPrefHeight(50);
-        logout.setPrefWidth(200);
-        logout.setPrefHeight(50);
+        return homepage;
+    }
+}
+
+
+    
         
-        grid.add(create, 6, 1, 40, 20);
-        grid.add(user, 5, 10, 40, 20);
-        grid.add(logout, 5, 100, 40, 20);
-       
-        pane.setLeft(grid);
-        
-        //gridpane voor center van de borderpane
-        pane.setCenter(HS_ViewTable.getScreen());
-        
-        user.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-               
-               pane.getChildren().add(HS_CreateUser.getScreen());
-               
-            }
-        });
+        /*
         
         //eventhandler terug naar start
         logout.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                
-               pane.getChildren().clear();
                pane.getChildren().add(Start.getScreen());
                
             }
         });
-        
-        
-        return pane;
-    }
-}
+        */
