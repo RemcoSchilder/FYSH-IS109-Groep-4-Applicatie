@@ -15,3 +15,10 @@
 }
 
 
+.vbox {
+    -fx-background-color: #8fbc8f;
+}
+
+.gridpane {
+    -fx-background-color: #2e8b57;
+}
