@@ -20,12 +20,6 @@ public class HS_ViewTable {
     private static TableView<TableUsers> table = new TableView<>();
     private static ObservableList<TableUsers> data = FXCollections.observableArrayList();
     
-    public static GridPane getScreen() {
-        Datatable();
-        
-        return screen;
-    }
-    
     public static GridPane Datatable() {
         
         //create colums voor table
@@ -70,6 +64,7 @@ public class HS_ViewTable {
         
         /* Create fields with labels */
         screen.add(table, 0, 0);
+        
     
         return screen;
     }
@@ -131,13 +126,4 @@ public class HS_ViewTable {
         }
 
     }
-    
-    public GridPane setScreen() {
-        Datatable();
-        GridPane grid = new GridPane();
-        grid.getChildren().add(table);
-
-        return grid;
-    }
-
 }
