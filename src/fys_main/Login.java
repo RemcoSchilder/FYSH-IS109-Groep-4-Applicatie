@@ -88,7 +88,7 @@ public class Login {
             @Override
             public void handle(ActionEvent event) {
                 pane.getChildren().clear();
-                pane.getChildren().add(Homepage_Systeem.homepage());
+                pane.getChildren().add(Homepage_Systeem.getScreen());
              
             }
         });
