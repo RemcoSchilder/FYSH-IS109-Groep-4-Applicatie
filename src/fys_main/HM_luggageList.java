@@ -47,7 +47,6 @@ public class HM_luggageList {
         TableColumn status= new TableColumn("Status");
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
         
-        
         /* Initialize Database */
         Database db = new Database();
         db.setConn();
@@ -75,23 +74,16 @@ public class HM_luggageList {
         table.setItems(data);
         table.getColumns().addAll(labelNumber, date, type, brand, color, status);
         
-        
         /* Create subheading */
         Text searchLuggage = new Text("Search luggage:");
         searchLuggage.getStyleClass().add("subheading");
         
         /* Create fields with labels */
-        
-    
-    
         screen.add(table, 0, 0);
         screen.add(searchLuggage, 0, 1);
     
         return screen;
     }
-    
-    
-    
     
     public static class TableLuggage {
         

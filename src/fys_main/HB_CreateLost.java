@@ -29,7 +29,6 @@ public class HB_CreateLost {
     private static Button next = new Button("Next");
     private static Button addLostLuggage = new Button("Add lost luggage");
     
-    
     public static GridPane getScreen() {
         /* GridPane properties */
         screen.setAlignment(Pos.CENTER);
@@ -55,16 +54,12 @@ public class HB_CreateLost {
             }
         });
         
-        
-        
         return screen;
     }
-    
     
     public static void screenOne() {
         /* Clear Grid */
         screen.getChildren().clear();
-        
         
         /* Create all subheadings */
         Text name = new Text("Name:");
@@ -78,7 +73,6 @@ public class HB_CreateLost {
         
         Text contact = new Text("Contact:");
         contact.getStyleClass().add("subheading");
-        
         
         /* Create all labels & inputs */
         Label firstNameL = new Label("First name:");
@@ -112,7 +106,6 @@ public class HB_CreateLost {
         
         Label telephoneL = new Label("Telephone:");
         TextField telephoneT = new TextField();
-        
         
         /* Add everything to the grid */
         screen.add(name, 0, 0);
@@ -162,7 +155,6 @@ public class HB_CreateLost {
         /* Clear Grid */
         screen.getChildren().clear();
         
-        
         /* Create all subheadings */
         Text lostInfo = new Text("Lost information:");
         lostInfo.getStyleClass().add("subheading");
@@ -175,7 +167,6 @@ public class HB_CreateLost {
         
         Text NameInfo = new Text("Name traveller:");
         NameInfo.getStyleClass().add("subheading");
-        
         
         /* Create all labels & inputs */
         Label dateL = new Label("Date:");
@@ -210,11 +201,9 @@ public class HB_CreateLost {
         characteristicsT.setPrefWidth(250);
         characteristicsT.setPrefHeight(100);
         
-        
         /* Get date */
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
         Date date = new Date();
-        
         
         /* Add everything to the grid */
         screen.add(NameInfo, 10, 5);

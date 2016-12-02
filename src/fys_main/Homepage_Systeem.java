@@ -1,4 +1,3 @@
-
 package fys_main;
 
 import javafx.event.ActionEvent;
@@ -15,14 +14,18 @@ import javafx.scene.layout.GridPane;
  */
 public class Homepage_Systeem {
     
+    //aanmaken allover borderpane
     public static BorderPane pane = new BorderPane();
     
+    //aanmaken sidebar menu, buttons en label
     private static Button user = new Button("User");
     private static Label create = new Label("Create");
     private static Button logout = new Button("Log out");
     
+    //methode voor scherm
     public static BorderPane getScreen() {
         
+        //gridpane voor left side van de borderpane
         GridPane grid = new GridPane();
         grid.setMinSize(150, 150);
         grid.setHgap(5);
@@ -31,7 +34,6 @@ public class Homepage_Systeem {
         
         user.setPrefWidth(200);
         user.setPrefHeight(50);
-       
         logout.setPrefWidth(200);
         logout.setPrefHeight(50);
         
@@ -40,7 +42,18 @@ public class Homepage_Systeem {
         grid.add(logout, 5, 100, 40, 20);
        
         pane.setLeft(grid);
+        
+        //gridpane voor center van de borderpane
         pane.setCenter(HS_ViewTable.getScreen());
+        
+        user.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+               
+               pane.getChildren().add(HS_CreateUser.getScreen());
+               
+            }
+        });
         
         //eventhandler terug naar start
         logout.setOnAction(new EventHandler<ActionEvent>() {

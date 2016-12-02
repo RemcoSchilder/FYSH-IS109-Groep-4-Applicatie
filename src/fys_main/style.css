@@ -1,8 +1,4 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
+
 /* 
     Created on : 29-nov-2016, 12:04:06
     Author     : Menno
@@ -12,3 +8,10 @@ and open the template in the editor.
     -fx-font: 16px Tahoma;
     -fx-font-weight: bold;
 }
+
+.sidebar{
+    -fx-background: red;
+    -fx-base: blue;
+}
+
+

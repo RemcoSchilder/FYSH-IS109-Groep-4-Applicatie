@@ -3,14 +3,12 @@ package fys_main;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -21,8 +19,10 @@ import javafx.scene.text.Text;
  */
 public class Login {
 
-    
+    //aanmaken allover borderpane
     private static BorderPane pane = new BorderPane();
+    
+    //aanmaken buttons, labels, en fields voor inlogscherm
     private static Button btnLogin= new Button("Log in");
     private static Text scenetitle = new Text("Welcome");
     private static Label userName = new Label("User Name:");
@@ -30,8 +30,10 @@ public class Login {
     private static Label pw = new Label("Password:");
     private static PasswordField pwBox = new PasswordField();
     
+    //methode voor het scherm van login naar baliemedewerker homepage
     public static BorderPane getScreenOne() {
 
+        //gridpane voor center van de borderpane, buttons, labels, en fields voor inlogscherm
         GridPane grid = new GridPane();
         grid.setMinSize(150, 150);
         grid.setHgap(5);
@@ -48,7 +50,7 @@ public class Login {
         
         pane.setCenter(grid);
         
-        
+        //eventhandler login naar baliemedewerker
         btnLogin.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -61,9 +63,10 @@ public class Login {
         return pane;
     }
 
-    
+    //methode voor het scherm van login naar systeembeheerder homepage
     public static BorderPane getScreenTwo() {
         
+        //gridpane voor center van de borderpane, buttons, labels, en fields voor inlogscherm
         GridPane grid = new GridPane();
         grid.setMinSize(150, 150);
         grid.setHgap(5);
@@ -80,7 +83,7 @@ public class Login {
         
         pane.setCenter(grid);
         
-        
+        //eventhandler login naar systeembeheerder
         btnLogin.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -93,8 +96,10 @@ public class Login {
         return pane;
     }
     
+    //methode voor het scherm van login naar manager homepage
     public static BorderPane getScreenThree() {
         
+        //gridpane voor center van de borderpane, buttons, labels, en fields voor inlogscherm
         GridPane grid = new GridPane();
         grid.setMinSize(150, 150);
         grid.setHgap(5);
@@ -111,7 +116,7 @@ public class Login {
         
         pane.setCenter(grid);
         
-        
+        //eventhandler login naar manager
         btnLogin.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -124,4 +129,3 @@ public class Login {
         return pane;
     }
 }
-
