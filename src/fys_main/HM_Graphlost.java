@@ -19,14 +19,8 @@ import javafx.stage.Stage;
  */
 public class HM_Graphlost {
 
-    //stage en gridpane maken
-    private Stage loststage;
-    GridPane lostgraph = new GridPane();
-
-    public void foundstatistieken() {
-
-        Scene scene = new Scene(new Group());
-        loststage.setTitle("Lost Graph");
+    public static GridPane getScreen() {
+        GridPane pane = new GridPane();
 
         /*grafiek maken en informatie geven. ik heb dit nu met getallen gedaan, deze 
         getallen moeten eigenlijk informatie vanuit de database zijn.
@@ -50,10 +44,9 @@ public class HM_Graphlost {
 
         chart.setMinSize(600, 600);  //grote aanpassen
 
-        ((Group) scene.getRoot()).getChildren().add(chart);
-        loststage.setScene(scene);
-        loststage.show();
+        pane.add(chart, 0, 0);
 
+        return pane;
     }
 
 }
