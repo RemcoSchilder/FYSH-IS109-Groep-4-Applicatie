@@ -74,6 +74,14 @@ public class Homepage_Manager {
 
             }
         });
+        
+        lost.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+              
+                pane.setCenter(HM_Graphlost.getScreen());
+            }
+        });
 
         return pane;
     }
