@@ -83,8 +83,9 @@ public class Homepage_Baliemedewerker {
         logout.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                 
                 pane.getChildren().clear();
-                pane.getChildren().add(Start.getScreen());
+                pane.getScene().setRoot(Start.getScreen());
 
             }
         });
