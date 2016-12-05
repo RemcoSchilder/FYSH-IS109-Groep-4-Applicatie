@@ -1,5 +1,7 @@
 package fys_main;
 
+import static fys_main.FYS_LostFound.grid;
+import static fys_main.FYS_LostFound.pane;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -20,7 +22,6 @@ import javafx.scene.text.Text;
 public class Login {
 
     //aanmaken allover borderpane
-    private static BorderPane pane = new BorderPane();
     
     //aanmaken buttons, labels, en fields voor inlogscherm
     private static Button btnLogin= new Button("Log in");
@@ -32,7 +33,7 @@ public class Login {
     
     //methode voor het scherm van login naar baliemedewerker homepage
     public static BorderPane getScreenOne() {
-
+        
         //gridpane voor center van de borderpane, buttons, labels, en fields voor inlogscherm
         GridPane grid = new GridPane();
         grid.setMinSize(150, 150);
@@ -55,7 +56,7 @@ public class Login {
             @Override
             public void handle(ActionEvent event) {
                 pane.getChildren().clear();
-                pane.getChildren().add(Homepage_Baliemedewerker.getScreen());
+                pane.getScene().setRoot(Homepage_Baliemedewerker.getScreen());
              
             }
         });
@@ -65,9 +66,9 @@ public class Login {
 
     //methode voor het scherm van login naar systeembeheerder homepage
     public static BorderPane getScreenTwo() {
-        
+        pane = new BorderPane();
         //gridpane voor center van de borderpane, buttons, labels, en fields voor inlogscherm
-        GridPane grid = new GridPane();
+        grid = new GridPane();
         grid.setMinSize(150, 150);
         grid.setHgap(5);
         grid.setVgap(5);
@@ -88,7 +89,7 @@ public class Login {
             @Override
             public void handle(ActionEvent event) {
                 pane.getChildren().clear();
-                pane.getChildren().add(Homepage_Systeem.getScreen());
+                pane.getScene().setRoot(Homepage_Systeem.getScreen());
              
             }
         });
@@ -121,7 +122,7 @@ public class Login {
             @Override
             public void handle(ActionEvent event) {
                 pane.getChildren().clear();
-                pane.getChildren().add(Homepage_Manager.getScreen());
+                pane.getScene().setRoot(Homepage_Manager.getScreen());
              
             }
         });

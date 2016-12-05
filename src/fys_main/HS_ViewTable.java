@@ -1,5 +1,6 @@
 package fys_main;
 
+import static fys_main.FYS_LostFound.grid;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,32 +17,43 @@ import javafx.scene.layout.GridPane;
  */
 public class HS_ViewTable {
     
-    private static GridPane screen = new GridPane();
     private static TableView<TableUsers> table = new TableView<>();
     private static ObservableList<TableUsers> data = FXCollections.observableArrayList();
     
     public static GridPane Datatable() {
         
+        //vernieuw gegevens
+        grid = new GridPane();
+        table = new TableView<>();
+        data.removeAll(data);
+        
         //create colums voor table
         TableColumn name = new TableColumn("Name");
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
-
+        name.prefWidthProperty().bind(table.widthProperty().divide(5));
+        
         TableColumn username = new TableColumn("Username");
         username.setCellValueFactory(new PropertyValueFactory<>("username"));
-
+        username.prefWidthProperty().bind(table.widthProperty().divide(5));
+        
         TableColumn password = new TableColumn("Password");
         password.setCellValueFactory(new PropertyValueFactory<>("password"));
-
+        password.prefWidthProperty().bind(table.widthProperty().divide(5));
+        
         TableColumn email = new TableColumn("Email");
         email.setCellValueFactory(new PropertyValueFactory<>("email"));
-
+        email.prefWidthProperty().bind(table.widthProperty().divide(5));
+        
         TableColumn function = new TableColumn("Function");
         function.setCellValueFactory(new PropertyValueFactory<>("function"));
+        function.prefWidthProperty().bind(table.widthProperty().divide(5));
         
         //ophalen van gegevens uit database
         Database db = new Database();
         db.setConn();
-
+        
+        
+        
         ResultSet result = db.getQuery("SELECT * FROM users");
         try {
             while (result.next()) {
@@ -62,15 +74,16 @@ public class HS_ViewTable {
         table.setItems(data);
         table.getColumns().addAll(name, username, password, email, function);
         
-        /* Create fields with labels */
-        screen.add(table, 0, 0);
+        /* voeg table toe aan grid */
+        grid.add(table, 0, 0);
+
         
-    
-        return screen;
+        return grid;
     }
 
     public static class TableUsers {
         
+        /* haalt gegevens uit database */
         private final SimpleStringProperty name;
         private final SimpleStringProperty username;
         private final SimpleStringProperty password;

@@ -4,6 +4,8 @@ import javafx.scene.Scene;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 /**
@@ -13,16 +15,21 @@ import javafx.stage.Stage;
 public class FYS_LostFound extends Application {
 
     Stage thestage;
-
+    static BorderPane pane = new BorderPane();
+    static GridPane grid = new GridPane();
+        
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) {
-
+        
         String css = this.getClass().getResource("style.css").toExternalForm();
 
+        pane = new BorderPane();
+        grid = new GridPane();
+        
         //aanmaken primary stage
         thestage = primaryStage;
         primaryStage.setTitle("FYS Lost & Found");
