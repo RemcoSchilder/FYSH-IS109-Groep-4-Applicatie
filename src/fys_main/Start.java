@@ -1,5 +1,7 @@
 package fys_main;
 
+import static fys_main.FYS_LostFound.grid;
+import static fys_main.FYS_LostFound.pane;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -16,7 +18,7 @@ import javafx.scene.layout.GridPane;
 public class Start {
     
     //aanmaken allover boderpane
-    private static BorderPane pane = new BorderPane();
+
 
     //buttons voor verschillende gebruikers
     private static Button btnBalie = new Button("Baliemedewerker");
@@ -25,9 +27,10 @@ public class Start {
    
     //mehtode voor het scherm
     public static BorderPane getScreen() {
-
+        pane = new BorderPane();
+        grid = new GridPane();
+        
         //gridpane voor center van de borderpane, buttons gebruikers
-        GridPane grid = new GridPane();
         grid.setMinSize(150, 150);
         grid.setHgap(5);
         grid.setVgap(5);
@@ -61,7 +64,7 @@ public class Start {
             @Override
             public void handle(ActionEvent event) {
                 pane.getChildren().clear();
-                pane.getChildren().add(Login.getScreenOne());
+                pane.getScene().setRoot(Login.getScreenOne());
             }
         });
         
@@ -69,7 +72,7 @@ public class Start {
             @Override
             public void handle(ActionEvent event) {
                 pane.getChildren().clear();
-                pane.getChildren().add(Login.getScreenTwo());
+                pane.getScene().setRoot(Login.getScreenTwo());
             }
         });
         
@@ -77,7 +80,7 @@ public class Start {
             @Override
             public void handle(ActionEvent event) {
                pane.getChildren().clear();
-               pane.getChildren().add(Login.getScreenThree());
+               pane.getScene().setRoot(Login.getScreenThree());
             }
         });
         
