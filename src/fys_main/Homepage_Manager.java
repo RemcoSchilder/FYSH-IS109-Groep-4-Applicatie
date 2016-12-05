@@ -1,6 +1,7 @@
 package fys_main;
 
 //import static fys_main.Homepage_Systeem.pane;
+import static fys_main.FYS_LostFound.pane;
 import static fys_main.Homepage_Baliemedewerker.vbox;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -31,7 +32,7 @@ public class Homepage_Manager {
    //methode voor het scherm
     public static VBox vbox() {
         VBox vbox = new VBox();
-        //image
+        
 
         //buttons
         bagageLijst.setMinSize(230, 48);
@@ -44,7 +45,7 @@ public class Homepage_Manager {
 
         //style voor de vbox
         vbox.getStyleClass().add("vbox");
-        VBox.setMargin(logout, new Insets(566, 0, 0, 0));
+        VBox.setMargin(logout, new Insets(575, 0, 0, 0));
 
         return vbox;
     }
@@ -69,7 +70,7 @@ public class Homepage_Manager {
             public void handle(ActionEvent event) {
 
                 pane.getChildren().clear();
-                pane.getChildren().add(Start.getScreen());
+                pane.getScene().setRoot(Start.getScreen());
 
             }
         });

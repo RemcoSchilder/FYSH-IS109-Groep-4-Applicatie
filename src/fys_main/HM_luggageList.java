@@ -1,5 +1,6 @@
 package fys_main;
 
+import static fys_main.FYS_LostFound.grid;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.beans.property.SimpleStringProperty;
@@ -28,6 +29,11 @@ public class HM_luggageList {
     }
     
     private static GridPane getScreenOne() {
+        
+        grid = new GridPane();
+        table = new TableView<>();
+        data.removeAll(data);
+        
         /* Create columns and assign them the right values */
         TableColumn date = new TableColumn("Date");
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
