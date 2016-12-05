@@ -20,13 +20,8 @@ import javafx.stage.Stage;
 public class HM_Graphfound {
 
     //stage en gridpane maken
-    private Stage foundstage;
-    GridPane foundgraph = new GridPane();
-
-    public void foundstatistieken() {
-
-        Scene scene = new Scene(new Group());
-        foundstage.setTitle("Found Graph");
+    public static GridPane getScreen() {
+        GridPane pane = new GridPane();
 
         /*grafiek maken en informatie geven. ik heb dit nu met getallen gedaan, deze 
         getallen moeten eigenlijk informatie vanuit de database zijn.
@@ -50,10 +45,9 @@ public class HM_Graphfound {
 
         chart.setMinSize(600, 600); //grote aanpassen
 
-        ((Group) scene.getRoot()).getChildren().add(chart);
-        foundstage.setScene(scene);
-        foundstage.show();
+        pane.add(chart, 0, 0);
 
+        return pane;
     }
 
 }

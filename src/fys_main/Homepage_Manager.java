@@ -82,6 +82,14 @@ public class Homepage_Manager {
                 pane.setCenter(HM_Graphlost.getScreen());
             }
         });
+        
+        found.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+              
+                pane.setCenter(HM_Graphfound.getScreen());
+            }
+        });
 
         return pane;
     }
