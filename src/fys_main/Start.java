@@ -22,7 +22,7 @@ public class Start {
 
     //buttons voor verschillende gebruikers
     private static Button btnBalie = new Button("Baliemedewerker");
-    private static Button btnSysteem = new Button("Systemeebeheer");
+    private static Button btnSysteem = new Button("Systeembeheer");
     private static Button btnManager = new Button("Manager");
    
     //mehtode voor het scherm
