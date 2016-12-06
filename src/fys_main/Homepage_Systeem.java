@@ -2,12 +2,13 @@ package fys_main;
 
 import static fys_main.FYS_LostFound.grid;
 import static fys_main.FYS_LostFound.pane;
+import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -76,11 +77,16 @@ public class Homepage_Systeem {
     public static BorderPane getScreen() {
         pane = new BorderPane();
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Delete user");
-        alert.setHeaderText("Wijzig Luchthaven");
-        alert.setContentText("Selecteer eerst een luchthaven in de lijst "
-                + "om te wijzigen");
-        alert.getButtonTypes();
+        
+        alert.setTitle("Delete");
+        alert.setHeaderText("Delete User");
+        alert.setContentText("Are u sure you want to delete this user?");
+        
+        ButtonType yesButton = new ButtonType("DELETE");
+        ButtonType cancelButton = new ButtonType("No");
+        
+        alert.getButtonTypes().setAll(cancelButton, yesButton);
+        
         
         //voeg alles toe aan de borderpane
         pane.setLeft(vbox());
@@ -110,7 +116,22 @@ public class Homepage_Systeem {
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                alert.showAndWait();
+                      
+                Optional<ButtonType> result = alert.showAndWait();
+                
+                if(result.get() == yesButton)
+                {
+                    grid.getChildren().clear();
+                    pane.setCenter(HS_CreateUser.getScreen());
+                    
+                    Database test = new Database();
+                    test.setConn();
+                    test.setQuery("DELETE FROM users WHERE username = 'gaykord'" );
+                }
+                else if(result.get() == cancelButton)
+                {
+
+                }  
 
             }
         });

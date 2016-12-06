@@ -20,10 +20,9 @@ public class HS_ViewTable {
     private static TableView<TableUsers> table = new TableView<>();
     private static ObservableList<TableUsers> data = FXCollections.observableArrayList();
     
-    public static GridPane Datatable() {
+    public static TableView<TableUsers> Datatable() {
         
         //vernieuw gegevens
-        grid = new GridPane();
         table = new TableView<>();
         data.removeAll(data);
         
@@ -75,10 +74,9 @@ public class HS_ViewTable {
         table.getColumns().addAll(name, username, password, email, function);
         
         /* voeg table toe aan grid */
-        grid.add(table, 0, 0);
 
         
-        return grid;
+        return table;
     }
 
     public static class TableUsers {
