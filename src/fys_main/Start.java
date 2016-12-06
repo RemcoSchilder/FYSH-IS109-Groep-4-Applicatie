@@ -21,7 +21,7 @@ public class Start {
 
 
     //buttons voor verschillende gebruikers
-    private static Button btnBalie = new Button("Baliemedewerker");
+    private static Button btnBalie = new Button("Inloggen");
     private static Button btnSysteem = new Button("Systeembeheer");
     private static Button btnManager = new Button("Manager");
    
@@ -37,8 +37,8 @@ public class Start {
         grid.setPadding(new Insets(200, 200, 200, 200));
         
         grid.add(btnBalie, 40, 0);
-        grid.add(btnSysteem, 50, 0);
-        grid.add(btnManager, 60, 0);
+        /*grid.add(btnSysteem, 50, 0);
+        grid.add(btnManager, 60, 0);*/
        
         //gridpane voor top van de borderpane, image corendon
         GridPane grid2 = new GridPane();
@@ -64,15 +64,15 @@ public class Start {
             @Override
             public void handle(ActionEvent event) {
                 pane.getChildren().clear();
-                pane.getScene().setRoot(Login.getScreenOne());
+                pane.getScene().setRoot(Login.getScreen());
             }
         });
         
-        btnSysteem.setOnAction(new EventHandler<ActionEvent>() {
+        /*btnSysteem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 pane.getChildren().clear();
-                pane.getScene().setRoot(Login.getScreenTwo());
+                pane.getScene().setRoot(Login.getScreen());
             }
         });
         
@@ -80,9 +80,9 @@ public class Start {
             @Override
             public void handle(ActionEvent event) {
                pane.getChildren().clear();
-               pane.getScene().setRoot(Login.getScreenThree());
+               pane.getScene().setRoot(Login.getScreen());
             }
-        });
+        });*/
         
         return pane;
     }

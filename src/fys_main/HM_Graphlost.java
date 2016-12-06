@@ -26,7 +26,7 @@ public class HM_Graphlost {
         
         Database test = new Database();
                 test.setConn();
-                test.setQuery("SELECT COUNT(*) FROM lostLuggage WHERE date LIKE '%-01-%'");
+                test.getQuery("SELECT COUNT(*) FROM lostLuggage WHERE date LIKE '%-01-%'");
         
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
                 
