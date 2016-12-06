@@ -35,6 +35,7 @@ public class Login {
     private static Label pw = new Label("Password:");
     private static PasswordField pwTextField = new PasswordField();
     
+    
     //methode voor het scherm van login naar baliemedewerker homepage
     public static BorderPane getScreen() {
         //gridpane voor center van de borderpane, buttons, labels, en fields voor inlogscherm

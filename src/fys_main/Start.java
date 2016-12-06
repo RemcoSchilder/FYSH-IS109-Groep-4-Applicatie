@@ -21,9 +21,10 @@ public class Start {
 
 
     //buttons voor verschillende gebruikers
-    private static Button btnBalie = new Button("Inloggen");
+    private static Button btnBalie = new Button("Baliemedewerker");
     private static Button btnSysteem = new Button("Systeembeheer");
     private static Button btnManager = new Button("Manager");
+    private static Button btnLogin = new Button("Inloggen");
    
     //mehtode voor het scherm
     public static BorderPane getScreen() {
@@ -37,8 +38,9 @@ public class Start {
         grid.setPadding(new Insets(200, 200, 200, 200));
         
         grid.add(btnBalie, 40, 0);
-        /*grid.add(btnSysteem, 50, 0);
-        grid.add(btnManager, 60, 0);*/
+        grid.add(btnSysteem, 50, 0);
+        grid.add(btnManager, 60, 0);
+        grid.add(btnLogin, 70, 0);
        
         //gridpane voor top van de borderpane, image corendon
         GridPane grid2 = new GridPane();
@@ -64,15 +66,15 @@ public class Start {
             @Override
             public void handle(ActionEvent event) {
                 pane.getChildren().clear();
-                pane.getScene().setRoot(Login.getScreen());
+                pane.getScene().setRoot(Homepage_Baliemedewerker.getScreen());
             }
         });
         
-        /*btnSysteem.setOnAction(new EventHandler<ActionEvent>() {
+        btnSysteem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 pane.getChildren().clear();
-                pane.getScene().setRoot(Login.getScreen());
+                pane.getScene().setRoot(Homepage_Systeem.getScreen());
             }
         });
         
@@ -80,9 +82,17 @@ public class Start {
             @Override
             public void handle(ActionEvent event) {
                pane.getChildren().clear();
+               pane.getScene().setRoot(Homepage_Manager.getScreen());
+            }
+        });
+        
+        btnLogin.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+               pane.getChildren().clear();
                pane.getScene().setRoot(Login.getScreen());
             }
-        });*/
+        });
         
         return pane;
     }
