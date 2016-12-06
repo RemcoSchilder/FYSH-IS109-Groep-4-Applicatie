@@ -93,8 +93,7 @@ public class HS_CreateUser {
         adduser.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                String status = "Open";
-                
+                               
                 Database test = new Database();
                 test.setConn();
                 test.setQuery("INSERT INTO users (name, username, password, "

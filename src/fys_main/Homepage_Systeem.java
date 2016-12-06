@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -74,7 +75,13 @@ public class Homepage_Systeem {
 
     public static BorderPane getScreen() {
         pane = new BorderPane();
-
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Delete user");
+        alert.setHeaderText("Wijzig Luchthaven");
+        alert.setContentText("Selecteer eerst een luchthaven in de lijst "
+                + "om te wijzigen");
+        alert.getButtonTypes();
+        
         //voeg alles toe aan de borderpane
         pane.setLeft(vbox());
         pane.setCenter(table());
@@ -103,9 +110,7 @@ public class Homepage_Systeem {
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                grid.getChildren().clear();
-                column.setPercentWidth(20);
-                pane.setCenter(HS_CreateUser.getScreen());
+                alert.showAndWait();
 
             }
         });
