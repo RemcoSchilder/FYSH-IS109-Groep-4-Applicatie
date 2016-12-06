@@ -117,7 +117,7 @@ public class HB_CreateLost {
         screen.add(lastNameT, 1, 2, 5, 1);
         
         screen.add(mainAddress, 0, 4);
-        screen.add(mainAddress2, 3, 4, 5, 1);
+        screen.add(mainAddress2, 6, 4, 5, 1);
         
         screen.add(streetL, 0, 5);
         screen.add(streetT, 1, 5, 5, 1);
@@ -265,6 +265,10 @@ public class HB_CreateLost {
                         + " '" + colorT.getText() + "',"
                         + " '" + brandT.getText() + "',"
                         + " '" + status + "')");
+               
+                screen.getChildren().clear();
+                screen.getChildren().add(HB_SearchBaggage.getScreen());
+                
             }
         });
     }

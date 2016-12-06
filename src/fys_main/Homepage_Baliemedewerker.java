@@ -6,9 +6,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
 /**
  *
@@ -38,6 +36,9 @@ public class Homepage_Baliemedewerker {
         baggage.setMinSize(230, 48);
         logout.setMinSize(230, 48);
 
+        create.getStyleClass().add("labels");
+        search.getStyleClass().add("labels");
+
         //alles wordt in de vbox gestopt
         vbox.getChildren().addAll(create, lost, found, search, baggage, logout);
 
@@ -50,10 +51,8 @@ public class Homepage_Baliemedewerker {
 
     public static BorderPane getScreen() {
 
-          pane.setLeft(vbox());
-          
-          
-          
+        pane.setLeft(vbox());
+
         //eventhander knop lost openen lost invoer
         lost.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -83,7 +82,7 @@ public class Homepage_Baliemedewerker {
         logout.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                 
+
                 pane.getChildren().clear();
                 pane.getScene().setRoot(Start.getScreen());
 

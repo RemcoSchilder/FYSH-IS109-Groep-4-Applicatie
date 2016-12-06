@@ -1,7 +1,9 @@
 package fys_main;
 
+import static com.sun.xml.internal.fastinfoset.org.apache.xerces.util.XMLChar.isValidName;
 import static fys_main.FYS_LostFound.grid;
 import static fys_main.FYS_LostFound.pane;
+import java.awt.event.KeyEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -12,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
+import static javafx.scene.text.Font.font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
@@ -34,6 +37,9 @@ public class Login {
     //methode voor het scherm van login naar baliemedewerker homepage
     public static BorderPane getScreenOne() {
         
+      
+        
+        
         //gridpane voor center van de borderpane, buttons, labels, en fields voor inlogscherm
         GridPane grid = new GridPane();
         grid.setMinSize(150, 150);
@@ -55,9 +61,24 @@ public class Login {
         btnLogin.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                pane.getChildren().clear();
-                pane.getScene().setRoot(Homepage_Baliemedewerker.getScreen());
-             
+              
+//                Database DB = new Database();
+//                DB.setConn();
+//               if(userTextField == DB.getQuery("SELECT username FROM users WHERE username = '" + userTextField.getText() + "'")){
+//                pane.getChildren().clear();
+//                pane.getScene().setRoot(Homepage_Baliemedewerker.getScreen());
+//               }else{
+//                   System.out.println("Wrong Username");
+//               }
+                
+//                if(pw == DB.getQuery("select password from users")){
+//                pane.getChildren().clear();
+//                pane.getScene().setRoot(Homepage_Baliemedewerker.getScreen());
+//               }else{
+//                   System.out.println("Wrong password");
+//               }
+               
+               
             }
         });
         
