@@ -130,7 +130,7 @@ public class HS_ViewTable {
             this.email.set(email);
         }
 
-        public String get() {
+        public String getFunction() {
             return function.get();
         }
 

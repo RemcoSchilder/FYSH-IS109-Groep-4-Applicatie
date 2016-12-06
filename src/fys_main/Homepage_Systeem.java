@@ -5,6 +5,7 @@ import static fys_main.FYS_LostFound.pane;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,9 +21,12 @@ import javafx.scene.text.Text;
  */
 public class Homepage_Systeem {
 
+    private static ColumnConstraints column = new ColumnConstraints();
     private static Button user = new Button("user");
     private static Button logout = new Button("logout");
-
+    private static Button delete = new Button("delete");
+    private static Button edit = new Button("edit");
+    
     public static VBox vbox() {
         VBox vbox = new VBox();
 
@@ -50,14 +54,20 @@ public class Homepage_Systeem {
 
     public static GridPane table() {
         grid = new GridPane();
-
+        
+        //button size
+        edit.setMinSize(180, 48);
+        delete.setMinSize(180, 48);
+        
         //voegt table toe aan gridpane
         grid.getChildren().add(HS_ViewTable.Datatable());
+        grid.add(edit, 4, 4);
+        grid.add(delete, 4, 6);
 
         //column grootte
-        ColumnConstraints column = new ColumnConstraints();
         column.setPercentWidth(75);
         grid.getColumnConstraints().add(column);
+        
 
         return grid;
     }
@@ -73,8 +83,29 @@ public class Homepage_Systeem {
         user.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                pane.getChildren().clear();
-                pane.getScene().setRoot(getScreen());
+                grid.getChildren().clear();
+                column.setPercentWidth(20);
+                pane.setCenter(HS_CreateUser.getScreen());
+
+            }
+        });
+        
+        edit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                grid.getChildren().clear();
+                column.setPercentWidth(20);
+                pane.setCenter(HS_CreateUser.getScreen());
+
+            }
+        });
+        
+        delete.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                grid.getChildren().clear();
+                column.setPercentWidth(20);
+                pane.setCenter(HS_CreateUser.getScreen());
 
             }
         });
