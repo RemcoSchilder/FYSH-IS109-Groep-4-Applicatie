@@ -75,6 +75,7 @@ public class Homepage_Manager {
             }
         });
         
+        //eventhandler naar lost pie chart
         lost.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -83,6 +84,7 @@ public class Homepage_Manager {
             }
         });
         
+        //eventhandler naar found pie chart
         found.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

@@ -7,11 +7,8 @@ package fys_main;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 /**
  *
@@ -25,8 +22,14 @@ public class HM_Graphlost {
         /*grafiek maken en informatie geven. ik heb dit nu met getallen gedaan, deze 
         getallen moeten eigenlijk informatie vanuit de database zijn.
          */
-        ObservableList<PieChart.Data> pieChartData
-                = FXCollections.observableArrayList(
+        
+        
+        Database test = new Database();
+                test.setConn();
+                test.setQuery("SELECT COUNT(*) FROM lostLuggage WHERE date LIKE '%-01-%'");
+        
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+                
                         new PieChart.Data("January", 10),
                         new PieChart.Data("February", 15),
                         new PieChart.Data("March", 10),
@@ -39,6 +42,7 @@ public class HM_Graphlost {
                         new PieChart.Data("October", 5),
                         new PieChart.Data("November", 7),
                         new PieChart.Data("December", 5));
+        
         final PieChart chart = new PieChart(pieChartData);
         chart.setTitle("Lost Lugagge");
 

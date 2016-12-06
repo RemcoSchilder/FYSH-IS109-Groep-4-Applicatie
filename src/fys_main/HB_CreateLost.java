@@ -255,12 +255,15 @@ public class HB_CreateLost {
                 
                 Database test = new Database();
                 test.setConn();
-                test.setQuery("INSERT INTO lostLuggage (date, label_number, type, brand, color, status) VALUES "
+                test.setQuery("INSERT INTO lostLuggage (date, time, airport, label_number, flight_number, type, color, brand) VALUES "
                         + "('" + dateT.getText() + "',"
+                        + "('" + timeT.getText() + "',"
+                        + "('" + airportT.getText() + "',"
                         + " '" + labelnrT.getText() + "',"
+                        + "('" + flightnrT.getText() + "',"
                         + " '" + typeT.getText() + "',"
-                        + " '" + brandT.getText() + "',"
                         + " '" + colorT.getText() + "',"
+                        + " '" + brandT.getText() + "',"
                         + " '" + status + "')");
             }
         });

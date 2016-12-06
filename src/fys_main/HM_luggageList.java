@@ -76,6 +76,8 @@ public class HM_luggageList {
            se.printStackTrace();
         }
         
+        
+        
         /* Set table colums and rows */
         table.setItems(data);
         table.getColumns().addAll(labelNumber, date, type, brand, color, status);
