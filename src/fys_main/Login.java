@@ -38,7 +38,7 @@ public class Login {
     public static BorderPane getScreenOne() {
         
       
-        
+        //userTextField = userTextfield.getText();
         
         //gridpane voor center van de borderpane, buttons, labels, en fields voor inlogscherm
         GridPane grid = new GridPane();
@@ -62,22 +62,25 @@ public class Login {
             @Override
             public void handle(ActionEvent event) {
               
-//                Database DB = new Database();
-//                DB.setConn();
-//               if(userTextField == DB.getQuery("SELECT username FROM users WHERE username = '" + userTextField.getText() + "'")){
-//                pane.getChildren().clear();
-//                pane.getScene().setRoot(Homepage_Baliemedewerker.getScreen());
-//               }else{
-//                   System.out.println("Wrong Username");
-//               }
+                Database DB = new Database();
+                DB.setConn();
+              
+                if(userTextField.getText() == DB.getQuery("SELECT username FROM users WHERE username = '" + userTextField.getText() + "'")){
+                    pane.getChildren().clear();
+                    pane.getScene().setRoot(Homepage_Baliemedewerker.getScreen());
+                }else{
+                    System.out.println("Wrong Username");
+                }
                 
-//                if(pw == DB.getQuery("select password from users")){
-//                pane.getChildren().clear();
-//                pane.getScene().setRoot(Homepage_Baliemedewerker.getScreen());
-//               }else{
-//                   System.out.println("Wrong password");
-//               }
-               
+                if(pwBox.getText() == DB.getQuery("SELECT username FROM users WHERE username = '" + pwBox.getText() + "'")){
+                    pane.getChildren().clear();
+                    pane.getScene().setRoot(Homepage_Baliemedewerker.getScreen());
+                }else{
+                    System.out.println("Wrong Password");
+                }
+
+//               pane.getChildren().clear();
+//               pane.getScene().setRoot(Homepage_Baliemedewerker.getScreen());
                
             }
         });

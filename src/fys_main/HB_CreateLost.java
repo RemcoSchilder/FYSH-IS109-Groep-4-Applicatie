@@ -255,7 +255,8 @@ public class HB_CreateLost {
                 
                 Database test = new Database();
                 test.setConn();
-                test.setQuery("INSERT INTO lostLuggage (date, time, airport, label_number, flight_number, type, color, brand) VALUES "
+                test.setQuery("INSERT INTO lostLuggage (date, time, airport, label_number, flight_number, type, color, brand) "
+                        + "VALUES "
                         + "('" + dateT.getText() + "',"
                         + "('" + timeT.getText() + "',"
                         + "('" + airportT.getText() + "',"

@@ -30,8 +30,7 @@ public class Database {
             e.printStackTrace();
         } finally {
             // Check connection
-            try {
-                 if(conn==null) {
+            try {if(conn==null) {
                      conn.close();
                  }
             } catch(SQLException se) {
@@ -43,6 +42,7 @@ public class Database {
     public ResultSet getQuery(String query) {
         Statement stmt = null;
         ResultSet rs = null;
+        
         
         try {
             // Create query
