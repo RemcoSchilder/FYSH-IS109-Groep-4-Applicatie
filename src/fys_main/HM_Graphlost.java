@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.chart.PieChart;
 import javafx.scene.layout.GridPane;
 
@@ -60,6 +61,7 @@ public class HM_Graphlost {
 
             chart.setMinSize(600, 600);  //grote aanpassen
 
+            pane.setAlignment(Pos.CENTER);
             pane.add(chart, 0, 0);
         }  catch(SQLException se) {
             //Handle errors for JDBC

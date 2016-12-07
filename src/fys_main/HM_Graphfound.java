@@ -7,6 +7,7 @@ package fys_main;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
@@ -45,6 +46,7 @@ public class HM_Graphfound {
 
         chart.setMinSize(600, 600); //grote aanpassen
 
+        pane.setAlignment(Pos.CENTER);
         pane.add(chart, 0, 0);
 
         return pane;

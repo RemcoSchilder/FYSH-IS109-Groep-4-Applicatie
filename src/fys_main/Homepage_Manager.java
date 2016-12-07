@@ -50,7 +50,7 @@ public class Homepage_Manager {
         return vbox;
     }
     
-//methode voor het scherm
+    //methode voor het scherm
     public static BorderPane getScreen() {
 
         pane.setLeft(vbox());
