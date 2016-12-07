@@ -62,8 +62,10 @@ public class Login {
             @Override
             public void handle(ActionEvent event) {
                 sceneError.setText(""); // Empty previous error
-                
-                if (userTextField.getText().equals("")) {
+                if(userTextField.getText().equals("") && pwTextField.getText().equals("")){
+                    sceneError.setText("Username and Password can not be empty");
+                }
+                else if (userTextField.getText().equals("")) {
                     sceneError.setText("Username can not be empty");
                 } else if (pwTextField.getText().equals("")) {
                     sceneError.setText("Password can not be empty");
