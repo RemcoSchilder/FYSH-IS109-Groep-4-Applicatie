@@ -5,6 +5,11 @@
  */
 package fys_main;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
@@ -19,36 +24,47 @@ public class HM_Graphlost {
     public static GridPane getScreen() {
         GridPane pane = new GridPane();
 
-        /*grafiek maken en informatie geven. ik heb dit nu met getallen gedaan, deze 
-        getallen moeten eigenlijk informatie vanuit de database zijn.
-         */
+        /* Get date */
+        DateFormat dateFormat = new SimpleDateFormat("YYYY");
+        Date date = new Date();
         
+        Database DB = new Database();
+        DB.setConn();
+        ResultSet getTotal = DB.getQuery("SELECT COUNT(*) AS total, MONTH(date) AS month FROM lostLuggage GROUP BY MONTH(date) ORDER BY MONTH(date)");
         
-        Database test = new Database();
-                test.setConn();
-                test.getQuery("SELECT COUNT(*) FROM lostLuggage WHERE date LIKE '%-01-%'");
+        try {
+            double total[] = new double[12];
+            int totalNumber = 0;
+            
+            while(getTotal.next()) {
+                total[getTotal.getInt("month")-1] = getTotal.getDouble("total");
+                totalNumber++;
+            }
+            
+            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+                            new PieChart.Data("January", total[0]),
+                            new PieChart.Data("February", total[1]),
+                            new PieChart.Data("March", total[2]),
+                            new PieChart.Data("April", total[3]),
+                            new PieChart.Data("May", total[4]),
+                            new PieChart.Data("June", total[5]),
+                            new PieChart.Data("July", total[6]),
+                            new PieChart.Data("August", total[7]),
+                            new PieChart.Data("September", total[8]),
+                            new PieChart.Data("October", total[9]),
+                            new PieChart.Data("November", total[10]),
+                            new PieChart.Data("December", total[11]));
         
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                
-                        new PieChart.Data("January", 10),
-                        new PieChart.Data("February", 15),
-                        new PieChart.Data("March", 10),
-                        new PieChart.Data("April", 5),
-                        new PieChart.Data("May", 5),
-                        new PieChart.Data("June", 10),
-                        new PieChart.Data("July", 10),
-                        new PieChart.Data("August", 5),
-                        new PieChart.Data("September", 8),
-                        new PieChart.Data("October", 5),
-                        new PieChart.Data("November", 7),
-                        new PieChart.Data("December", 5));
-        
-        final PieChart chart = new PieChart(pieChartData);
-        chart.setTitle("Lost Lugagge");
+            PieChart chart = new PieChart(pieChartData);
+            chart.setTitle("Lost Lugagge " + dateFormat.format(date));
 
-        chart.setMinSize(600, 600);  //grote aanpassen
+            chart.setMinSize(600, 600);  //grote aanpassen
 
-        pane.add(chart, 0, 0);
+            pane.add(chart, 0, 0);
+        }  catch(SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }
 
         return pane;
     }

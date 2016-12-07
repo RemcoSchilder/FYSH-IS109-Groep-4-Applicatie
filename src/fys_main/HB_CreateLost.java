@@ -155,6 +155,10 @@ public class HB_CreateLost {
         /* Clear Grid */
         screen.getChildren().clear();
         
+        /* Get date */
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+        Date date = new Date();
+        
         /* Create all subheadings */
         Text lostInfo = new Text("Lost information:");
         lostInfo.getStyleClass().add("subheading");
@@ -170,7 +174,7 @@ public class HB_CreateLost {
         
         /* Create all labels & inputs */
         Label dateL = new Label("Date:");
-        TextField dateT = new TextField();
+        TextField dateT = new TextField(dateFormat.format(date));
         
         Label timeL = new Label("Time:");
         TextField timeT = new TextField();
@@ -200,10 +204,6 @@ public class HB_CreateLost {
         TextArea characteristicsT = new TextArea();
         characteristicsT.setPrefWidth(250);
         characteristicsT.setPrefHeight(100);
-        
-        /* Get date */
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
-        Date date = new Date();
         
         /* Add everything to the grid */
         screen.add(NameInfo, 10, 5);
@@ -251,21 +251,19 @@ public class HB_CreateLost {
         addLostLuggage.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                String status = "Open";
-                
                 Database test = new Database();
                 test.setConn();
-                test.setQuery("INSERT INTO lostLuggage (date, time, airport, label_number, flight_number, type, color, brand) "
+                test.setQuery("INSERT INTO lostLuggage (date, time, airport, label_number, flight_number, destination, brand, color, type) "
                         + "VALUES "
                         + "('" + dateT.getText() + "',"
-                        + "('" + timeT.getText() + "',"
-                        + "('" + airportT.getText() + "',"
+                        + " '" + timeT.getText() + "',"
+                        + " '" + airportT.getText() + "',"
                         + " '" + labelnrT.getText() + "',"
-                        + "('" + flightnrT.getText() + "',"
-                        + " '" + typeT.getText() + "',"
-                        + " '" + colorT.getText() + "',"
+                        + " '" + flightnrT.getText() + "',"
+                        + " '" + destinationT.getText() + "',"
                         + " '" + brandT.getText() + "',"
-                        + " '" + status + "')");
+                        + " '" + colorT.getText() + "',"
+                        + " '" + typeT.getText() + "')");
                
                 screen.getChildren().clear();
                 screen.getChildren().add(HB_SearchBaggage.getScreen());

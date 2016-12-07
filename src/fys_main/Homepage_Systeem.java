@@ -62,7 +62,7 @@ public class Homepage_Systeem {
         delete.setMinSize(180, 48);
         
         //voegt table toe aan gridpane
-        grid.getChildren().add(HS_ViewTable.Datatable());
+        grid.getChildren().add(HS_ViewTable.lostLuggage());
         grid.add(edit, 4, 4);
         grid.add(delete, 4, 6);
 

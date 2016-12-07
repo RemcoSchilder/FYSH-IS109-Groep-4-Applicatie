@@ -38,20 +38,29 @@ public class HB_SearchBaggage {
         TableColumn date = new TableColumn("Date");
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
         
+        TableColumn time = new TableColumn("Time");
+        time.setCellValueFactory(new PropertyValueFactory<>("time"));
+        
+        TableColumn airport = new TableColumn("Airport");
+        airport.setCellValueFactory(new PropertyValueFactory<>("airport"));
+        
         TableColumn labelNumber = new TableColumn("Label number");
         labelNumber.setCellValueFactory(new PropertyValueFactory<>("label_number"));
         
-        TableColumn type = new TableColumn("Type");
-        type.setCellValueFactory(new PropertyValueFactory<>("type"));
+        TableColumn flightNumber = new TableColumn("Flight number");
+        flightNumber.setCellValueFactory(new PropertyValueFactory<>("flight_number"));
         
-        TableColumn brand= new TableColumn("Brand");
+        TableColumn destination = new TableColumn("Destination");
+        destination.setCellValueFactory(new PropertyValueFactory<>("destination"));
+        
+        TableColumn brand = new TableColumn("Brand");
         brand.setCellValueFactory(new PropertyValueFactory<>("brand"));
         
-        TableColumn color= new TableColumn("Color");
+        TableColumn color = new TableColumn("Color");
         color.setCellValueFactory(new PropertyValueFactory<>("color"));
         
-        TableColumn status= new TableColumn("Status");
-        status.setCellValueFactory(new PropertyValueFactory<>("status"));
+        TableColumn type = new TableColumn("Type");
+        type.setCellValueFactory(new PropertyValueFactory<>("type"));
         
         /* Initialize Database */
         Database db = new Database();
@@ -64,11 +73,14 @@ public class HB_SearchBaggage {
             while(result.next()) {
                 data.add(new TableLuggage(
                         result.getString("date"),
-                        result.getInt("label_number"),  
-                        result.getString("type"), 
+                        result.getString("time"),
+                        result.getString("airport"),
+                        result.getString("label_number"),  
+                        result.getString("flight_number"),  
+                        result.getString("destination"),  
                         result.getString("brand"), 
                         result.getString("color"), 
-                        result.getString("status"))
+                        result.getString("type"))
                 );
             }
         } catch(SQLException se) {
@@ -78,7 +90,7 @@ public class HB_SearchBaggage {
         
         /* Set table colums and rows */
         table.setItems(data);
-        table.getColumns().addAll(labelNumber, date, type, brand, color, status);
+        table.getColumns().addAll(date, time, airport, labelNumber, flightNumber, destination, brand, color, type);
         
         /* Create subheading */
         Text searchLuggage = new Text("Search luggage:");
@@ -94,27 +106,25 @@ public class HB_SearchBaggage {
     public static class TableLuggage {
         
         private final SimpleStringProperty date;
+        private final SimpleStringProperty time;
+        private final SimpleStringProperty airport;
         private final SimpleStringProperty label_number;
-        private final SimpleStringProperty type;
+        private final SimpleStringProperty flight_number;
+        private final SimpleStringProperty destination;
         private final SimpleStringProperty brand;
         private final SimpleStringProperty color;
-        private final SimpleStringProperty status;
+        private final SimpleStringProperty type;
     
-        private TableLuggage (String date, int label_number, String type, String brand, String color, String status) {
+        private TableLuggage (String date, String time, String airport, String label_number, String flight_number, String destination, String brand, String color, String type) {
             this.date = new SimpleStringProperty(date);
-            this.label_number = new SimpleStringProperty(String.valueOf(label_number));
-            this.type = new SimpleStringProperty(type);
+            this.time = new SimpleStringProperty(time);
+            this.airport = new SimpleStringProperty(airport);
+            this.label_number = new SimpleStringProperty(label_number);
+            this.flight_number = new SimpleStringProperty(flight_number);
+            this.destination = new SimpleStringProperty(destination);
             this.brand = new SimpleStringProperty(brand);
             this.color = new SimpleStringProperty(color);
-            this.status = new SimpleStringProperty(status);
-        }
-        
-        public String getLabel_number() {
-            return label_number.get();
-        }
- 
-        public void setLabel_number(String label_number) {
-            this.label_number.set(label_number);
+            this.type = new SimpleStringProperty(type);
         }
         
         public String getDate() {
@@ -125,12 +135,44 @@ public class HB_SearchBaggage {
             this.date.set(date);
         }
         
-        public String getType() {
-            return type.get();
+        public String getTime() {
+            return time.get();
         }
  
-        public void setType(String type) {
-            this.type.set(type);
+        public void setTime(String time) {
+            this.time.set(time);
+        }
+        
+        public String getAirport() {
+            return airport.get();
+        }
+ 
+        public void setAirport(String airport) {
+            this.airport.set(airport);
+        }
+        
+        public String getLabel_number() {
+            return label_number.get();
+        }
+ 
+        public void setLabel_number(String label_number) {
+            this.label_number.set(label_number);
+        }
+        
+        public String getFlight_number() {
+            return flight_number.get();
+        }
+ 
+        public void setFlight_number(String flight_number) {
+            this.flight_number.set(flight_number);
+        }
+        
+        public String getDestination() {
+            return destination.get();
+        }
+ 
+        public void setDestination(String destination) {
+            this.destination.set(destination);
         }
         
         public String getBrand() {
@@ -149,12 +191,12 @@ public class HB_SearchBaggage {
             this.color.set(color);
         }
         
-        public String getStatus() {
-            return status.get();
+        public String getType() {
+            return type.get();
         }
  
-        public void setStatus(String status) {
-            this.status.set(status);
+        public void setType(String type) {
+            this.type.set(type);
         }
     
     }

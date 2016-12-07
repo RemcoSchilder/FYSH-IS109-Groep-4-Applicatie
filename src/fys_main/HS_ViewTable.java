@@ -20,7 +20,7 @@ public class HS_ViewTable {
     private static TableView<TableUsers> table = new TableView<>();
     private static ObservableList<TableUsers> data = FXCollections.observableArrayList();
     
-    public static TableView<TableUsers> Datatable() {
+    public static TableView<TableUsers> lostLuggage() {
         
         //vernieuw gegevens
         table = new TableView<>();
