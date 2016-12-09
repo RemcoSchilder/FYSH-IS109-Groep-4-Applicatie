@@ -1,4 +1,8 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package fys_main;
 
 import static fys_main.FYS_LostFound.grid;
@@ -12,20 +16,23 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 /**
  *
- * @author Thijs Timmermans
+ * @author freek
  */
-public class HS_CreateUser {
+public class HS_EditUser {
     
     private static Button cancel = new Button("Cancel");
-    private static Button adduser = new Button("Add user");
+    private static Button save = new Button("Save");   
+    private static TableView<HS_ViewTable.TableUsers> table = new TableView<>();
     
     public static GridPane getScreen() {
+        table = HS_ViewTable.users();
         
         ObservableList<String> options = 
         FXCollections.observableArrayList(
@@ -41,7 +48,7 @@ public class HS_CreateUser {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
         
-        /* Create all subheadings */
+         /* Create all subheadings */
         Text name = new Text("Name:");
         name.getStyleClass().add("subheading");
         
@@ -91,7 +98,7 @@ public class HS_CreateUser {
         grid.add(functionT, 1, 8, 5, 1);
         
         grid.add(cancel, 0, 10);
-        grid.add(adduser, 1, 10, 10, 1);
+        grid.add(save, 1, 10, 10, 1);
         
         /* Event handlers */
         cancel.setOnAction(new EventHandler<ActionEvent>() {
@@ -102,20 +109,20 @@ public class HS_CreateUser {
             }
         });
         
-        adduser.setOnAction(new EventHandler<ActionEvent>() {
+        save.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                                
                 Database test = new Database();
                 test.setConn();
-                test.setQuery("INSERT INTO users (firstname, lastname, "
-                        + "username, password, email, function) "
-                        + " VALUES ('" + firstNameT.getText() + "', '" 
-                        + lastNameT.getText() + "', '" 
-                        + usernameT.getText() + "', '" 
-                        + passwordT.getText() + "', '" 
-                        + emailT.getText() + "', '" 
-                        + functionT.getValue() + "')");
+                test.setQuery("Update users SET "
+                        + "firstname='" + firstNameT.getText() + "', " 
+                        + "lastname='" + lastNameT.getText() + "', "
+                        + "username='" + usernameT.getText() + "', "
+                        + "password='" +passwordT.getText() + "', "
+                        + "email='" + emailT.getText() + "', "
+                        + "function='" + functionT.getValue() + "')");
+                       
                 pane.getChildren().clear();
                 pane.getScene().setRoot(Homepage_Systeem.getScreen());
             }

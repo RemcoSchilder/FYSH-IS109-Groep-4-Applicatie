@@ -1,6 +1,5 @@
 package fys_main;
 
-import static fys_main.FYS_LostFound.grid;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.beans.property.SimpleStringProperty;
@@ -9,7 +8,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
 
 /**
  *
@@ -20,7 +18,7 @@ public class HS_ViewTable {
     private static TableView<TableUsers> table = new TableView<>();
     private static ObservableList<TableUsers> data = FXCollections.observableArrayList();
     
-    public static TableView<TableUsers> lostLuggage() {
+    public static TableView<TableUsers> users() {
         
         //vernieuw gegevens
         table = new TableView<>();
@@ -53,7 +51,7 @@ public class HS_ViewTable {
         
         
         
-        ResultSet result = db.getQuery("SELECT * FROM users");
+        ResultSet result = db.getQuery("SELECT CONCAT(firstname, ' ', lastname) AS name, username, password, email, function FROM users");
         try {
             while (result.next()) {
                 data.add(new TableUsers(
@@ -68,12 +66,10 @@ public class HS_ViewTable {
             //Handle errors for JDBC
             se.printStackTrace();
         }
-        
+
         /* Set table colums and rows */
         table.setItems(data);
         table.getColumns().addAll(name, username, password, email, function);
-        
-        /* voeg table toe aan grid */
 
         
         return table;
@@ -82,6 +78,7 @@ public class HS_ViewTable {
     public static class TableUsers {
         
         /* haalt gegevens uit database */
+
         private final SimpleStringProperty name;
         private final SimpleStringProperty username;
         private final SimpleStringProperty password;

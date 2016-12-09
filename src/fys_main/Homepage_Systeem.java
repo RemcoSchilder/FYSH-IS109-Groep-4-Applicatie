@@ -2,6 +2,7 @@ package fys_main;
 
 import static fys_main.FYS_LostFound.grid;
 import static fys_main.FYS_LostFound.pane;
+import java.util.List;
 import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -9,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -22,7 +24,8 @@ import javafx.scene.text.Text;
  * @author Thijs Timmermans
  */
 public class Homepage_Systeem {
-
+    
+    private static TableView<HS_ViewTable.TableUsers> table;
     private static ColumnConstraints column = new ColumnConstraints();
     private static Button user = new Button("user");
     private static Button logout = new Button("logout");
@@ -56,13 +59,14 @@ public class Homepage_Systeem {
 
     public static GridPane table() {
         grid = new GridPane();
+        table = HS_ViewTable.users();
         
         //button size
         edit.setMinSize(180, 48);
         delete.setMinSize(180, 48);
         
         //voegt table toe aan gridpane
-        grid.getChildren().add(HS_ViewTable.lostLuggage());
+        grid.add(table, 0, 0);
         grid.add(edit, 4, 4);
         grid.add(delete, 4, 6);
 
@@ -86,8 +90,7 @@ public class Homepage_Systeem {
         ButtonType cancelButton = new ButtonType("No");
         
         alert.getButtonTypes().setAll(cancelButton, yesButton);
-        
-        
+       
         //voeg alles toe aan de borderpane
         pane.setLeft(vbox());
         pane.setCenter(table());
@@ -106,9 +109,6 @@ public class Homepage_Systeem {
         edit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                grid.getChildren().clear();
-                column.setPercentWidth(20);
-                pane.setCenter(HS_CreateUser.getScreen());
 
             }
         });
@@ -116,17 +116,19 @@ public class Homepage_Systeem {
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                
+                String username = table.getSelectionModel().getSelectedItem().getUsername();
                       
                 Optional<ButtonType> result = alert.showAndWait();
                 
                 if(result.get() == yesButton)
-                {
-                    grid.getChildren().clear();
-                    pane.setCenter(HS_CreateUser.getScreen());
-                    
+                {                       
                     Database test = new Database();
                     test.setConn();
-                    test.setQuery("DELETE FROM users WHERE username = 'gaykord'" );
+                    test.setQuery("DELETE FROM users WHERE username = '" + username + "'" );
+                    
+                    pane.getChildren().clear();
+                    pane.getScene().setRoot(Homepage_Systeem.getScreen());
                 }
                 else if(result.get() == cancelButton)
                 {
