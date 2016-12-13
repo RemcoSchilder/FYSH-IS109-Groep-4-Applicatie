@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
@@ -18,15 +19,17 @@ public class Homepage_Baliemedewerker {
     private static BorderPane pane = new BorderPane();
 
     //sidebar Menu Buttons
-    private static Label create = new Label("Create");
+    private static Label createL = new Label("Create");
     private static Button lost = new Button("Lost bagage");
     private static Button found = new Button("Found bagage");
-    private static Label search = new Label("Search");
+    private static Label searchL = new Label("Search");
     private static Button baggage = new Button("Baggage");
     private static Button logout = new Button("Log out");
-
+    
+   
+    
     //methode voor het scherm
-    public static VBox vbox() {
+    public static VBox vboxLeft() {
         VBox vbox = new VBox();
         //image
 
@@ -36,11 +39,11 @@ public class Homepage_Baliemedewerker {
         baggage.setMinSize(230, 48);
         logout.setMinSize(230, 48);
 
-        create.getStyleClass().add("labels");
-        search.getStyleClass().add("labels");
+        createL.getStyleClass().add("labels");
+        searchL.getStyleClass().add("labels");
 
         //alles wordt in de vbox gestopt
-        vbox.getChildren().addAll(create, lost, found, search, baggage, logout);
+        vbox.getChildren().addAll(createL, lost, found, searchL, baggage, logout);
 
         //style voor de vbox
         vbox.getStyleClass().add("vbox");
@@ -48,11 +51,13 @@ public class Homepage_Baliemedewerker {
 
         return vbox;
     }
+   
 
     public static BorderPane getScreen() {
 
-        pane.setLeft(vbox());
-
+        pane.setLeft(vboxLeft());
+        
+        
         //eventhander knop lost openen lost invoer
         lost.setOnAction(new EventHandler<ActionEvent>() {
             @Override

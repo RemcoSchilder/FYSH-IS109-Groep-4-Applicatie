@@ -6,10 +6,15 @@ import java.sql.SQLException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 /**
@@ -18,19 +23,55 @@ import javafx.scene.text.Text;
  */
 public class HB_SearchBaggage {
     
-    private static GridPane screen = new GridPane();
+    private static BorderPane screen = new BorderPane();
     private static TableView<TableLuggage> table = new TableView<>();
     private static ObservableList<TableLuggage> data = FXCollections.observableArrayList();
     
-    public static GridPane getScreen() {
+    private static Button search = new Button("Search");
+    private static TextField searchLabelNr = new TextField();
+    private static TextField searchBrand = new TextField();
+    private static TextField searchType = new TextField();
+    private static TextField searchColor = new TextField();
+    private static Label LabelNumber = new Label("Label Number: ");
+    private static Label Brand = new Label("Brand: ");
+    private static Label Type = new Label("Type: ");
+    private static Label Color = new Label("Color: ");
+    
+    public static BorderPane getScreen() {
         getScreenOne();
         
         return screen;
     }
     
-    private static GridPane getScreenOne() {
+    public static VBox vboxRight() {
+        VBox vbox = new VBox();
+        //image
+
+        //buttons
+        search.setMinSize(230, 48);
+        searchLabelNr.setMinSize(230, 48);
+        searchBrand.setMinSize(230, 48);
+        searchType.setMinSize(230, 48); 
+        searchColor.setMinSize(230, 48);
+       
+        LabelNumber.getStyleClass().add("labels");
+        Brand.getStyleClass().add("labels");
+        Type.getStyleClass().add("labels");
+        Color.getStyleClass().add("labels");
         
-        grid = new GridPane();
+        //alles wordt in de vbox gestopt
+        vbox.getChildren().addAll(LabelNumber,searchLabelNr, Brand, searchBrand, Type, searchType, Color, searchColor, search);
+
+        //style voor de vbox
+        vbox.getStyleClass().add("vbox");
+       
+
+        return vbox;
+    }
+    
+    private static BorderPane getScreenOne() {
+        
+       
         table = new TableView<>();
         data.removeAll(data);
         
@@ -97,9 +138,10 @@ public class HB_SearchBaggage {
         searchLuggage.getStyleClass().add("subheading");
         
         /* Create fields with labels */
-        screen.add(table, 0, 0);
-        screen.add(searchLuggage, 0, 1);
-    
+        screen.setCenter(table);
+        screen.setTop(searchLuggage);
+        screen.setRight(vboxRight());
+        
         return screen;
     }
     

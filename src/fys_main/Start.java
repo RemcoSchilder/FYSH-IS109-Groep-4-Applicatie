@@ -2,6 +2,7 @@ package fys_main;
 
 import static fys_main.FYS_LostFound.grid;
 import static fys_main.FYS_LostFound.pane;
+import javafx.scene.media.AudioClip;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -18,14 +19,14 @@ import javafx.scene.layout.GridPane;
 public class Start {
     
     //aanmaken allover boderpane
-
+    
 
     //buttons voor verschillende gebruikers
     private static Button btnBalie = new Button("Baliemedewerker");
     private static Button btnSysteem = new Button("Systeembeheer");
     private static Button btnManager = new Button("Manager");
     private static Button btnLogin = new Button("Inloggen");
-   
+    
     //mehtode voor het scherm
     public static BorderPane getScreen() {
         pane = new BorderPane();
@@ -61,10 +62,15 @@ public class Start {
         
         pane.setCenter(grid);
         pane.setTop(grid2);
+        
+     // AudioClip sound = new AudioClip("https://ia600501.us.archive.org/33/items/nyannyannyan/NyanCatoriginal.mp3");
+   
        
         btnBalie.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+               
+                //sound.play();
                 pane.getChildren().clear();
                 pane.getScene().setRoot(Homepage_Baliemedewerker.getScreen());
             }
