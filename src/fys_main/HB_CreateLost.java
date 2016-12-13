@@ -29,6 +29,39 @@ public class HB_CreateLost {
     private static Button next = new Button("Next");
     private static Button addLostLuggage = new Button("Add lost luggage");
     
+    /* Get date and time */
+    private static DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+    private static DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+    private static Date date = new Date();
+    
+    /* Name info data */
+    private static Text nameData = new Text();
+    
+    /* Inputs */
+    private static TextField firstNameT = new TextField();
+    private static TextField lastNameT = new TextField();
+    private static TextField streetT = new TextField();
+    private static TextField street2T = new TextField();
+    private static TextField cityT = new TextField();
+    private static TextField city2T = new TextField();
+    private static TextField zipCodeT = new TextField();
+    private static TextField zipCode2T = new TextField();
+    private static TextField countryT = new TextField();
+    private static TextField country2T = new TextField();
+    private static TextField emailT = new TextField();
+    private static TextField telephoneT = new TextField();
+    
+    private static TextField dateT = new TextField(dateFormat.format(date));
+    private static TextField airportT = new TextField();
+    private static TextField labelNumberT = new TextField();
+    private static TextField flightNumberT = new TextField();
+    private static TextField destinationT = new TextField();
+    private static TextField brandT = new TextField();
+    private static TextField colorT = new TextField();
+    private static TextField typeT = new TextField();
+    private static TextArea characteristicsT = new TextArea();
+
+    
     public static GridPane getScreen() {
         /* GridPane properties */
         screen.setAlignment(Pos.CENTER);
@@ -43,6 +76,7 @@ public class HB_CreateLost {
         next.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                nameData.setText(firstNameT.getText() + " " + lastNameT.getText());
                 screenTwo();
             }
         });
@@ -74,38 +108,19 @@ public class HB_CreateLost {
         Text contact = new Text("Contact:");
         contact.getStyleClass().add("subheading");
         
-        /* Create all labels & inputs */
+        /* Create all labels */
         Label firstNameL = new Label("First name:");
-        TextField firstNameT = new TextField();
-        
         Label lastNameL = new Label("Last name:");
-        TextField lastNameT = new TextField();
-        
         Label streetL = new Label("Street:");
         Label street2L = new Label("Street:");
-        TextField streetT = new TextField();
-        TextField street2T = new TextField();
-        
         Label cityL = new Label("City:");
         Label city2L = new Label("City:");
-        TextField cityT = new TextField();
-        TextField city2T = new TextField();
-        
         Label zipCodeL = new Label("Zip code:");
         Label zipCode2L = new Label("Zip code:");
-        TextField zipCodeT = new TextField();
-        TextField zipCode2T = new TextField();
-        
         Label countryL = new Label("Country:");
         Label country2L = new Label("Country:");
-        TextField countryT = new TextField();
-        TextField country2T = new TextField();
-        
         Label emailL = new Label("Email:");
-        TextField emailT = new TextField();
-        
         Label telephoneL = new Label("Telephone:");
-        TextField telephoneT = new TextField();
         
         /* Add everything to the grid */
         screen.add(name, 0, 0);
@@ -155,10 +170,6 @@ public class HB_CreateLost {
         /* Clear Grid */
         screen.getChildren().clear();
         
-        /* Get date */
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
-        Date date = new Date();
-        
         /* Create all subheadings */
         Text lostInfo = new Text("Lost information:");
         lostInfo.getStyleClass().add("subheading");
@@ -169,63 +180,44 @@ public class HB_CreateLost {
         Text luggageInfo = new Text("Luggage information:");
         luggageInfo.getStyleClass().add("subheading");
         
-        Text NameInfo = new Text("Name traveller:");
-        NameInfo.getStyleClass().add("subheading");
+        Text nameInfo = new Text("Name traveller:");
+        nameInfo.getStyleClass().add("subheading");
         
         /* Create all labels & inputs */
         Label dateL = new Label("Date:");
-        TextField dateT = new TextField(dateFormat.format(date));
-        
-        Label timeL = new Label("Time:");
-        TextField timeT = new TextField();
+        dateT.setDisable(true);
         
         Label airportL = new Label("Airport:");
-        TextField airportT = new TextField();
-        
-        Label labelnrL = new Label("Lable number:");
-        TextField labelnrT = new TextField();
-        
-        Label flightnrL = new Label("Flight number:");
-        TextField flightnrT = new TextField();
-        
+        Label labelNumberL = new Label("Lable number:");
+        Label flightNumberL = new Label("Flight number:");
         Label destinationL = new Label("Destination:");
-        TextField destinationT = new TextField();
-        
         Label brandL = new Label("Brand:");
-        TextField brandT = new TextField();
-        
         Label colorL = new Label("Color:");
-        TextField colorT = new TextField();
-        
         Label typeL = new Label("Type:");
-        TextField typeT = new TextField();
         
         Label characteristicsL = new Label("Characteristics:");
-        TextArea characteristicsT = new TextArea();
         characteristicsT.setPrefWidth(250);
         characteristicsT.setPrefHeight(100);
         
         /* Add everything to the grid */
-        screen.add(NameInfo, 10, 5);
+        screen.add(nameInfo, 15, 5);
+        screen.add(nameData, 15, 6);
         
         screen.add(lostInfo, 0, 0);
         
         screen.add(dateL, 0, 1);
         screen.add(dateT, 1, 1, 10, 1);
         
-        screen.add(timeL, 0, 2);
-        screen.add(timeT, 1, 2, 10, 1);
-        
         screen.add(airportL, 0, 3);
         screen.add(airportT, 1, 3, 10, 1);
         
         screen.add(labelInfo, 0, 5);
         
-        screen.add(labelnrL, 0, 6);
-        screen.add(labelnrT, 1, 6, 10, 1);
+        screen.add(labelNumberL, 0, 6);
+        screen.add(labelNumberT, 1, 6, 10, 1);
         
-        screen.add(flightnrL, 0, 7);
-        screen.add(flightnrT, 1, 7, 10, 1);
+        screen.add(flightNumberL, 0, 7);
+        screen.add(flightNumberT, 1, 7, 10, 1);
         
         screen.add(destinationL, 0, 8);
         screen.add(destinationT, 1, 8, 10, 1);
@@ -247,27 +239,42 @@ public class HB_CreateLost {
         screen.add(previous, 0, 15);
         screen.add(addLostLuggage, 1, 15, 10, 1);
         
-        // all event handlers from screen two
+        // All event handlers from screen two
         addLostLuggage.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Database test = new Database();
-                test.setConn();
-                test.setQuery("INSERT INTO lostLuggage (date, time, airport, label_number, flight_number, destination, brand, color, type) "
+                Database DB = new Database();
+                DB.setConn();
+                DB.setQuery("INSERT INTO travellers (firstName, lastName, street, city, zipCode, country, street2, city2, zipCode2, country2, email, telephone) "
                         + "VALUES "
-                        + "('" + dateT.getText() + "',"
-                        + " '" + timeT.getText() + "',"
+                        + "('" + firstNameT.getText() + "',"
+                        + " '" + lastNameT.getText() + "',"
+                        + " '" + streetT.getText() + "',"
+                        + " '" + cityT.getText() + "',"
+                        + " '" + zipCodeT.getText() + "',"
+                        + " '" + countryT.getText() + "',"
+                        + " '" + street2T.getText() + "',"
+                        + " '" + city2T.getText() + "',"
+                        + " '" + zipCode2T.getText() + "',"
+                        + " '" + country2T.getText() + "',"
+                        + " '" + emailT.getText() + "',"
+                        + " '" + telephoneT.getText() + "')");
+                
+                DB.setQuery("INSERT INTO lost (date, time, airport, labelNumber, flightNumber, destination, brand, color, type, characteristics) "
+                        + "VALUES "
+                        + "('" + dateFormat.format(date) + "',"
+                        + " '" + timeFormat.format(date) + "',"
                         + " '" + airportT.getText() + "',"
-                        + " '" + labelnrT.getText() + "',"
-                        + " '" + flightnrT.getText() + "',"
+                        + " '" + labelNumberT.getText() + "',"
+                        + " '" + flightNumberT.getText() + "',"
                         + " '" + destinationT.getText() + "',"
                         + " '" + brandT.getText() + "',"
                         + " '" + colorT.getText() + "',"
-                        + " '" + typeT.getText() + "')");
+                        + " '" + typeT.getText() + "',"
+                        + " '" + characteristicsT.getText() + "')");
                
                 screen.getChildren().clear();
                 screen.getChildren().add(HB_SearchBaggage.getScreen());
-                
             }
         });
     }

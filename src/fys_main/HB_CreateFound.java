@@ -19,25 +19,50 @@ import javafx.scene.text.Text;
  * @author Thijs Timmermans
  */
 public class HB_CreateFound {
-
-    //aanmaken gridpane
+    // Create gridpane
     private static GridPane screen = new GridPane();
 
-    //aanmaken Buttons
+    // Create Buttons
     private static Button cancel = new Button("Cancel");
     private static Button next = new Button("Next");
     private static Button addFoundLuggage = new Button("Add Found luggage");
+    
+    /* Get date and time */
+    private static DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+    private static DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+    private static Date date = new Date();
+    
+    /* Inputs */
+    private static TextField dateT = new TextField(dateFormat.format(date));
+    private static TextField airportT = new TextField();
+    private static TextField labelNumberT = new TextField();
+    private static TextField flightNumberT = new TextField();
+    private static TextField destinationT = new TextField();
+    private static TextField brandT = new TextField();
+    private static TextField colorT = new TextField();
+    private static TextField typeT = new TextField();
+    private static TextArea characteristicsT = new TextArea();
+    
 
     public static GridPane getScreen() {
-
+        /* Pane properties */
         screen.setAlignment(Pos.CENTER);
         screen.setHgap(10);
         screen.setVgap(10);
         screen.setPadding(new Insets(25, 25, 25, 25));
+        
+        screenOne();
 
+        return screen;
+    }
+    
+    
+    
+    public static void screenOne() {
+        /* Clear screen */
         screen.getChildren().clear();
         
-        //aanmaken van de subheadings
+        // Aanmaken van de subheadings
         Text lostInfo = new Text("Lost information:");
         lostInfo.getStyleClass().add("subheading");
 
@@ -47,80 +72,38 @@ public class HB_CreateFound {
         Text luggageInfo = new Text("Luggage information:");
         luggageInfo.getStyleClass().add("subheading");
 
-        Text NameInfo = new Text("Name traveller:");
-        NameInfo.getStyleClass().add("subheading");
-
-        //aanmaken van de labels en textfields
+        // Aanmaken van de labels en textfields
         Label dateL = new Label("Date:");
-        TextField dateT = new TextField();
-
-        Label timeL = new Label("Time:");
-        TextField timeT = new TextField();
+        dateT.setDisable(true);
 
         Label airportL = new Label("Airport:");
-        TextField airportT = new TextField();
-
-        Label labelnrL = new Label("Lable number:");
-        TextField labelnrT = new TextField();
-
-        Label flightnrL = new Label("Flight number:");
-        TextField flightnrT = new TextField();
-
+        Label labelNumberL = new Label("Label number:");
+        Label flightNumberL = new Label("Flight number:");
         Label destinationL = new Label("Destination:");
-        TextField destinationT = new TextField();
-
         Label brandL = new Label("Brand:");
-        TextField brandT = new TextField();
-
         Label colorL = new Label("Color:");
-        TextField colorT = new TextField();
-
         Label typeL = new Label("Type:");
-        TextField typeT = new TextField();
 
         Label characteristicsL = new Label("Characteristics:");
-        TextArea characteristicsT = new TextArea();
         characteristicsT.setPrefWidth(250);
         characteristicsT.setPrefHeight(100);
-        
-        Label FirstNameL = new Label("First Name: ");
-        TextField FirstNameT = new TextField();
-        
-        Label LastNameL = new Label("Last Name: ");
-        TextField LastNameT = new TextField();
 
-        /* Get date */
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
-        Date date = new Date();
-
-        //alles toevoegen aan de gridpane
-        screen.add(NameInfo, 15, 5);
-
+        // Alles toevoegen aan de gridpane
         screen.add(lostInfo, 0, 0);
-
-        screen.add(FirstNameL, 15,6);
-        screen.add(FirstNameT, 16,6);
-        
-        screen.add(LastNameL, 15,7);
-        screen.add(LastNameT, 16,7);
-        
         
         screen.add(dateL, 0, 1);
         screen.add(dateT, 1, 1, 10, 1);
-
-        screen.add(timeL, 0, 2);
-        screen.add(timeT, 1, 2, 10, 1);
 
         screen.add(airportL, 0, 3);
         screen.add(airportT, 1, 3, 10, 1);
 
         screen.add(labelInfo, 0, 5);
 
-        screen.add(labelnrL, 0, 6);
-        screen.add(labelnrT, 1, 6, 10, 1);
+        screen.add(labelNumberL, 0, 6);
+        screen.add(labelNumberT, 1, 6, 10, 1);
 
-        screen.add(flightnrL, 0, 7);
-        screen.add(flightnrT, 1, 7, 10, 1);
+        screen.add(flightNumberL, 0, 7);
+        screen.add(flightNumberT, 1, 7, 10, 1);
 
         screen.add(destinationL, 0, 8);
         screen.add(destinationT, 1, 8, 10, 1);
@@ -141,29 +124,26 @@ public class HB_CreateFound {
 
         screen.add(addFoundLuggage, 1, 15, 10, 1);
 
-        //eventhandler voor toevoegen aan database
+        // Eventhandler voor toevoegen aan database
         addFoundLuggage.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                String status = "Open";
-
-                Database test = new Database();
-                test.setConn();
-                test.setQuery("INSERT INTO lostLuggage (date, label_number, type, brand, color, status) VALUES "
-                        + "('" + dateT.getText() + "',"
-                       // + " '" + timeT.getText() + "',"
-                       // + " '" + airportT.getText() + "',"
-                        + " '" + labelnrT.getText() + "',"
-                       // + " '" + flightnrT.getText() + "',"
-                        //+ " '" + destinationT.getText() + "',"
-                        + " '" + typeT.getText() + "',"
+                Database DB = new Database();
+                DB.setConn();
+                DB.setQuery("INSERT INTO found (date, time, airport, labelNumber, flightNumber, destination, brand, color, type, characteristics) "
+                        + "VALUES "
+                        + "('" + dateFormat.format(date) + "',"
+                        + " '" + timeFormat.format(date) + "',"
+                        + " '" + airportT.getText() + "',"
+                        + " '" + labelNumberT.getText() + "',"
+                        + " '" + flightNumberT.getText() + "',"
+                        + " '" + destinationT.getText() + "',"
                         + " '" + brandT.getText() + "',"
-                        + " '" + colorT.getText() + "')");
-                        
+                        + " '" + colorT.getText() + "',"
+                        + " '" + typeT.getText() + "',"
+                        + " '" + characteristicsT.getText() + "')");
             }
         });
-
-        return screen;
     }
 
 }

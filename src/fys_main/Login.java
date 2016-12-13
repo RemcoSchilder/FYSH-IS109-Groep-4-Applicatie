@@ -77,13 +77,14 @@ public class Login {
                 
                     try {
                         if (checkLogin.next()) {
-                            pane.getChildren().clear();
-                            
                             if (checkLogin.getString("function").equals("system_manager")) {
+                                pane.getChildren().clear();
                                 pane.getScene().setRoot(Homepage_Systeem.getScreen());
                             } else if (checkLogin.getString("function").equals("manager")) {
+                                pane.getChildren().clear();
                                 pane.getScene().setRoot(Homepage_Manager.getScreen());
                             } else if (checkLogin.getString("function").equals("baliemedewerker")) {
+                                pane.getChildren().clear();
                                 pane.getScene().setRoot(Homepage_Baliemedewerker.getScreen());
                             } else {
                                 sceneError.setText("This account does not have a function, please contact the system manager");

@@ -20,8 +20,8 @@ public class Homepage_Baliemedewerker {
 
     //sidebar Menu Buttons
     private static Label createL = new Label("Create");
-    private static Button lost = new Button("Lost bagage");
-    private static Button found = new Button("Found bagage");
+    private static Button lost = new Button("Lost baggage");
+    private static Button found = new Button("Found baggage");
     private static Label searchL = new Label("Search");
     private static Button baggage = new Button("Baggage");
     private static Button logout = new Button("Log out");

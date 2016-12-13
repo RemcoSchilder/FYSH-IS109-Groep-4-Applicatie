@@ -11,10 +11,6 @@ public class Database {
     /* Static connection variable */
     private static Connection conn = null;
     
-    public void Database() { 
-        
-    }
-    
     public static void setConn() {
         try {
             // Register JDBC driver
@@ -42,7 +38,6 @@ public class Database {
     public ResultSet getQuery(String query) {
         Statement stmt = null;
         ResultSet rs = null;
-        
         
         try {
             // Create query
