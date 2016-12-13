@@ -141,7 +141,9 @@ public class HB_CreateFound {
                         + " '" + brandT.getText() + "',"
                         + " '" + colorT.getText() + "',"
                         + " '" + typeT.getText() + "',"
-                        + " '" + characteristicsT.getText() + "')");
+                        + " '" + characteristicsT.getText() + "',"
+                        + " 'found',"
+                        + " 'open')");
             }
         });
     }

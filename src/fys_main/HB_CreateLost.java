@@ -91,7 +91,7 @@ public class HB_CreateLost {
         return screen;
     }
     
-    public static void screenOne() {
+    private static void screenOne() {
         /* Clear Grid */
         screen.getChildren().clear();
         
@@ -166,7 +166,7 @@ public class HB_CreateLost {
         screen.add(next, 4, 14, 5, 1);
     }
     
-    public static void screenTwo() {
+    private static void screenTwo() {
         /* Clear Grid */
         screen.getChildren().clear();
         
@@ -260,7 +260,7 @@ public class HB_CreateLost {
                         + " '" + emailT.getText() + "',"
                         + " '" + telephoneT.getText() + "')");
                 
-                DB.setQuery("INSERT INTO lost (date, time, airport, labelNumber, flightNumber, destination, brand, color, type, characteristics) "
+                DB.setQuery("INSERT INTO lost (date, time, airport, labelNumber, flightNumber, destination, brand, color, type, characteristics, lost_found, status) "
                         + "VALUES "
                         + "('" + dateFormat.format(date) + "',"
                         + " '" + timeFormat.format(date) + "',"
@@ -271,12 +271,25 @@ public class HB_CreateLost {
                         + " '" + brandT.getText() + "',"
                         + " '" + colorT.getText() + "',"
                         + " '" + typeT.getText() + "',"
-                        + " '" + characteristicsT.getText() + "')");
+                        + " '" + characteristicsT.getText() + "',"
+                        + " 'lost',"
+                        + " 'open')");
                
-                screen.getChildren().clear();
-                screen.getChildren().add(HB_SearchBaggage.getScreen());
+                /*screen.getChildren().clear();
+                FYS_LostFound.pane.setCenter(HB_SearchBaggage.getScreen());*/
             }
         });
+    }
+    
+    
+    private static void screenThree() {
+        /* Clear grid */
+        screen.getChildren().clear();
+        
+        /* Get matched results */
+        Database DB = new Database();
+        DB.setConn();
+        DB.getQuery("SELECT * FROM found WHERE");
     }
     
 }

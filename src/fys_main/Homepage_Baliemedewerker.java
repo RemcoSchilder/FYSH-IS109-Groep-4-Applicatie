@@ -26,7 +26,6 @@ public class Homepage_Baliemedewerker {
     private static Button baggage = new Button("Baggage");
     private static Button logout = new Button("Log out");
     
-   
     
     //methode voor het scherm
     public static VBox vboxLeft() {
