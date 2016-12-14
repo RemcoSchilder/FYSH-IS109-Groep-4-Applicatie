@@ -41,6 +41,7 @@ public class FYS_LostFound extends Application {
 
         //begin van de eerste scene
         thestage = primaryStage;
+        primaryStage.setMaximized(true);
         primaryStage.setScene(scene);
         primaryStage.show();
 
