@@ -111,8 +111,8 @@ public class HB_CreateLost {
         /* Create all labels */
         Label firstNameL = new Label("First name:");
         Label lastNameL = new Label("Last name:");
-        Label streetL = new Label("Street:");
-        Label street2L = new Label("Street:");
+        Label streetL = new Label("Street + nr:");
+        Label street2L = new Label("Street + nr:");
         Label cityL = new Label("City:");
         Label city2L = new Label("City:");
         Label zipCodeL = new Label("Zip code:");
