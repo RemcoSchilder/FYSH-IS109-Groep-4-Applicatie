@@ -158,30 +158,56 @@ public class HB_SearchBaggage {
         search.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
-                
                 Database DB = new Database();
                 DB.setConn();
 
                 table = new TableView<>();
                 data.removeAll(data);
-
                 
-               ResultSet searchResult = DB.getQuery("SELECT * "
+                boolean where = false;
+
+                String query = "SELECT * "
                         + " FROM ( SELECT *"
                         + " FROM lost "
                         + " UNION "
                         + " SELECT *"
                         + " FROM found "
-                        + ") AS search "
-                        + " WHERE "
-                        + " labelNumber = '" + searchLabelNr.getText() + "' "
-                        + " AND "
-                        + "brand = '" + searchBrand.getText() + "' "
-                        + " AND "
-                        + "color = '" + searchColor.getText() + "' "
-                        + " AND "
-                        + " type = '" + searchType.getText() + "' ");
+                        + ") AS search";
+                
+                if (!searchLabelNr.getText().equals("")) {
+                    if (where) {
+                        query += " AND labelNumber = '" + searchLabelNr.getText() + "'";
+                    } else {
+                        where = true;
+                        query += " WHERE labelNumber = '" + searchLabelNr.getText() + "'";
+                    }
+                } 
+                if (!searchBrand.getText().equals("")) {
+                    if (where) {
+                        query += " AND brand = '" + searchBrand.getText() + "'";
+                    } else {
+                        where = true;
+                        query += " WHERE brand = '" + searchBrand.getText() + "'";
+                    }
+                } 
+                if (!searchColor.getText().equals("")) {
+                    if (where) {
+                        query += " AND color = '" + searchColor.getText() + "'";
+                    } else {
+                        where = true;
+                        query += " WHERE color = '" + searchColor.getText() + "'";
+                    }
+                } 
+                if (!searchType.getText().equals("")) {
+                    if (where) {
+                        query += " AND type = '" + searchType.getText() + "'";
+                    } else {
+                        where = true;
+                        query += " WHERE type = '" + searchType.getText() + "'";
+                    }
+                }
+                
+                ResultSet searchResult = DB.getQuery(query);
 
                 /* Get all the lost luggage */
                 try {
