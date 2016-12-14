@@ -31,7 +31,7 @@ public class HM_Graphlost {
         
         Database DB = new Database();
         DB.setConn();
-        ResultSet getTotal = DB.getQuery("SELECT COUNT(*) AS total, MONTH(date) AS month FROM lostLuggage GROUP BY MONTH(date) ORDER BY MONTH(date)");
+        ResultSet getTotal = DB.getQuery("SELECT COUNT(*) AS total, MONTH(date) AS month FROM lost GROUP BY MONTH(date) ORDER BY MONTH(date)");
         
         try {
             double total[] = new double[12];

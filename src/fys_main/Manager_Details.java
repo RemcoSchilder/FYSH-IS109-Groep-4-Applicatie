@@ -20,14 +20,15 @@ public class Manager_Details {
     
     //moet allemaal nog gefixt worden
     
-       private static GridPane screen = new GridPane();
+        private static GridPane screen = new GridPane();
        
-       private static Button returnBtn = new Button("Return");
+        public static GridPane getScreen() {
+        screenDetails();
+        
+        return screen;
+        }
        
      
-        
-       
-       
         public static void screenDetails(){
              
             
@@ -74,19 +75,4 @@ public class Manager_Details {
         Label charac = new Label("Characteristics");
         screen.add(charac, 20, 20);        
         }
-        
-        public static GridPane getScreen() {
-        //pane properties
-        screen.setAlignment(Pos.CENTER);
-        screen.setHgap(10);
-        screen.setVgap(10);
-        screen.setPadding(new Insets(25, 25, 25, 25));
-       
-        screenDetails();
-        
-        
-        
-        return screen;
-        }
-    
 }
