@@ -1,11 +1,14 @@
 package fys_main;
 
 import static fys_main.FYS_LostFound.grid;
+import static fys_main.FYS_LostFound.pane;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,11 +25,11 @@ import javafx.scene.text.Text;
  * @author Menno
  */
 public class HB_SearchBaggage {
-    
+
     private static BorderPane screen = new BorderPane();
     private static TableView<TableLuggage> table = new TableView<>();
     private static ObservableList<TableLuggage> data = FXCollections.observableArrayList();
-    
+
     private static Button search = new Button("Search");
     private static TextField searchLabelNr = new TextField();
     private static TextField searchBrand = new TextField();
@@ -36,13 +39,13 @@ public class HB_SearchBaggage {
     private static Label Brand = new Label("Brand: ");
     private static Label Type = new Label("Type: ");
     private static Label Color = new Label("Color: ");
-    
+
     public static BorderPane getScreen() {
         getScreenOne();
-        
+
         return screen;
     }
-    
+
     public static VBox vboxRight() {
         VBox vbox = new VBox();
         //image
@@ -51,102 +54,170 @@ public class HB_SearchBaggage {
         search.setMinSize(230, 48);
         searchLabelNr.setMinSize(230, 48);
         searchBrand.setMinSize(230, 48);
-        searchType.setMinSize(230, 48); 
+        searchType.setMinSize(230, 48);
         searchColor.setMinSize(230, 48);
-       
+
         LabelNumber.getStyleClass().add("labels");
         Brand.getStyleClass().add("labels");
         Type.getStyleClass().add("labels");
         Color.getStyleClass().add("labels");
-        
+
         //alles wordt in de vbox gestopt
-        vbox.getChildren().addAll(LabelNumber,searchLabelNr, Brand, searchBrand, Type, searchType, Color, searchColor, search);
+        vbox.getChildren().addAll(LabelNumber, searchLabelNr, Brand, searchBrand, Color, searchColor,Type, searchType, search);
 
         //style voor de vbox
         vbox.getStyleClass().add("vbox");
-       
 
         return vbox;
     }
-    
+
     private static BorderPane getScreenOne() {
-        
-       
+
         table = new TableView<>();
         data.removeAll(data);
-        
+
         /* Create columns and assign them the right values */
         TableColumn date = new TableColumn("Date");
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
-        
+
         TableColumn time = new TableColumn("Time");
         time.setCellValueFactory(new PropertyValueFactory<>("time"));
-        
+
         TableColumn airport = new TableColumn("Airport");
         airport.setCellValueFactory(new PropertyValueFactory<>("airport"));
-        
+
         TableColumn labelNumber = new TableColumn("Label number");
         labelNumber.setCellValueFactory(new PropertyValueFactory<>("label_number"));
-        
+
         TableColumn flightNumber = new TableColumn("Flight number");
         flightNumber.setCellValueFactory(new PropertyValueFactory<>("flight_number"));
-        
+
         TableColumn destination = new TableColumn("Destination");
         destination.setCellValueFactory(new PropertyValueFactory<>("destination"));
-        
+
         TableColumn brand = new TableColumn("Brand");
         brand.setCellValueFactory(new PropertyValueFactory<>("brand"));
-        
+
         TableColumn color = new TableColumn("Color");
         color.setCellValueFactory(new PropertyValueFactory<>("color"));
-        
+
         TableColumn type = new TableColumn("Type");
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
-        
+
+        TableColumn characteristics = new TableColumn("characteristics");
+        characteristics.setCellValueFactory(new PropertyValueFactory<>("characteristics"));
+
+        TableColumn lost_found = new TableColumn("lost_found");
+        lost_found.setCellValueFactory(new PropertyValueFactory<>("lost_found"));
+
+        TableColumn status = new TableColumn("status");
+        status.setCellValueFactory(new PropertyValueFactory<>("status"));
+
         /* Initialize Database */
         Database db = new Database();
         db.setConn();
-        
+
         /* Get all the lost luggage */
-        ResultSet result = db.getQuery("SELECT * FROM lostLuggage");
+        ResultSet result = db.getQuery("SELECT * FROM lost");
         try {
             /* For each row insert them into the data from the table */
-            while(result.next()) {
+            while (result.next()) {
                 data.add(new TableLuggage(
                         result.getString("date"),
                         result.getString("time"),
                         result.getString("airport"),
-                        result.getString("label_number"),  
-                        result.getString("flight_number"),  
-                        result.getString("destination"),  
-                        result.getString("brand"), 
-                        result.getString("color"), 
-                        result.getString("type"))
+                        result.getString("labelNumber"),
+                        result.getString("flightNumber"),
+                        result.getString("destination"),
+                        result.getString("brand"),
+                        result.getString("color"),
+                        result.getString("type"),
+                        result.getString("characteristics"),
+                        result.getString("lost_found"),
+                        result.getString("status"))
                 );
             }
-        } catch(SQLException se) {
-           //Handle errors for JDBC
-           se.printStackTrace();
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
         }
-        
+
         /* Set table colums and rows */
         table.setItems(data);
-        table.getColumns().addAll(date, time, airport, labelNumber, flightNumber, destination, brand, color, type);
-        
+        table.getColumns().addAll(date, time, airport, labelNumber, flightNumber, destination, brand, color, type, characteristics, lost_found, status);
+
         /* Create subheading */
         Text searchLuggage = new Text("Search luggage:");
         searchLuggage.getStyleClass().add("subheading");
-        
+
         /* Create fields with labels */
         screen.setCenter(table);
         screen.setTop(searchLuggage);
         screen.setRight(vboxRight());
-        
+
+        search.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                
+                Database DB = new Database();
+                DB.setConn();
+
+                table = new TableView<>();
+                data.removeAll(data);
+
+                
+               ResultSet searchResult = DB.getQuery("SELECT * "
+                        + " FROM ( SELECT *"
+                        + " FROM lost "
+                        + " UNION "
+                        + " SELECT *"
+                        + " FROM found "
+                        + ") AS search "
+                        + " WHERE "
+                        + " labelNumber = '" + searchLabelNr.getText() + "' "
+                        + " AND "
+                        + "brand = '" + searchBrand.getText() + "' "
+                        + " AND "
+                        + "color = '" + searchColor.getText() + "' "
+                        + " AND "
+                        + " type = '" + searchType.getText() + "' ");
+
+                /* Get all the lost luggage */
+                try {
+                    /* For each row insert them into the data from the table */
+                    while (searchResult.next()) {
+                        data.add(new TableLuggage(
+                                searchResult.getString("date"),
+                                searchResult.getString("time"),
+                                searchResult.getString("airport"),
+                                searchResult.getString("labelNumber"),
+                                searchResult.getString("flightNumber"),
+                                searchResult.getString("destination"),
+                                searchResult.getString("brand"),
+                                searchResult.getString("color"),
+                                searchResult.getString("type"),
+                                searchResult.getString("characteristics"),
+                                searchResult.getString("lost_found"),
+                                searchResult.getString("status"))
+                        );
+                    }
+                } catch (SQLException se) {
+                    //Handle errors for JDBC
+                    se.printStackTrace();
+                }
+
+                /* Set table colums and rows */
+                table.setItems(data);
+                
+            }
+        });
+
         return screen;
     }
-    
+
     public static class TableLuggage {
-        
+
         private final SimpleStringProperty date;
         private final SimpleStringProperty time;
         private final SimpleStringProperty airport;
@@ -156,8 +227,12 @@ public class HB_SearchBaggage {
         private final SimpleStringProperty brand;
         private final SimpleStringProperty color;
         private final SimpleStringProperty type;
-    
-        private TableLuggage (String date, String time, String airport, String label_number, String flight_number, String destination, String brand, String color, String type) {
+        private final SimpleStringProperty characteristics;
+        private final SimpleStringProperty lost_found;
+        private final SimpleStringProperty status;
+
+        private TableLuggage(String date, String time, String airport, String label_number, String flight_number, String destination, String brand, String color, String type, String characteristics, String lost_found, String status) {
+
             this.date = new SimpleStringProperty(date);
             this.time = new SimpleStringProperty(time);
             this.airport = new SimpleStringProperty(airport);
@@ -167,79 +242,107 @@ public class HB_SearchBaggage {
             this.brand = new SimpleStringProperty(brand);
             this.color = new SimpleStringProperty(color);
             this.type = new SimpleStringProperty(type);
+            this.characteristics = new SimpleStringProperty(characteristics);
+            this.lost_found = new SimpleStringProperty(lost_found);
+            this.status = new SimpleStringProperty(status);
+
         }
-        
+
         public String getDate() {
             return date.get();
         }
- 
+
         public void setDate(String date) {
             this.date.set(date);
         }
-        
+
         public String getTime() {
             return time.get();
         }
- 
+
         public void setTime(String time) {
             this.time.set(time);
         }
-        
+
         public String getAirport() {
             return airport.get();
         }
- 
+
         public void setAirport(String airport) {
             this.airport.set(airport);
         }
-        
+
         public String getLabel_number() {
             return label_number.get();
         }
- 
+
         public void setLabel_number(String label_number) {
             this.label_number.set(label_number);
         }
-        
+
         public String getFlight_number() {
             return flight_number.get();
         }
- 
+
         public void setFlight_number(String flight_number) {
             this.flight_number.set(flight_number);
         }
-        
+
         public String getDestination() {
             return destination.get();
         }
- 
+
         public void setDestination(String destination) {
             this.destination.set(destination);
         }
-        
+
         public String getBrand() {
             return brand.get();
         }
- 
+
         public void setBrand(String brand) {
             this.brand.set(brand);
         }
-        
+
         public String getColor() {
             return color.get();
         }
- 
+
         public void setColor(String color) {
             this.color.set(color);
         }
-        
+
         public String getType() {
             return type.get();
         }
- 
+
         public void setType(String type) {
             this.type.set(type);
         }
-    
+
+        public String getCharacteristics() {
+            return type.get();
+        }
+
+        public void setCharacteristics(String characteristics) {
+            this.characteristics.set(characteristics);
+        }
+
+        public String getLost_found() {
+            return type.get();
+        }
+
+        public void setLost_found(String lost_found) {
+            this.lost_found.set(lost_found);
+        }
+
+        public String getStatus() {
+            return type.get();
+        }
+
+        public void setStatus(String status) {
+            this.status.set(status);
+        }
+
     }
 }
