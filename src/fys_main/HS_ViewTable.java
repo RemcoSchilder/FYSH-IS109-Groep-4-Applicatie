@@ -49,9 +49,8 @@ public class HS_ViewTable {
         Database db = new Database();
         db.setConn();
         
-        
-        
-        ResultSet result = db.getQuery("SELECT CONCAT(firstname, ' ', lastname) AS name, username, password, email, function FROM users");
+        ResultSet result = db.getQuery("SELECT CONCAT(firstname, ' ', lastname)"
+                + " AS name, username, password, email, function FROM users");
         try {
             while (result.next()) {
                 data.add(new TableUsers(
@@ -63,6 +62,7 @@ public class HS_ViewTable {
                 ));
             }
         } catch (SQLException se) {
+            
             //Handle errors for JDBC
             se.printStackTrace();
         }
@@ -78,7 +78,6 @@ public class HS_ViewTable {
     public static class TableUsers {
         
         /* haalt gegevens uit database */
-
         private final SimpleStringProperty name;
         private final SimpleStringProperty username;
         private final SimpleStringProperty password;
