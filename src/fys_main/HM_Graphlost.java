@@ -38,7 +38,7 @@ public class HM_Graphlost {
             int totalNumber = 0;
             
             while(getTotal.next()) {
-                total[getTotal.getInt("month")] = getTotal.getDouble("total");
+                total[getTotal.getInt("month")-1] = getTotal.getDouble("total");
                 totalNumber++;
             }
             
