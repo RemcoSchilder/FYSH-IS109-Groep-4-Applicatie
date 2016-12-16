@@ -125,6 +125,8 @@ public class Homepage_Systeem {
         ButtonType cancelButton = new ButtonType("No");
         Alert alert = new Alert(Alert.AlertType.WARNING);
         
+        table = HS_ViewTable.users();
+        
         //delete warning popup
         alert.setTitle("Delete");
         alert.setHeaderText("Delete User");
@@ -133,8 +135,9 @@ public class Homepage_Systeem {
        
         //voeg alles toe aan de border
         pane.setLeft(vboxLeft());
-        pane.setCenter(HS_ViewTable.users());
+        pane.setCenter(table);
         pane.setRight(vboxRight());
+
         
 
         //eventhandeler bekijken van userlist 
