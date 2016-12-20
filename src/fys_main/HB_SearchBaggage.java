@@ -112,13 +112,15 @@ public class HB_SearchBaggage {
 
         TableColumn status = new TableColumn("status");
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
+        
+       
 
         /* Initialize Database */
         Database db = new Database();
         db.setConn();
 
         /* Get all the lost luggage */
-        ResultSet result = db.getQuery("SELECT * FROM lost");
+        ResultSet result = db.getQuery("SELECT * FROM lost UNION SELECT * FROM found");
         try {
             /* For each row insert them into the data from the table */
             while (result.next()) {
@@ -347,7 +349,7 @@ public class HB_SearchBaggage {
         }
 
         public String getCharacteristics() {
-            return type.get();
+            return characteristics.get();
         }
 
         public void setCharacteristics(String characteristics) {
@@ -355,7 +357,7 @@ public class HB_SearchBaggage {
         }
 
         public String getLost_found() {
-            return type.get();
+            return lost_found.get();
         }
 
         public void setLost_found(String lost_found) {
@@ -363,7 +365,7 @@ public class HB_SearchBaggage {
         }
 
         public String getStatus() {
-            return type.get();
+            return status.get();
         }
 
         public void setStatus(String status) {

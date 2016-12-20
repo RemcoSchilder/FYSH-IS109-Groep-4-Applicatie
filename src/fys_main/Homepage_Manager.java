@@ -1,6 +1,8 @@
 package fys_main;
 
 
+import static fys_main.FYS_LostFound.pane;
+import static fys_main.Homepage_Systeem.vboxBottom;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -35,15 +37,31 @@ public class Homepage_Manager {
         bagageLijst.setMinSize(230, 48);
         lost.setMinSize(230, 48);
         found.setMinSize(230, 48);
-        logout.setMinSize(230, 48);
 
         //alles wordt in de vbox gestopt
-        vbox.getChildren().addAll(see, bagageLijst, graph, lost, found, logout);
+        vbox.getChildren().addAll(see, bagageLijst, graph, lost, found);
 
         //style voor de vbox
         vbox.getStyleClass().add("vbox");
-        VBox.setMargin(logout, new Insets(575, 0, 0, 0));
+       
 
+        return vbox;
+    }
+    
+    public static VBox vboxBottom() {
+        VBox vbox = new VBox();
+        
+        //buttons
+        logout.setMinSize(230, 48);
+        
+        //alles wordt in de vbox gestopt
+        vbox.getChildren().addAll(logout);
+
+        //style voor de vbox
+        vbox.getStyleClass().add("vbox");
+       // VBox.setMargin(logout, new Insets(566, 0, 0, 0));
+       
+       
         return vbox;
     }
     
@@ -51,7 +69,9 @@ public class Homepage_Manager {
     public static BorderPane getScreen() {
 
         pane.setLeft(vbox());
-
+        pane.setBottom(vboxBottom());
+        
+        
         //eventhandler knop bagagelijst opent bagagelijst info
         bagageLijst.setOnAction(new EventHandler<ActionEvent>() {
             @Override

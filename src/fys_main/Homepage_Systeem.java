@@ -2,6 +2,7 @@ package fys_main;
 
 import static fys_main.FYS_LostFound.grid;
 import static fys_main.FYS_LostFound.pane;
+import static fys_main.Homepage_Baliemedewerker.vboxBottom;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,19 +50,37 @@ public class Homepage_Systeem {
         v1.setImage(image);
 
         //tekst & buttons
-        logout.setMinSize(230, 48);
+        
 
         //alles wordt in de vbox gestopt
-        vbox.getChildren().addAll(v1, logout);
+        vbox.getChildren().addAll(v1);
 
         //style voor de vbox
         vbox.getStyleClass().add("vbox");
 
         //logout button onderaan
-        VBox.setMargin(logout, new Insets(608, 0, 0, 0));
+        
 
         return vbox;
     }
+    
+    public static VBox vboxBottom() {
+        VBox vbox = new VBox();
+        
+        //buttons
+        logout.setMinSize(230, 48);
+        
+        //alles wordt in de vbox gestopt
+        vbox.getChildren().addAll(logout);
+
+        //style voor de vbox
+        vbox.getStyleClass().add("vbox");
+       // VBox.setMargin(logout, new Insets(566, 0, 0, 0));
+       
+       
+        return vbox;
+    }
+    
     
     public static VBox vboxRight() {
         VBox vbox = new VBox();
@@ -137,7 +156,8 @@ public class Homepage_Systeem {
         pane.setLeft(vboxLeft());
         pane.setCenter(table);
         pane.setRight(vboxRight());
-
+        pane.setBottom(vboxBottom());
+        
         
 
         //eventhandeler bekijken van userlist 

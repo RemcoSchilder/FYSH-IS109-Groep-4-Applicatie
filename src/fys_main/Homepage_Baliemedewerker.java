@@ -46,15 +46,37 @@ public class Homepage_Baliemedewerker {
 
         //style voor de vbox
         vbox.getStyleClass().add("vbox");
-        VBox.setMargin(logout, new Insets(566, 0, 0, 0));
-
+       // VBox.setMargin(logout, new Insets(566, 0, 0, 0));
+        
+       
+       
         return vbox;
     }
    
+    public static VBox vboxBottom() {
+        VBox vbox = new VBox();
+        
+        //buttons
+        logout.setMinSize(230, 48);
+        
+        //alles wordt in de vbox gestopt
+        vbox.getChildren().addAll(logout);
 
+        //style voor de vbox
+        vbox.getStyleClass().add("vbox");
+       // VBox.setMargin(logout, new Insets(566, 0, 0, 0));
+       
+       
+        return vbox;
+    }
+    
+    
+    
+    
     public static BorderPane getScreen() {
 
         pane.setLeft(vboxLeft());
+        pane.setBottom(vboxBottom());
         
         
         //eventhander knop lost openen lost invoer
