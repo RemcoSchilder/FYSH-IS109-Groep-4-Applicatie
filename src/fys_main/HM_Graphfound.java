@@ -75,25 +75,25 @@ public class HM_Graphfound {
         xAxis.setLabel("Status");
         yAxis.setLabel("Value");
 
-        XYChart.Series series1 = new XYChart.Series();
-        series1.setName("Lost");
-        series1.getData().add(new XYChart.Data(open, totalLost[0]));
-        series1.getData().add(new XYChart.Data(matched, totalLost[1]));
-        series1.getData().add(new XYChart.Data(send, totalLost[2]));
-        series1.getData().add(new XYChart.Data(returned, totalLost[3]));
+        XYChart.Series lostColumn = new XYChart.Series();
+        lostColumn.setName("Lost");
+        lostColumn.getData().add(new XYChart.Data(open, totalLost[0]));
+        lostColumn.getData().add(new XYChart.Data(matched, totalLost[1]));
+        lostColumn.getData().add(new XYChart.Data(send, totalLost[2]));
+        lostColumn.getData().add(new XYChart.Data(returned, totalLost[3]));
 
-        XYChart.Series series2 = new XYChart.Series();
-        series2.setName("Found");
-        series2.getData().add(new XYChart.Data(open, totalFound[0]));
-        series2.getData().add(new XYChart.Data(matched, totalFound[1]));
-        series2.getData().add(new XYChart.Data(send, totalFound[2]));
-        series2.getData().add(new XYChart.Data(returned, totalFound[3]));
+        XYChart.Series foundColumn = new XYChart.Series();
+        foundColumn.setName("Found");
+        foundColumn.getData().add(new XYChart.Data(open, totalFound[0]));
+        foundColumn.getData().add(new XYChart.Data(matched, totalFound[1]));
+        foundColumn.getData().add(new XYChart.Data(send, totalFound[2]));
+        foundColumn.getData().add(new XYChart.Data(returned, totalFound[3]));
 
             bc.setMinSize(600, 600);  //grote aanpassen
 
             pane.setAlignment(Pos.CENTER);
             pane.getChildren().addAll(bc);
-            bc.getData().addAll(series1, series2);
+            bc.getData().addAll(lostColumn, foundColumn);
             
         }  catch(SQLException se) {
             //Handle errors for JDBC

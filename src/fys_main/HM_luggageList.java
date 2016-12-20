@@ -28,7 +28,7 @@ public class HM_luggageList {
     private static ObservableList<TableLuggage> data = FXCollections.observableArrayList();
 
     private static Button search = new Button("Search");
-    private static Button details = new Button("details");
+    private static Button details = new Button("Details");
     private static TextField searchLabelNr = new TextField();
     private static TextField searchBrand = new TextField();
     private static TextField searchType = new TextField();
