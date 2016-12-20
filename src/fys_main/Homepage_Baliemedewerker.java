@@ -2,11 +2,10 @@ package fys_main;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -22,6 +21,7 @@ public class Homepage_Baliemedewerker {
     private static Label createL = new Label("Create");
     private static Button lost = new Button("Lost baggage");
     private static Button found = new Button("Found baggage");
+    private static Button edit = new Button ("Edit");
     private static Label searchL = new Label("Search");
     private static Button baggage = new Button("Baggage");
     private static Button logout = new Button("Log out");
@@ -46,28 +46,26 @@ public class Homepage_Baliemedewerker {
 
         //style voor de vbox
         vbox.getStyleClass().add("vbox");
-       // VBox.setMargin(logout, new Insets(566, 0, 0, 0));
         
-       
-       
         return vbox;
     }
    
-    public static VBox vboxBottom() {
-        VBox vbox = new VBox();
+    public static HBox HboxBottom() {
+        HBox hbox = new HBox();
         
         //buttons
         logout.setMinSize(230, 48);
-        
+        edit.setMinSize(230, 48);
         //alles wordt in de vbox gestopt
-        vbox.getChildren().addAll(logout);
+        hbox.getChildren().addAll(logout, edit);
 
         //style voor de vbox
-        vbox.getStyleClass().add("vbox");
-       // VBox.setMargin(logout, new Insets(566, 0, 0, 0));
+        hbox.getStyleClass().add("vbox");
+        //VBox.setMargin(edit, new Insets(566, 0, 0, 0));
        
        
-        return vbox;
+       
+        return hbox;
     }
     
     
@@ -76,7 +74,7 @@ public class Homepage_Baliemedewerker {
     public static BorderPane getScreen() {
 
         pane.setLeft(vboxLeft());
-        pane.setBottom(vboxBottom());
+        pane.setBottom(HboxBottom());
         
         
         //eventhander knop lost openen lost invoer

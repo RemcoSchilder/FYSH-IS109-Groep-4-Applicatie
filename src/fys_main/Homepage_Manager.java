@@ -1,14 +1,13 @@
 package fys_main;
 
 
-import static fys_main.FYS_LostFound.pane;
-import static fys_main.Homepage_Systeem.vboxBottom;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -48,28 +47,28 @@ public class Homepage_Manager {
         return vbox;
     }
     
-    public static VBox vboxBottom() {
-        VBox vbox = new VBox();
+    public static HBox hboxBottom() {
+        HBox hbox = new HBox();
         
         //buttons
         logout.setMinSize(230, 48);
         
         //alles wordt in de vbox gestopt
-        vbox.getChildren().addAll(logout);
+        hbox.getChildren().addAll(logout);
 
         //style voor de vbox
-        vbox.getStyleClass().add("vbox");
+        hbox.getStyleClass().add("vbox");
        // VBox.setMargin(logout, new Insets(566, 0, 0, 0));
        
        
-        return vbox;
+        return hbox;
     }
     
     //methode voor het scherm
     public static BorderPane getScreen() {
 
         pane.setLeft(vbox());
-        pane.setBottom(vboxBottom());
+        pane.setBottom(hboxBottom());
         
         
         //eventhandler knop bagagelijst opent bagagelijst info
