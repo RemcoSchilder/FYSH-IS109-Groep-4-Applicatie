@@ -2,6 +2,7 @@ package fys_main;
 
 import static fys_main.FYS_LostFound.grid;
 import static fys_main.FYS_LostFound.pane;
+import java.sql.ResultSet;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,7 +25,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
 /**
  *
@@ -32,9 +32,13 @@ import javafx.scene.text.Text;
  */
 public class Homepage_Systeem {
     
+    public static ResultSet searchResult;
     private static StackPane stack = new StackPane();
-    private static TableView<HS_ViewTable.TableUsers> table;
-    private static ColumnConstraints column = new ColumnConstraints();
+    private static TextField searchFirstName = new TextField();
+    private static TextField searchLastName = new TextField();
+    private static TextField searchEmail = new TextField();
+    private static ComboBox boxFunction = new ComboBox();
+    private static Button search = new Button("Search");
     private static Button user = new Button("user");
     private static Button logout = new Button("logout");
     private static Button delete = new Button("delete");
@@ -84,18 +88,14 @@ public class Homepage_Systeem {
     public static VBox vboxRight() {
         VBox vbox = new VBox();
         VBox buttonVbox = new VBox();
-        Button search = new Button("Search");
-        TextField searchFirstName = new TextField();
-        TextField searchLastName = new TextField();
-        TextField searchEmail = new TextField();
         
         ObservableList<String> options = 
         FXCollections.observableArrayList(
-            "Counter Assistent",
+            "Counter Assistant",
             "Manager",
-            "Admin"
+            "System Manager"
         );
-        final ComboBox boxFunction = new ComboBox(options);
+        boxFunction = new ComboBox(options);
         
         Label labelFirstName = new Label("First Name: ");
         Label labelLastName = new Label("Last Name: ");
@@ -123,7 +123,7 @@ public class Homepage_Systeem {
         //alles wordt in de vbox gestopt
         vbox.getChildren().addAll(labelFirstName, searchFirstName, labelLastName
                 , searchLastName, labelEmail, searchEmail, labelFunction
-                , boxFunction, stack);
+                , boxFunction, search, stack);
         
         VBox.setVgrow(stack, Priority.ALWAYS);
         VBox.setMargin(stack, new Insets(400, 0, 0, 0));
@@ -143,7 +143,7 @@ public class Homepage_Systeem {
         ButtonType cancelButton = new ButtonType("No");
         Alert alert = new Alert(Alert.AlertType.WARNING);
         
-        table = HS_ViewTable.users();
+        TableView<HS_ViewTable.TableUsers> table = HS_ViewTable.users();
         
         //delete warning popup
         alert.setTitle("Delete");
@@ -158,13 +158,62 @@ public class Homepage_Systeem {
         pane.setBottom(hboxBottom());
         
         
+        search.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Database DB = new Database();
+                DB.setConn();
+                
+                boolean where = false;
+                
+                String query = "SELECT CONCAT(firstname, ' ', lastname)"
+                + " AS name, username, password, email, function FROM users";
+                
+                if (!searchFirstName.getText().equals("")) {
+                    if (where) {
+                        query += " AND firstname = '" + searchFirstName.getText() + "'";
+                    } else {
+                        where = true;
+                        query += " WHERE firstname = '" + searchFirstName.getText() + "'";
+                    }
+                } 
+                if (!searchLastName.getText().equals("")) {
+                    if (where) {
+                        query += " AND lastname = '" + searchLastName.getText() + "'";
+                    } else {
+                        where = true;
+                        query += " WHERE lastname = '" + searchLastName.getText() + "'";
+                    }
+                } 
+                if (!searchEmail.getText().equals("")) {
+                    if (where) {
+                        query += " AND email = '" + searchEmail.getText() + "'";
+                    } else {
+                        where = true;
+                        query += " WHERE email = '" + searchEmail.getText() + "'";
+                    }
+                } 
+                if (!boxFunction.getValue().equals("")) {
+                    if (where) {
+                        query += " AND function = '" + boxFunction.getValue() + "'";
+                    } else {
+                        where = true;
+                        query += " WHERE function = '" + boxFunction.getValue() + "'";
+                    }
+                } 
+                
+                
+                searchResult = DB.getQuery(query);
+                TableView<HS_SearchUsers.SearchUsers> table = HS_SearchUsers.searchUsers();
+                pane.setCenter(table);
+                
+            }
+        });
 
         //eventhandeler bekijken van userlist 
         user.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                grid.getChildren().clear();
-                column.setPercentWidth(20);
                 pane.setCenter(HS_CreateUser.getScreen());
 
             }

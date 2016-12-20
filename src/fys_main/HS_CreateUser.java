@@ -29,9 +29,9 @@ public class HS_CreateUser {
         
         ObservableList<String> options = 
         FXCollections.observableArrayList(
-            "Counter Assistent",
+            "Counter Assistant",
             "Manager",
-            "Admin"
+            "System Manager"
         );
         final ComboBox function = new ComboBox(options);
         
