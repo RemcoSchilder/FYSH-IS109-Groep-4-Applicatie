@@ -111,21 +111,19 @@ public class Homepage_Systeem {
         labelFunction.getStyleClass().add("labels");
         
         //Stackpane
-        user.setMinSize(160, 48);
-        edit.setMinSize(160, 48);
-        delete.setMinSize(160, 48);
+        user.setMinSize(230, 48);
+        edit.setMinSize(230, 48);
+        delete.setMinSize(230, 48);
         
-        stack.setMinHeight(200);
         buttonVbox.getChildren().addAll(user, edit, delete);
         stack.getChildren().add(buttonVbox);
-        stack.setAlignment(Pos.BOTTOM_CENTER);
+        
         
         //alles wordt in de vbox gestopt
         vbox.getChildren().addAll(labelFirstName, searchFirstName, labelLastName
                 , searchLastName, labelEmail, searchEmail, labelFunction
                 , boxFunction, search, stack);
         
-        VBox.setVgrow(stack, Priority.ALWAYS);
         VBox.setMargin(stack, new Insets(400, 0, 0, 0));
         
 
@@ -250,7 +248,7 @@ public class Homepage_Systeem {
                 }  
 
             }
-});
+        });
 
         //eventhandler terug naar start
         logout.setOnAction(new EventHandler<ActionEvent>() {
