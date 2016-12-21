@@ -113,11 +113,8 @@ public class HM_luggageList {
         TableColumn status = new TableColumn("status");
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        
-
-
-/* Initialize Database */
-Database db = new Database();
+        /* Initialize Database */
+        Database db = new Database();
         db.setConn();
 
         /* Get all the lost luggage */
@@ -160,13 +157,13 @@ Database db = new Database();
 
         search.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-        public void handle(ActionEvent event) {
+            public void handle(ActionEvent event) {
                 Database DB = new Database();
                 DB.setConn();
 
                 table = new TableView<>();
                 data.removeAll(data);
-                
+
                 boolean where = false;
 
                 String query = "SELECT * "
@@ -176,7 +173,7 @@ Database db = new Database();
                         + " SELECT *"
                         + " FROM found "
                         + ") AS search";
-                
+
                 if (!searchLabelNr.getText().equals("")) {
                     if (where) {
                         query += " AND labelNumber = '" + searchLabelNr.getText() + "'";
@@ -184,7 +181,7 @@ Database db = new Database();
                         where = true;
                         query += " WHERE labelNumber = '" + searchLabelNr.getText() + "'";
                     }
-                } 
+                }
                 if (!searchBrand.getText().equals("")) {
                     if (where) {
                         query += " AND brand = '" + searchBrand.getText() + "'";
@@ -192,7 +189,7 @@ Database db = new Database();
                         where = true;
                         query += " WHERE brand = '" + searchBrand.getText() + "'";
                     }
-                } 
+                }
                 if (!searchColor.getText().equals("")) {
                     if (where) {
                         query += " AND color = '" + searchColor.getText() + "'";
@@ -200,7 +197,7 @@ Database db = new Database();
                         where = true;
                         query += " WHERE color = '" + searchColor.getText() + "'";
                     }
-                } 
+                }
                 if (!searchType.getText().equals("")) {
                     if (where) {
                         query += " AND type = '" + searchType.getText() + "'";
@@ -209,7 +206,7 @@ Database db = new Database();
                         query += " WHERE type = '" + searchType.getText() + "'";
                     }
                 }
-                
+
                 ResultSet searchResult = DB.getQuery(query);
 
                 /* Get all the lost luggage */
@@ -238,7 +235,7 @@ Database db = new Database();
 
                 /* Set table colums and rows */
                 table.setItems(data);
-                
+
             }
         });
 
@@ -250,144 +247,137 @@ Database db = new Database();
             }
         });
 
-        
-
-
-        
-        
-        
         return screen;
-    
 
-}
+    }
 
     public static class TableLuggage {
 
-    private final SimpleStringProperty date;
-    private final SimpleStringProperty time;
-    private final SimpleStringProperty airport;
-    private final SimpleStringProperty label_number;
-    private final SimpleStringProperty flight_number;
-    private final SimpleStringProperty destination;
-    private final SimpleStringProperty brand;
-    private final SimpleStringProperty color;
-    private final SimpleStringProperty type;
-    private final SimpleStringProperty characteristics;
-    private final SimpleStringProperty lost_found;
-    private final SimpleStringProperty status;
+        private final SimpleStringProperty date;
+        private final SimpleStringProperty time;
+        private final SimpleStringProperty airport;
+        private final SimpleStringProperty label_number;
+        private final SimpleStringProperty flight_number;
+        private final SimpleStringProperty destination;
+        private final SimpleStringProperty brand;
+        private final SimpleStringProperty color;
+        private final SimpleStringProperty type;
+        private final SimpleStringProperty characteristics;
+        private final SimpleStringProperty lost_found;
+        private final SimpleStringProperty status;
 
-    private TableLuggage(String date, String time, String airport, String label_number, String flight_number, String destination, String brand, String color, String type, String characteristics, String lost_found, String status) {
+        private TableLuggage(String date, String time, String airport, String label_number, String flight_number, String destination, String brand, String color, String type, String characteristics, String lost_found, String status) {
 
-        this.date = new SimpleStringProperty(date);
-        this.time = new SimpleStringProperty(time);
-        this.airport = new SimpleStringProperty(airport);
-        this.label_number = new SimpleStringProperty(label_number);
-        this.flight_number = new SimpleStringProperty(flight_number);
-        this.destination = new SimpleStringProperty(destination);
-        this.brand = new SimpleStringProperty(brand);
-        this.color = new SimpleStringProperty(color);
-        this.type = new SimpleStringProperty(type);
-        this.characteristics = new SimpleStringProperty(characteristics);
-        this.lost_found = new SimpleStringProperty(lost_found);
-        this.status = new SimpleStringProperty(status);
+            this.date = new SimpleStringProperty(date);
+            this.time = new SimpleStringProperty(time);
+            this.airport = new SimpleStringProperty(airport);
+            this.label_number = new SimpleStringProperty(label_number);
+            this.flight_number = new SimpleStringProperty(flight_number);
+            this.destination = new SimpleStringProperty(destination);
+            this.brand = new SimpleStringProperty(brand);
+            this.color = new SimpleStringProperty(color);
+            this.type = new SimpleStringProperty(type);
+            this.characteristics = new SimpleStringProperty(characteristics);
+            this.lost_found = new SimpleStringProperty(lost_found);
+            this.status = new SimpleStringProperty(status);
+
+        }
+
+        public String getDate() {
+            return date.get();
+        }
+
+        public void setDate(String date) {
+            this.date.set(date);
+        }
+
+        public String getTime() {
+            return time.get();
+        }
+
+        public void setTime(String time) {
+            this.time.set(time);
+        }
+
+        public String getAirport() {
+            return airport.get();
+        }
+
+        public void setAirport(String airport) {
+            this.airport.set(airport);
+        }
+
+        public String getLabel_number() {
+            return label_number.get();
+        }
+
+        public void setLabel_number(String label_number) {
+            this.label_number.set(label_number);
+        }
+
+        public String getFlight_number() {
+            return flight_number.get();
+        }
+
+        public void setFlight_number(String flight_number) {
+            this.flight_number.set(flight_number);
+        }
+
+        public String getDestination() {
+            return destination.get();
+        }
+
+        public void setDestination(String destination) {
+            this.destination.set(destination);
+        }
+
+        public String getBrand() {
+            return brand.get();
+        }
+
+        public void setBrand(String brand) {
+            this.brand.set(brand);
+        }
+
+        public String getColor() {
+            return color.get();
+        }
+
+        public void setColor(String color) {
+            this.color.set(color);
+        }
+
+        public String getType() {
+            return type.get();
+        }
+
+        public void setType(String type) {
+            this.type.set(type);
+        }
+
+        public String getCharacteristics() {
+            return characteristics.get();
+        }
+
+        public void setCharacteristics(String characteristics) {
+            this.characteristics.set(characteristics);
+        }
+
+        public String getLost_found() {
+            return lost_found.get();
+        }
+
+        public void setLost_found(String lost_found) {
+            this.lost_found.set(lost_found);
+        }
+
+        public String getStatus() {
+            return status.get();
+        }
+
+        public void setStatus(String status) {
+            this.status.set(status);
+        }
 
     }
-
-    public String getDate() {
-        return date.get();
-    }
-
-    public void setDate(String date) {
-        this.date.set(date);
-    }
-
-    public String getTime() {
-        return time.get();
-    }
-
-    public void setTime(String time) {
-        this.time.set(time);
-    }
-
-    public String getAirport() {
-        return airport.get();
-    }
-
-    public void setAirport(String airport) {
-        this.airport.set(airport);
-    }
-
-    public String getLabel_number() {
-        return label_number.get();
-    }
-
-    public void setLabel_number(String label_number) {
-        this.label_number.set(label_number);
-    }
-
-    public String getFlight_number() {
-        return flight_number.get();
-    }
-
-    public void setFlight_number(String flight_number) {
-        this.flight_number.set(flight_number);
-    }
-
-    public String getDestination() {
-        return destination.get();
-    }
-
-    public void setDestination(String destination) {
-        this.destination.set(destination);
-    }
-
-    public String getBrand() {
-        return brand.get();
-    }
-
-    public void setBrand(String brand) {
-        this.brand.set(brand);
-    }
-
-    public String getColor() {
-        return color.get();
-    }
-
-    public void setColor(String color) {
-        this.color.set(color);
-    }
-
-    public String getType() {
-        return type.get();
-    }
-
-    public void setType(String type) {
-        this.type.set(type);
-    }
-
-    public String getCharacteristics() {
-        return characteristics.get();
-    }
-
-    public void setCharacteristics(String characteristics) {
-        this.characteristics.set(characteristics);
-    }
-
-    public String getLost_found() {
-        return lost_found.get();
-    }
-
-    public void setLost_found(String lost_found) {
-        this.lost_found.set(lost_found);
-    }
-
-    public String getStatus() {
-        return status.get();
-    }
-
-    public void setStatus(String status) {
-        this.status.set(status);
-    }
-
-}
 }

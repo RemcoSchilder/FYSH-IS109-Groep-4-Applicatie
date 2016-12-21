@@ -1,5 +1,7 @@
 package fys_main;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 /**
@@ -275,8 +278,8 @@ public class HB_CreateLost {
                         + " 'lost',"
                         + " 'open')");
                
-                /*screen.getChildren().clear();
-                FYS_LostFound.pane.setCenter(HB_SearchBaggage.getScreen());*/
+                screenThree();
+                /*FYS_LostFound.pane.setCenter(HB_SearchBaggage.getScreen());*/
             }
         });
     }
@@ -289,7 +292,40 @@ public class HB_CreateLost {
         /* Get matched results */
         Database DB = new Database();
         DB.setConn();
-        DB.getQuery("SELECT * FROM found WHERE");
+        ResultSet labelMatch = DB.getQuery("SELECT * FROM found WHERE labelNumber='" + labelNumberT.getText() + "'");
+        
+        try {
+            if (labelMatch.next()) {
+                /* Create success message */
+                Text successTitle = new Text("There is a match with the label number");
+                successTitle.getStyleClass().add("subheading");
+                Text successText = new Text("Label numer '" + labelNumberT.getText() + "' has been found at airport " + labelMatch.getString("airport") + " on " + labelMatch.getString("date"));
+                
+                /* Create buttons */
+                HBox buttons = new HBox();
+                buttons.setMinWidth(200);
+                Button cancel = new Button("Cancel");
+                Button match = new Button("Match & send");
+                buttons.getChildren().addAll(cancel, match);
+                
+                /* Add all elements to the grid */
+                screen.add(successTitle, 0, 0);
+                screen.add(successText, 0, 1);
+                
+                screen.add(buttons, 0, 3);
+            } else {
+                ResultSet otherMatch = DB.getQuery("SELECT * FROM found WHERE (brand='" + brandT.getText() + "' "
+                        + "OR color='" + colorT.getText() + "' "
+                        + "OR type='" + typeT.getText() + "') "
+                        + "AND status='open'");
+                
+                Text error = new Text("Label number not found, check if the following results have a match:");
+                screen.add(error, 0, 0);
+            }
+        }  catch(SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }
     }
     
 }

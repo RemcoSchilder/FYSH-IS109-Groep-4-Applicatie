@@ -10,13 +10,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -27,8 +30,8 @@ import javafx.scene.text.Text;
 public class HB_SearchBaggage {
 
     private static BorderPane screen = new BorderPane();
-    private static TableView<TableLuggage> table = new TableView<>();
-    private static ObservableList<TableLuggage> data = FXCollections.observableArrayList();
+    private static TableView<TableBaggage> table = new TableView<>();
+    private static ObservableList<TableBaggage> data = FXCollections.observableArrayList();
 
     private static Button search = new Button("Search");
     private static TextField searchLabelNr = new TextField();
@@ -39,12 +42,18 @@ public class HB_SearchBaggage {
     private static Label Brand = new Label("Brand: ");
     private static Label Type = new Label("Type: ");
     private static Label Color = new Label("Color: ");
+    
+    /* Buttons */
+    private static Button cancel = new Button("Cancel");
+    private static Button save = new Button("Save");
 
+    
     public static BorderPane getScreen() {
         getScreenOne();
 
         return screen;
     }
+    
 
     public static VBox vboxRight() {
         VBox vbox = new VBox();
@@ -124,7 +133,7 @@ public class HB_SearchBaggage {
         try {
             /* For each row insert them into the data from the table */
             while (result.next()) {
-                data.add(new TableLuggage(
+                data.add(new TableBaggage(
                         result.getString("date"),
                         result.getString("time"),
                         result.getString("airport"),
@@ -215,7 +224,7 @@ public class HB_SearchBaggage {
                 try {
                     /* For each row insert them into the data from the table */
                     while (searchResult.next()) {
-                        data.add(new TableLuggage(
+                        data.add(new TableBaggage(
                                 searchResult.getString("date"),
                                 searchResult.getString("time"),
                                 searchResult.getString("airport"),
@@ -243,8 +252,122 @@ public class HB_SearchBaggage {
 
         return screen;
     }
-
-    public static class TableLuggage {
+    
+    
+    public static BorderPane getScreenTwo() {
+        /* GridPane with properties */
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
+        
+        TableBaggage baggage = table.getSelectionModel().getSelectedItem();
+        
+       /* Create all subheadings */
+        Text lostInfo = new Text("Lost information:");
+        lostInfo.getStyleClass().add("subheading");
+        
+        Text labelInfo = new Text("Luggage label information:");
+        labelInfo.getStyleClass().add("subheading");
+        
+        Text luggageInfo = new Text("Luggage information:");
+        luggageInfo.getStyleClass().add("subheading");
+        
+        /* Textfields */
+        TextField airportT = new TextField(baggage.getAirport());
+        TextField labelNumberT = new TextField(baggage.getLabel_number());
+        TextField flightNumberT = new TextField(baggage.getFlight_number());
+        TextField destinationT = new TextField(baggage.getDestination());
+        TextField brandT = new TextField(baggage.getBrand());
+        TextField colorT = new TextField(baggage.getColor());
+        TextField typeT = new TextField(baggage.getType());
+        TextArea characteristicsT = new TextArea(baggage.getCharacteristics());
+        
+        /* Create all labels & inputs */
+        Label airportL = new Label("Airport:");
+        Label labelNumberL = new Label("Lable number:");
+        Label flightNumberL = new Label("Flight number:");
+        Label destinationL = new Label("Destination:");
+        Label brandL = new Label("Brand:");
+        Label colorL = new Label("Color:");
+        Label typeL = new Label("Type:");
+        
+        Label characteristicsL = new Label("Characteristics:");
+        characteristicsT.setPrefWidth(250);
+        characteristicsT.setPrefHeight(100);
+        
+        /* Add everything to the grid */
+        grid.add(lostInfo, 0, 0);
+        
+        grid.add(airportL, 0, 3);
+        grid.add(airportT, 1, 3, 10, 1);
+        
+        grid.add(labelInfo, 0, 5);
+        
+        grid.add(labelNumberL, 0, 6);
+        grid.add(labelNumberT, 1, 6, 10, 1);
+        
+        grid.add(flightNumberL, 0, 7);
+        grid.add(flightNumberT, 1, 7, 10, 1);
+        
+        grid.add(destinationL, 0, 8);
+        grid.add(destinationT, 1, 8, 10, 1);
+        
+        grid.add(luggageInfo, 0, 10);
+        
+        grid.add(brandL, 0, 11);
+        grid.add(brandT, 1, 11, 10, 1);
+        
+        grid.add(colorL, 0, 12);
+        grid.add(colorT, 1, 12, 10, 1);
+        
+        grid.add(typeL, 0, 13);
+        grid.add(typeT, 1, 13, 10, 1);
+        
+        grid.add(characteristicsL, 0, 14);
+        grid.add(characteristicsT, 1, 14, 10, 1);
+        
+        grid.add(cancel, 0, 15);
+        grid.add(save, 1, 15, 10, 1);
+        
+        // All event handlers from screen two
+        save.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Database DB = new Database();
+                DB.setConn();
+                DB.setQuery("UPDATE " + baggage.getLost_found() + " "
+                        + "SET "
+                        + "airport='" + airportT.getText() + "', "
+                        + "labelNumber='" + labelNumberT.getText() + "', "
+                        + "flightNumber='" + flightNumberT.getText() + "', "
+                        + "destination='" + destinationT.getText() + "', "
+                        + "brand='" + brandT.getText() + "', "
+                        + "color='" + colorT.getText() + "', "
+                        + "type='" + typeT.getText() + "', "
+                        + "characteristics='" + characteristicsT.getText() + "' "
+                        + "WHERE labelNumber='" + baggage.getLabel_number() + "'");
+               
+                pane.setCenter(HB_SearchBaggage.getScreen());
+            }
+        });
+        
+        
+        cancel.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                pane.setCenter(HB_SearchBaggage.getScreen());
+            }
+        });
+        
+        pane.setCenter(grid);
+        
+        return pane;
+    }
+    
+    
+    public static class TableBaggage {
 
         private final SimpleStringProperty date;
         private final SimpleStringProperty time;
@@ -259,7 +382,7 @@ public class HB_SearchBaggage {
         private final SimpleStringProperty lost_found;
         private final SimpleStringProperty status;
 
-        private TableLuggage(String date, String time, String airport, String label_number, String flight_number, String destination, String brand, String color, String type, String characteristics, String lost_found, String status) {
+        private TableBaggage(String date, String time, String airport, String label_number, String flight_number, String destination, String brand, String color, String type, String characteristics, String lost_found, String status) {
 
             this.date = new SimpleStringProperty(date);
             this.time = new SimpleStringProperty(time);
