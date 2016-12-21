@@ -7,6 +7,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -14,6 +16,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -243,14 +246,102 @@ public class HM_luggageList {
             @Override
             public void handle(ActionEvent event) {
 
-                screen.setCenter(Manager_Details.getScreen());
+                screen.setCenter(getScreenDetails());
             }
         });
-
+ 
         return screen;
 
     }
 
+    public static GridPane getScreenDetails(){
+    
+     /* Make GridPane with properties */
+        GridPane screen = new GridPane();
+        screen.setAlignment(Pos.CENTER);
+        screen.setHgap(10);
+        screen.setVgap(10);
+        screen.setPadding(new Insets(25, 25, 25, 25));
+    
+        TableLuggage details = table.getSelectionModel().getSelectedItem();
+        
+        
+        /*Create subheadings */
+        Text bagagedetails = new Text("Bagage details:");
+        bagagedetails.getStyleClass().add("subheading");
+        
+        Text labelinfo = new Text("Bagage label information:");
+        labelinfo.getStyleClass().add("subheading");
+        
+        Text bagageinfo = new Text("Bagage Information:");
+        bagageinfo.getStyleClass().add("subheading");
+        
+        /*Create labels */
+        Label date = new Label("Date(Y-D-M):");
+        Label time = new Label("Time:");   
+        Label airport = new Label("Airport");
+        Label labelnumber = new Label("Label number:");
+        Label flightnumber = new Label("Flight number:");
+        Label lostfound = new Label("Lost/Found:");
+        Label type = new Label("Type:");
+        Label brand = new Label("Brand:");
+        Label color = new Label("Color:");
+        Label characteristics = new Label("Characteristics:");
+        
+        /*Create labels with information from the table */
+        Label date2 = new Label(details.getDate());
+        Label time2 = new Label(details.getTime());
+        Label airport2 = new Label(details.getAirport());
+        Label labelnumber2 = new Label(details.getLabel_number());
+        Label flightnumber2 = new Label(details.getFlight_number());
+        Label lostfound2 = new Label(details.getLost_found());
+        Label type2 = new Label(details.getType());
+        Label brand2 = new Label(details.getBrand());
+        Label color2 = new Label(details.getColor());
+        Label characteristics2 = new Label(details.getCharacteristics());
+        
+       
+        
+        /*Add everything to the grid */
+        screen.add(bagagedetails, 0 , 0);
+        
+        screen.add(date, 0, 2);
+        screen.add(date2, 1 ,2);
+        
+        screen.add(time, 0, 3);
+        screen.add(time2,1, 3);
+        
+        screen.add(airport, 0, 4);
+        screen.add(airport2, 1, 4);
+        
+        screen.add(labelinfo, 0, 6);
+        
+        screen.add(labelnumber, 0, 8);
+        screen.add(labelnumber2, 1, 8);
+        
+        screen.add(flightnumber, 0, 9);
+        screen.add(flightnumber2, 1, 9);
+        
+        screen.add(lostfound, 0,10);
+        screen.add(lostfound2, 1, 10);
+        
+        screen.add(bagageinfo, 0, 12);
+        
+        screen.add(type, 0, 14);
+        screen.add(type2, 1, 14);
+        
+        screen.add(brand, 0, 15);
+        screen.add(brand2, 1, 15);
+        
+        screen.add(color, 0, 16);
+        screen.add(color2, 1, 16);
+        
+        screen.add(characteristics, 0, 17);
+        screen.add(characteristics2, 1, 17);        
+        
+       return screen;
+    }
+    
     public static class TableLuggage {
 
         private final SimpleStringProperty date;
