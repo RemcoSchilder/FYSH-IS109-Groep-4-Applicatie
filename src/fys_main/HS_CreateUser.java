@@ -26,7 +26,7 @@ public class HS_CreateUser {
     private static Button adduser = new Button("Add user");
 
     public static GridPane getScreen() {
-
+        error = new Text(" ");
         grid = new GridPane();
         ObservableList<String> options
                 = FXCollections.observableArrayList(

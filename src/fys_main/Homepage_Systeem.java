@@ -1,7 +1,7 @@
 package fys_main;
 
-import static fys_main.FYS_LostFound.grid;
 import static fys_main.FYS_LostFound.pane;
+import fys_main.HS_ViewTable.TableUsers;
 import java.sql.ResultSet;
 import java.util.Optional;
 import javafx.collections.FXCollections;
@@ -20,7 +20,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
@@ -32,6 +31,7 @@ import javafx.scene.layout.VBox;
  */
 public class Homepage_Systeem {
     
+    private static TableView<TableUsers> table = new TableView<>();
     public static ResultSet searchResult;
     private static StackPane stack = new StackPane();
     private static TextField searchFirstName = new TextField();
@@ -44,19 +44,44 @@ public class Homepage_Systeem {
     private static Button delete = new Button("delete");
     private static Button edit = new Button("edit");
     
-    public static VBox vboxLeft() {
-        VBox vbox = new VBox();
-
-        //image
+    public static HBox hboxTop() {
+        HBox hbox = new HBox();
+        StackPane stack = new StackPane();
+        
         Image image = new Image("https://www.corendon.be/apple-touch-icon-152x152.png", 230, 80, false, false);
         ImageView v1 = new ImageView();
         v1.setImage(image);
+        
+        hbox.getChildren().add(v1);
+        hbox.getStyleClass().add("hbox");
+        
+        return hbox;
+    }
+    
+    public static HBox hboxBottom() {
+        HBox hbox = new HBox();
+        
+        hbox.setMinHeight(48);
+        
+        
+        hbox.getStyleClass().add("hbox");
+        
+        return hbox;
+    }
+    
+    public static VBox vboxLeft() {
+        VBox vbox = new VBox();
+        StackPane stack = new StackPane();
 
         //tekst & buttons
-        
+        logout.setMinSize(230, 48);
+        stack.getChildren().add(logout);
+        stack.setAlignment(Pos.BOTTOM_CENTER);
+        vbox.getChildren().add(stack);
+        VBox.setVgrow(stack, Priority.ALWAYS);
 
         //alles wordt in de vbox gestopt
-        vbox.getChildren().addAll(v1);
+        
 
         //style voor de vbox
         vbox.getStyleClass().add("vbox");
@@ -67,23 +92,6 @@ public class Homepage_Systeem {
         return vbox;
     }
     
-    public static HBox hboxBottom() {
-        HBox hbox = new HBox();
-        
-        //buttons
-        logout.setMinSize(230, 48);
-        
-        //alles wordt in de vbox gestopt
-        hbox.getChildren().addAll(logout);
-
-        //style voor de vbox
-        hbox.getStyleClass().add("vbox");
-       // VBox.setMargin(logout, new Insets(566, 0, 0, 0));
-       
-       
-        return hbox;
-    }
-    
     
     public static VBox vboxRight() {
         VBox vbox = new VBox();
@@ -91,11 +99,15 @@ public class Homepage_Systeem {
         
         ObservableList<String> options = 
         FXCollections.observableArrayList(
+            "",
             "Counter Assistant",
             "Manager",
             "System Manager"
         );
         boxFunction = new ComboBox(options);
+        boxFunction.getSelectionModel().selectFirst();
+
+
         
         Label labelFirstName = new Label("First Name: ");
         Label labelLastName = new Label("Last Name: ");
@@ -141,7 +153,7 @@ public class Homepage_Systeem {
         ButtonType cancelButton = new ButtonType("No");
         Alert alert = new Alert(Alert.AlertType.WARNING);
         
-        TableView<HS_ViewTable.TableUsers> table = HS_ViewTable.users();
+        table = HS_ViewTable.users();
         
         //delete warning popup
         alert.setTitle("Delete");
@@ -150,6 +162,7 @@ public class Homepage_Systeem {
         alert.getButtonTypes().setAll(cancelButton, yesButton);
        
         //voeg alles toe aan de border
+        pane.setTop(hboxTop());
         pane.setLeft(vboxLeft());
         pane.setCenter(table);
         pane.setRight(vboxRight());
@@ -200,11 +213,10 @@ public class Homepage_Systeem {
                     }
                 } 
                 
-                
                 searchResult = DB.getQuery(query);
-                TableView<HS_SearchUsers.SearchUsers> table = HS_SearchUsers.searchUsers();
+                table = HS_ViewTable.users();
                 pane.setCenter(table);
-                
+                    
             }
         });
 
@@ -212,6 +224,7 @@ public class Homepage_Systeem {
         user.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                
                 pane.setCenter(HS_CreateUser.getScreen());
 
             }
@@ -228,7 +241,6 @@ public class Homepage_Systeem {
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                
                 String username = table.getSelectionModel().getSelectedItem().getUsername();
                       
                 Optional<ButtonType> result = alert.showAndWait();
@@ -239,8 +251,7 @@ public class Homepage_Systeem {
                     test.setConn();
                     test.setQuery("DELETE FROM users WHERE username = '" + username + "'" );
                     
-                    pane.getChildren().clear();
-                    pane.getScene().setRoot(Homepage_Systeem.getScreen());
+                    table = HS_ViewTable.users();
                 }
                 else if(result.get() == cancelButton)
                 {

@@ -1,5 +1,6 @@
 package fys_main;
 
+import static fys_main.Homepage_Systeem.searchResult;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.beans.property.SimpleStringProperty;
@@ -48,23 +49,43 @@ public class HS_ViewTable {
         //ophalen van gegevens uit database
         Database db = new Database();
         db.setConn();
-        
-        ResultSet result = db.getQuery("SELECT CONCAT(firstname, ' ', lastname)"
+
+        if (searchResult == null) {
+            ResultSet result = db.getQuery("SELECT CONCAT(firstname, ' ', lastname)"
                 + " AS name, username, password, email, function FROM users");
-        try {
-            while (result.next()) {
-                data.add(new TableUsers(
-                        result.getString("name"),
-                        result.getString("username"),
-                        result.getString("password"),
-                        result.getString("email"),
-                        result.getString("function")
-                ));
-            }
-        } catch (SQLException se) {
+            
+            try {
+                while (result.next()) {
+                    data.add(new TableUsers(
+                            result.getString("name"),
+                            result.getString("username"),
+                            result.getString("password"),
+                            result.getString("email"),
+                            result.getString("function")
+                    ));
+                }
+            } catch (SQLException se) {
             
             //Handle errors for JDBC
             se.printStackTrace();
+            }
+           
+        } else {
+            try {
+                while (searchResult.next()) {
+                    data.add(new TableUsers(
+                            searchResult.getString("name"),
+                            searchResult.getString("username"),
+                            searchResult.getString("password"),
+                            searchResult.getString("email"),
+                            searchResult.getString("function")
+                    ));
+                }
+            } catch (SQLException se) {
+            
+            //Handle errors for JDBC
+            se.printStackTrace();
+            }
         }
 
         /* Set table colums and rows */
