@@ -108,12 +108,12 @@ public class HS_CreateUser {
         adduser.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
-                if (firstNameT.getText() == ""
-                        || lastNameT.getText() == ""
-                        || usernameT.getText() == ""
-                        || passwordT.getText() == ""
-                        || emailT.getText() == ""
+                        
+                if (firstNameT.getText() == null || firstNameT.getText().trim().isEmpty()
+                        || lastNameT.getText() == null || lastNameT.getText().trim().isEmpty()
+                        || usernameT.getText() == null || usernameT.getText().trim().isEmpty()
+                        || passwordT.getText() == null || passwordT.getText().trim().isEmpty()
+                        || emailT.getText() == null || emailT.getText().trim().isEmpty()
                         || functionT.getValue() == null) {
 
                     error = new Text("You have not filled all the fields");
@@ -132,9 +132,9 @@ public class HS_CreateUser {
                         + passwordT.getText() + "', '"
                         + emailT.getText() + "', '"
                         + functionT.getValue() + "')");
+                
                 pane.getChildren().clear();
                 pane.getScene().setRoot(Homepage_Systeem.getScreen());
-
             }
         });
 

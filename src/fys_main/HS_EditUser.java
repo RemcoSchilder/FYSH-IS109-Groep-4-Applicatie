@@ -7,6 +7,7 @@ package fys_main;
 
 import static fys_main.FYS_LostFound.grid;
 import static fys_main.FYS_LostFound.pane;
+import static fys_main.Homepage_Systeem.editUser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,7 +17,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
@@ -29,19 +29,28 @@ public class HS_EditUser {
     
     private static Button cancel = new Button("Cancel");
     private static Button save = new Button("Save");   
-    private static TableView<HS_ViewTable.TableUsers> table = new TableView<>();
     
     public static GridPane getScreen() {
-        table = HS_ViewTable.users();
+        grid = new GridPane();
         
         ObservableList<String> options = 
         FXCollections.observableArrayList(
-            "Counter Assistent",
+            "Counter Assistant",
             "Manager",
-            "Admin"
+            "System Manager"
         );
         final ComboBox function = new ComboBox(options);
         
+        System.out.println(editUser.getFunction());
+        function.getSelectionModel().selectFirst(); 
+        if (!"Counter Assistant".equals(editUser.getFunction())) {
+            function.getSelectionModel().selectNext();   
+            if (!"Manager".equals(editUser.getFunction())) {
+                function.getSelectionModel().selectNext();
+            }
+        }  
+        
+            
         /* GridPane properties */
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
@@ -57,19 +66,19 @@ public class HS_EditUser {
         
         /* Create all labels & inputs */
         Label firstNameL = new Label("First name:");
-        TextField firstNameT = new TextField();
+        TextField firstNameT = new TextField(editUser.getFirstname());
         
         Label lastNameL = new Label("Last name:");
-        TextField lastNameT = new TextField();
+        TextField lastNameT = new TextField(editUser.getLastname());
         
         Label usernameL = new Label("Username:");
-        TextField usernameT = new TextField();
+        Label usernameT = new Label(editUser.getUsername());
         
         Label passwordL = new Label("password:");
-        TextField passwordT = new TextField();
+        TextField passwordT = new TextField(editUser.getPassword());
         
         Label emailL = new Label("Email:");
-        TextField emailT = new TextField();
+        TextField emailT = new TextField(editUser.getEmail());
         
         Label functionL = new Label("Type:");
         ComboBox functionT = function;
@@ -118,10 +127,10 @@ public class HS_EditUser {
                 test.setQuery("Update users SET "
                         + "firstname='" + firstNameT.getText() + "', " 
                         + "lastname='" + lastNameT.getText() + "', "
-                        + "username='" + usernameT.getText() + "', "
-                        + "password='" +passwordT.getText() + "', "
+                        + "password='" + passwordT.getText() + "', "
                         + "email='" + emailT.getText() + "', "
-                        + "function='" + functionT.getValue() + "')");
+                        + "function='" + functionT.getValue() + "' "
+                        + "WHERE username = '" + editUser.getUsername() + "'");
                        
                 pane.getChildren().clear();
                 pane.getScene().setRoot(Homepage_Systeem.getScreen());

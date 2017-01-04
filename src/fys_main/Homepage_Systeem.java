@@ -33,20 +33,19 @@ public class Homepage_Systeem {
     
     private static TableView<TableUsers> table = new TableView<>();
     public static ResultSet searchResult;
-    private static StackPane stack = new StackPane();
+    public static TableUsers editUser;
     private static TextField searchFirstName = new TextField();
     private static TextField searchLastName = new TextField();
     private static TextField searchEmail = new TextField();
     private static ComboBox boxFunction = new ComboBox();
     private static Button search = new Button("Search");
-    private static Button user = new Button("user");
+    private static Button addUser = new Button("user");
     private static Button logout = new Button("logout");
     private static Button delete = new Button("delete");
     private static Button edit = new Button("edit");
     
     public static HBox hboxTop() {
         HBox hbox = new HBox();
-        StackPane stack = new StackPane();
         
         Image image = new Image("https://www.corendon.be/apple-touch-icon-152x152.png", 230, 80, false, false);
         ImageView v1 = new ImageView();
@@ -96,6 +95,7 @@ public class Homepage_Systeem {
     public static VBox vboxRight() {
         VBox vbox = new VBox();
         VBox buttonVbox = new VBox();
+        StackPane stack = new StackPane();
         
         ObservableList<String> options = 
         FXCollections.observableArrayList(
@@ -123,11 +123,11 @@ public class Homepage_Systeem {
         labelFunction.getStyleClass().add("labels");
         
         //Stackpane
-        user.setMinSize(230, 48);
+        addUser.setMinSize(230, 48);
         edit.setMinSize(230, 48);
         delete.setMinSize(230, 48);
         
-        buttonVbox.getChildren().addAll(user, edit, delete);
+        buttonVbox.getChildren().addAll(addUser, edit, delete);
         stack.getChildren().add(buttonVbox);
         
         
@@ -149,6 +149,7 @@ public class Homepage_Systeem {
 
     public static BorderPane getScreen() {
         pane = new BorderPane();
+        table = new TableView<>();
         ButtonType yesButton = new ButtonType("DELETE");
         ButtonType cancelButton = new ButtonType("No");
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -177,8 +178,8 @@ public class Homepage_Systeem {
                 
                 boolean where = false;
                 
-                String query = "SELECT CONCAT(firstname, ' ', lastname)"
-                + " AS name, username, password, email, function FROM users";
+                String query = "SELECT firstname, lastname"
+                + ", username, password, email, function FROM users";
                 
                 if (!searchFirstName.getText().equals("")) {
                     if (where) {
@@ -221,10 +222,9 @@ public class Homepage_Systeem {
         });
 
         //eventhandeler bekijken van userlist 
-        user.setOnAction(new EventHandler<ActionEvent>() {
+        addUser.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                
                 pane.setCenter(HS_CreateUser.getScreen());
 
             }
@@ -234,7 +234,9 @@ public class Homepage_Systeem {
         edit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
+                editUser = table.getSelectionModel().getSelectedItem();
+                pane.setCenter(HS_EditUser.getScreen());
+                
             }
         });
         
@@ -265,7 +267,7 @@ public class Homepage_Systeem {
         logout.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                pane.getChildren().clear();
+                
                 pane.getScene().setRoot(Start.getScreen());
 
             }
