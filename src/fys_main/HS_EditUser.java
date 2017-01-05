@@ -7,6 +7,7 @@ package fys_main;
 
 import static fys_main.FYS_LostFound.grid;
 import static fys_main.FYS_LostFound.pane;
+import static fys_main.Homepage_Systeem.createTable;
 import static fys_main.Homepage_Systeem.editUser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,8 +28,8 @@ import javafx.scene.text.Text;
  */
 public class HS_EditUser {
     
-    private static Button cancel = new Button("Cancel");
-    private static Button save = new Button("Save");   
+    private static Label error;
+    private static Button cancel, save;  
     
     public static GridPane getScreen() {
         grid = new GridPane();
@@ -39,32 +40,13 @@ public class HS_EditUser {
             "Manager",
             "System Manager"
         );
-        final ComboBox function = new ComboBox(options);
         
-        System.out.println(editUser.getFunction());
-        function.getSelectionModel().selectFirst(); 
-        if (!"Counter Assistant".equals(editUser.getFunction())) {
-            function.getSelectionModel().selectNext();   
-            if (!"Manager".equals(editUser.getFunction())) {
-                function.getSelectionModel().selectNext();
-            }
-        }  
-        
-            
-        /* GridPane properties */
-        grid.setAlignment(Pos.CENTER);
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 25, 25));
-        
-         /* Create all subheadings */
         Text name = new Text("Name:");
         name.getStyleClass().add("subheading");
         
         Text account = new Text("Account:");
         account.getStyleClass().add("subheading");
         
-        /* Create all labels & inputs */
         Label firstNameL = new Label("First name:");
         TextField firstNameT = new TextField(editUser.getFirstname());
         
@@ -81,9 +63,12 @@ public class HS_EditUser {
         TextField emailT = new TextField(editUser.getEmail());
         
         Label functionL = new Label("Type:");
-        ComboBox functionT = function;
+        ComboBox functionC = new ComboBox(options);
         
-        /* Add everything to the grid */
+        error = new Label();
+        cancel = new Button("Cancel");
+        save = new Button("Save");
+        
         grid.add(name, 0, 0);
         
         grid.add(firstNameL, 0, 1);
@@ -104,36 +89,68 @@ public class HS_EditUser {
         grid.add(emailT, 1, 7, 5, 1);
         
         grid.add(functionL, 0, 8);
-        grid.add(functionT, 1, 8, 5, 1);
+        grid.add(functionC, 1, 8, 5, 1);
+        
+        grid.add(error, 0, 12, 10, 1);
         
         grid.add(cancel, 0, 10);
         grid.add(save, 1, 10, 10, 1);
         
-        /* Event handlers */
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
+        
+        if (!"Counter Assistant".equals(editUser.getFunction())) {
+            functionC.getSelectionModel().selectNext();   
+            
+            if (!"Manager".equals(editUser.getFunction())) {
+                functionC.getSelectionModel().selectNext();
+            }
+        }  else {
+            functionC.getSelectionModel().selectFirst(); 
+        }
+        
         cancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                pane.getChildren().clear();
-                pane.getScene().setRoot(Homepage_Systeem.getScreen());
+                pane.setCenter(createTable());
             }
         });
         
         save.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                               
+                
+                if (
+                        firstNameT.getText() == null || 
+                        firstNameT.getText().trim().isEmpty() ||
+                        lastNameT.getText() == null || 
+                        lastNameT.getText().trim().isEmpty() ||
+                        usernameT.getText() == null || 
+                        usernameT.getText().trim().isEmpty() ||
+                        passwordT.getText() == null || 
+                        passwordT.getText().trim().isEmpty() ||
+                        emailT.getText() == null || 
+                        emailT.getText().trim().isEmpty() ||
+                        functionC.getValue() == null) {
+
+                    error.setText("You have not filled all the fields");
+                    
+                    return;
+                }
+                
                 Database test = new Database();
-                test.setConn();
+                Database.setConn();
                 test.setQuery("Update users SET "
                         + "firstname='" + firstNameT.getText() + "', " 
                         + "lastname='" + lastNameT.getText() + "', "
                         + "password='" + passwordT.getText() + "', "
                         + "email='" + emailT.getText() + "', "
-                        + "function='" + functionT.getValue() + "' "
+                        + "function='" + functionC.getValue() + "' "
                         + "WHERE username = '" + editUser.getUsername() + "'");
                        
-                pane.getChildren().clear();
-                pane.getScene().setRoot(Homepage_Systeem.getScreen());
+                pane.setCenter(createTable());
             }
         });
         

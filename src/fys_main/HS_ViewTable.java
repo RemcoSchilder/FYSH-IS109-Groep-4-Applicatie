@@ -16,14 +16,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class HS_ViewTable {
     
-    private static TableView<TableUsers> table = new TableView<>();
-    private static ObservableList<TableUsers> data = FXCollections.observableArrayList();
+    private static TableView<TableUsers> table;
+    private static ObservableList<TableUsers> data;
     
     public static TableView<TableUsers> users() {
         
         //vernieuw gegevens
         table = new TableView<>();
-        data.removeAll(data);
+        data = FXCollections.observableArrayList();
         
         //create colums voor table
         TableColumn firstname = new TableColumn("Firstname");
@@ -92,12 +92,15 @@ public class HS_ViewTable {
             //Handle errors for JDBC
             se.printStackTrace();
             }
+            
+            searchResult = null;
         }
 
         /* Set table colums and rows */
         table.setItems(data);
-        table.getColumns().addAll(firstname, lastname, username, password, email, function);
-
+        table.getColumns().addAll(firstname, lastname, username, password, 
+                email, function);
+        
         
         return table;
     }
@@ -112,7 +115,9 @@ public class HS_ViewTable {
         private final SimpleStringProperty email;
         private final SimpleStringProperty function;
 
-        private TableUsers(String firstname, String lastname, String username, String password, String email, String function) {
+        private TableUsers(String firstname, String lastname, String username,
+                String password, String email, String function) {
+            
             this.firstname = new SimpleStringProperty(firstname);
             this.lastname = new SimpleStringProperty(lastname);
             this.username = new SimpleStringProperty(username);
