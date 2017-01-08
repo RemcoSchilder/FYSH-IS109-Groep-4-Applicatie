@@ -73,17 +73,17 @@ public class Login {
                     Database DB = new Database();
                     DB.setConn();
                 
-                    ResultSet checkLogin = DB.getQuery("SELECT * FROM users WHERE BINARY username='" + userTextField.getText() + "' AND BINARY password='" + pwTextField.getText() + "'");
+                    ResultSet checkLogin = DB.getQuery("SELECT function FROM users WHERE BINARY username='" + userTextField.getText() + "' AND BINARY password='" + pwTextField.getText() + "'");
                 
                     try {
                         if (checkLogin.next()) {
-                            if (checkLogin.getString("function").equals("system_manager")) {
+                            if (checkLogin.getString("function").equals("System Manager")) {
                                 pane.getChildren().clear();
                                 pane.getScene().setRoot(Homepage_Systeem.getScreen());
-                            } else if (checkLogin.getString("function").equals("manager")) {
+                            } else if (checkLogin.getString("function").equals("Manager")) {
                                 pane.getChildren().clear();
                                 pane.getScene().setRoot(Homepage_Manager.getScreen());
-                            } else if (checkLogin.getString("function").equals("baliemedewerker")) {
+                            } else if (checkLogin.getString("function").equals("Counterassistent")) {
                                 pane.getChildren().clear();
                                 pane.getScene().setRoot(Homepage_Baliemedewerker.getScreen());
                             } else {
