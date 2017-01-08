@@ -1,14 +1,13 @@
 package fys_main;
 
-import static fys_main.FYS_LostFound.grid;
 import static fys_main.FYS_LostFound.pane;
+import fys_main.HS_ViewTable.TableUsers;
 import java.sql.ResultSet;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -20,7 +19,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
@@ -32,128 +30,123 @@ import javafx.scene.layout.VBox;
  */
 public class Homepage_Systeem {
     
-    public static ResultSet searchResult;
-    private static StackPane stack = new StackPane();
-    private static TextField searchFirstName = new TextField();
-    private static TextField searchLastName = new TextField();
-    private static TextField searchEmail = new TextField();
-    private static ComboBox boxFunction = new ComboBox();
-    private static Button search = new Button("Search");
-    private static Button user = new Button("user");
-    private static Button logout = new Button("logout");
-    private static Button delete = new Button("delete");
-    private static Button edit = new Button("edit");
+    private static TableView<TableUsers> table;
+    protected static ResultSet searchResult;
+    protected static TableUsers editUser;
+    private static TextField searchFirstName, searchLastName, searchEmail;
+    private static ComboBox boxFunction;
+    private static Button search, addUser, edit, delete, logout;
+    private static ButtonType yesButton, cancelButton;
     
-    public static VBox vboxLeft() {
-        VBox vbox = new VBox();
-
-        //image
+    public static HBox hboxTop() {
+        HBox hbox = new HBox();
+        
         Image image = new Image("https://www.corendon.be/apple-touch-icon-152x152.png", 230, 80, false, false);
-        ImageView v1 = new ImageView();
-        v1.setImage(image);
-
-        //tekst & buttons
+        ImageView v1 = new ImageView(image);
         
-
-        //alles wordt in de vbox gestopt
-        vbox.getChildren().addAll(v1);
-
-        //style voor de vbox
-        vbox.getStyleClass().add("vbox");
-
-        //logout button onderaan
+        hbox.getChildren().add(v1);
+        hbox.getStyleClass().add("hbox");
         
-
-        return vbox;
+        return hbox;
     }
     
     public static HBox hboxBottom() {
         HBox hbox = new HBox();
         
-        //buttons
+        hbox.setMinHeight(48);
+        hbox.getStyleClass().add("hbox");
+        
+        return hbox;
+    }
+    
+    public static VBox vboxLeft() {
+        VBox vbox = new VBox();
+        StackPane stack = new StackPane();
+        
+        logout = new Button("logout");
         logout.setMinSize(230, 48);
         
-        //alles wordt in de vbox gestopt
-        hbox.getChildren().addAll(logout);
-
-        //style voor de vbox
-        hbox.getStyleClass().add("vbox");
-       // VBox.setMargin(logout, new Insets(566, 0, 0, 0));
-       
-       
-        return hbox;
+        stack.getChildren().add(logout);
+        stack.setAlignment(Pos.BOTTOM_CENTER);
+        
+        vbox.getChildren().add(stack);
+        VBox.setVgrow(stack, Priority.ALWAYS);
+        vbox.getStyleClass().add("vbox");
+        
+        return vbox;
     }
     
     
     public static VBox vboxRight() {
         VBox vbox = new VBox();
-        VBox buttonVbox = new VBox();
         
-        ObservableList<String> options = 
-        FXCollections.observableArrayList(
-            "Counter Assistant",
-            "Manager",
-            "System Manager"
-        );
-        boxFunction = new ComboBox(options);
+        searchFirstName = new TextField();
+        searchLastName = new TextField();
+        searchEmail = new TextField();
         
+        search = new Button("Search"); 
+        addUser = new Button("user");
+        edit = new Button("edit");
+        delete = new Button("delete"); 
+
         Label labelFirstName = new Label("First Name: ");
         Label labelLastName = new Label("Last Name: ");
         Label labelEmail = new Label("Email: ");
         Label labelFunction = new Label("Function: ");
-        
-        //buttons
-        search.setMinSize(230, 48);
        
         labelFirstName.getStyleClass().add("labels");
         labelLastName.getStyleClass().add("labels");
         labelEmail.getStyleClass().add("labels");
         labelFunction.getStyleClass().add("labels");
         
-        //Stackpane
-        user.setMinSize(160, 48);
-        edit.setMinSize(160, 48);
-        delete.setMinSize(160, 48);
+        ObservableList<String> options = 
+        FXCollections.observableArrayList(
+            "",
+            "Counter Assistant",
+            "Manager",
+            "System Manager"
+        );
+        boxFunction = new ComboBox(options);
+        boxFunction.getSelectionModel().selectFirst();
+        boxFunction.setMaxWidth(Double.MAX_VALUE);
         
-        stack.setMinHeight(200);
-        buttonVbox.getChildren().addAll(user, edit, delete);
-        stack.getChildren().add(buttonVbox);
-        stack.setAlignment(Pos.BOTTOM_CENTER);
+        search.setMinSize(230, 48);
+        addUser.setMinSize(230, 48);
+        edit.setMinSize(230, 48);
+        delete.setMinSize(230, 48);
         
-        //alles wordt in de vbox gestopt
-        vbox.getChildren().addAll(labelFirstName, searchFirstName, labelLastName
-                , searchLastName, labelEmail, searchEmail, labelFunction
-                , boxFunction, search, stack);
+        vbox.getChildren().addAll(labelFirstName, searchFirstName,
+                labelLastName, searchLastName, labelEmail, searchEmail,
+                labelFunction, boxFunction, search, addUser, edit, delete);
         
-        VBox.setVgrow(stack, Priority.ALWAYS);
-        VBox.setMargin(stack, new Insets(400, 0, 0, 0));
-        
-
-        //style voor de vbox
         vbox.getStyleClass().add("vbox");
-        
 
         return vbox;
     }
     
-
-    public static BorderPane getScreen() {
-        pane = new BorderPane();
-        ButtonType yesButton = new ButtonType("DELETE");
-        ButtonType cancelButton = new ButtonType("No");
+    public static TableView createTable() {
+        table = HS_ViewTable.users();
+        
+        return table;
+    }
+    
+    public static Alert alertPopup() {
+        yesButton = new ButtonType("DELETE");
+        cancelButton = new ButtonType("No");
         Alert alert = new Alert(Alert.AlertType.WARNING);
         
-        TableView<HS_ViewTable.TableUsers> table = HS_ViewTable.users();
-        
-        //delete warning popup
         alert.setTitle("Delete");
         alert.setHeaderText("Delete User");
         alert.setContentText("Are u sure you want to delete this user?");
         alert.getButtonTypes().setAll(cancelButton, yesButton);
-       
-        //voeg alles toe aan de border
+        
+        return alert;
+    }
+    
+    public static BorderPane getScreen() {
+        pane.setTop(hboxTop());
         pane.setLeft(vboxLeft());
-        pane.setCenter(table);
+        pane.setCenter(createTable());
         pane.setRight(vboxRight());
         pane.setBottom(hboxBottom());
         
@@ -162,19 +155,19 @@ public class Homepage_Systeem {
             @Override
             public void handle(ActionEvent event) {
                 Database DB = new Database();
-                DB.setConn();
+                Database.setConn();
                 
                 boolean where = false;
                 
-                String query = "SELECT CONCAT(firstname, ' ', lastname)"
-                + " AS name, username, password, email, function FROM users";
+                String query = "SELECT firstname, lastname"
+                + ", username, password, email, function FROM users";
                 
                 if (!searchFirstName.getText().equals("")) {
                     if (where) {
                         query += " AND firstname = '" + searchFirstName.getText() + "'";
                     } else {
                         where = true;
-                        query += " WHERE firstname = '" + searchFirstName.getText() + "'";
+                        query += " WHERE firstname LIKE '%" + searchFirstName.getText() + "%'";
                     }
                 } 
                 if (!searchLastName.getText().equals("")) {
@@ -182,7 +175,7 @@ public class Homepage_Systeem {
                         query += " AND lastname = '" + searchLastName.getText() + "'";
                     } else {
                         where = true;
-                        query += " WHERE lastname = '" + searchLastName.getText() + "'";
+                        query += " WHERE lastname LIKE '%" + searchLastName.getText() + "%'";
                     }
                 } 
                 if (!searchEmail.getText().equals("")) {
@@ -190,7 +183,7 @@ public class Homepage_Systeem {
                         query += " AND email = '" + searchEmail.getText() + "'";
                     } else {
                         where = true;
-                        query += " WHERE email = '" + searchEmail.getText() + "'";
+                        query += " WHERE email LIKE '%" + searchEmail.getText() + "%'";
                     }
                 } 
                 if (!boxFunction.getValue().equals("")) {
@@ -202,16 +195,13 @@ public class Homepage_Systeem {
                     }
                 } 
                 
-                
                 searchResult = DB.getQuery(query);
-                TableView<HS_SearchUsers.SearchUsers> table = HS_SearchUsers.searchUsers();
-                pane.setCenter(table);
-                
+                pane.setCenter(createTable());
+                    
             }
         });
-
-        //eventhandeler bekijken van userlist 
-        user.setOnAction(new EventHandler<ActionEvent>() {
+ 
+        addUser.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 pane.setCenter(HS_CreateUser.getScreen());
@@ -219,40 +209,45 @@ public class Homepage_Systeem {
             }
         });
         
-        //eventhandeler edit van gegevens
         edit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
+                
+                editUser = table.getSelectionModel().getSelectedItem();
+                
+                if (editUser != null) {
+                    pane.setCenter(HS_EditUser.getScreen());
+                }
+                
+                
+                
             }
         });
+        
         
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                
                 String username = table.getSelectionModel().getSelectedItem().getUsername();
                       
-                Optional<ButtonType> result = alert.showAndWait();
+                Optional<ButtonType> result = alertPopup().showAndWait();
                 
                 if(result.get() == yesButton)
                 {                       
                     Database test = new Database();
-                    test.setConn();
+                    Database.setConn();
                     test.setQuery("DELETE FROM users WHERE username = '" + username + "'" );
                     
-                    pane.getChildren().clear();
-                    pane.getScene().setRoot(Homepage_Systeem.getScreen());
+                    createTable();
                 }
                 else if(result.get() == cancelButton)
                 {
-
+                    alertPopup().close();
                 }  
 
             }
-});
+        });
 
-        //eventhandler terug naar start
         logout.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

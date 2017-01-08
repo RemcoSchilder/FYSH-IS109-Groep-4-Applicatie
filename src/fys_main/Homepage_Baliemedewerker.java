@@ -1,7 +1,7 @@
 package fys_main;
 
 import static fys_main.FYS_LostFound.pane;
-import fys_main.HB_SearchBaggage.TableLuggage;
+import fys_main.HB_SearchBaggage.TableBaggage;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,8 +29,8 @@ public class Homepage_Baliemedewerker {
     private static BorderPane pane = new BorderPane();
     private static GridPane grid = new GridPane();
 
-   private static TableView<TableLuggage> table = new TableView<>();
-    private static ObservableList<TableLuggage> data = FXCollections.observableArrayList();
+    private static TableView<TableBaggage> table = new TableView<>();
+    private static ObservableList<TableBaggage> data = FXCollections.observableArrayList();
 
     //sidebar Menu Buttons
     private static Label createL = new Label("Create");
@@ -126,37 +126,18 @@ public class Homepage_Baliemedewerker {
             public void handle(ActionEvent event) {
                 pane.getChildren().clear();
                 pane.getScene().setRoot(Start.getScreen());
-
+                hbox.getChildren().remove(edit);
             }
         });
-        
-        
+
         edit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                pane.setCenter(getScreenOne());
-                hbox.getChildren().remove(edit);
-
+                pane.setCenter(HB_SearchBaggage.getScreenTwo());
             }
         });
-       
-    
-    return pane;
-    }
-         
-       public static BorderPane getScreenOne() {
-        
-           
-           
-           
-           
-           
-           
-        
 
         return pane;
     }
-
-    
 
 }

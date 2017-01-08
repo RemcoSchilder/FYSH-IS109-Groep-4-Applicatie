@@ -11,10 +11,15 @@
 
 .vbox {
     -fx-background-color: #d81e05;
+    -fx-min-width: 230px;
 }
 
 .gridpane {
     -fx-background-color: #2e8b57;
+}
+
+.hbox {
+    -fx-background-color: #d81e05;
 }
 
 .labels{
