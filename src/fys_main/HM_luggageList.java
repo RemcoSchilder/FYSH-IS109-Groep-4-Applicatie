@@ -1,5 +1,6 @@
 package fys_main;
 
+import static fys_main.FYS_LostFound.pane;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
@@ -40,6 +42,10 @@ public class HM_luggageList {
     private static Label Brand = new Label("Brand: ");
     private static Label Type = new Label("Type: ");
     private static Label Color = new Label("Color: ");
+    
+    /* Buttons */
+    private static Button cancel = new Button("Cancel");
+    private static Button save = new Button("Save");
 
     public static BorderPane getScreen() {
         getScreenOne();
@@ -254,6 +260,118 @@ public class HM_luggageList {
 
     }
 
+    public static BorderPane getScreenTwo() {
+        /* GridPane with properties */
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
+        
+        TableLuggage baggage = table.getSelectionModel().getSelectedItem();
+        
+       /* Create all subheadings */
+        Text lostInfo = new Text("Lost information:");
+        lostInfo.getStyleClass().add("subheading");
+        
+        Text labelInfo = new Text("Luggage label information:");
+        labelInfo.getStyleClass().add("subheading");
+        
+        Text luggageInfo = new Text("Luggage information:");
+        luggageInfo.getStyleClass().add("subheading");
+        
+        /* Textfields */
+        TextField airportT = new TextField(baggage.getAirport());
+        TextField labelNumberT = new TextField(baggage.getLabel_number());
+        TextField flightNumberT = new TextField(baggage.getFlight_number());
+        TextField destinationT = new TextField(baggage.getDestination());
+        TextField brandT = new TextField(baggage.getBrand());
+        TextField colorT = new TextField(baggage.getColor());
+        TextField typeT = new TextField(baggage.getType());
+        TextArea characteristicsT = new TextArea(baggage.getCharacteristics());
+        
+        /* Create all labels & inputs */
+        Label airportL = new Label("Airport:");
+        Label labelNumberL = new Label("Lable number:");
+        Label flightNumberL = new Label("Flight number:");
+        Label destinationL = new Label("Destination:");
+        Label brandL = new Label("Brand:");
+        Label colorL = new Label("Color:");
+        Label typeL = new Label("Type:");
+        
+        Label characteristicsL = new Label("Characteristics:");
+        characteristicsT.setPrefWidth(250);
+        characteristicsT.setPrefHeight(100);
+        
+        /* Add everything to the grid */
+        grid.add(lostInfo, 0, 0);
+        
+        grid.add(airportL, 0, 3);
+        grid.add(airportT, 1, 3, 10, 1);
+        
+        grid.add(labelInfo, 0, 5);
+        
+        grid.add(labelNumberL, 0, 6);
+        grid.add(labelNumberT, 1, 6, 10, 1);
+        
+        grid.add(flightNumberL, 0, 7);
+        grid.add(flightNumberT, 1, 7, 10, 1);
+        
+        grid.add(destinationL, 0, 8);
+        grid.add(destinationT, 1, 8, 10, 1);
+        
+        grid.add(luggageInfo, 0, 10);
+        
+        grid.add(brandL, 0, 11);
+        grid.add(brandT, 1, 11, 10, 1);
+        
+        grid.add(colorL, 0, 12);
+        grid.add(colorT, 1, 12, 10, 1);
+        
+        grid.add(typeL, 0, 13);
+        grid.add(typeT, 1, 13, 10, 1);
+        
+        grid.add(characteristicsL, 0, 14);
+        grid.add(characteristicsT, 1, 14, 10, 1);
+        
+        grid.add(cancel, 0, 15);
+        grid.add(save, 1, 15, 10, 1);
+        
+        // All event handlers from screen two
+        save.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Database DB = new Database();
+                DB.setConn();
+                DB.setQuery("UPDATE " + baggage.getLost_found() + " "
+                        + "SET "
+                        + "airport='" + airportT.getText() + "', "
+                        + "labelNumber='" + labelNumberT.getText() + "', "
+                        + "flightNumber='" + flightNumberT.getText() + "', "
+                        + "destination='" + destinationT.getText() + "', "
+                        + "brand='" + brandT.getText() + "', "
+                        + "color='" + colorT.getText() + "', "
+                        + "type='" + typeT.getText() + "', "
+                        + "characteristics='" + characteristicsT.getText() + "' "
+                        + "WHERE labelNumber='" + baggage.getLabel_number() + "'");
+               
+                pane.setCenter(HM_luggageList.getScreen());
+            }
+        });
+        
+        
+        cancel.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                pane.setCenter(HM_luggageList.getScreen());
+            }
+        });
+        
+        pane.setCenter(grid);
+        
+        return pane;
+    }
+    
     public static GridPane getScreenDetails(){
     
      /* Make GridPane with properties */
@@ -283,9 +401,9 @@ public class HM_luggageList {
         Label labelnumber = new Label("Label number:");
         Label flightnumber = new Label("Flight number:");
         Label lostfound = new Label("Lost/Found:");
-        Label type = new Label("Type:");
         Label brand = new Label("Brand:");
         Label color = new Label("Color:");
+        Label type = new Label("Type:");
         Label characteristics = new Label("Characteristics:");
         
         /*Create labels with information from the table */
@@ -295,9 +413,9 @@ public class HM_luggageList {
         Label labelnumber2 = new Label(details.getLabel_number());
         Label flightnumber2 = new Label(details.getFlight_number());
         Label lostfound2 = new Label(details.getLost_found());
-        Label type2 = new Label(details.getType());
         Label brand2 = new Label(details.getBrand());
         Label color2 = new Label(details.getColor());
+        Label type2 = new Label(details.getType());
         Label characteristics2 = new Label(details.getCharacteristics());
         
        
@@ -327,14 +445,14 @@ public class HM_luggageList {
         
         screen.add(bagageinfo, 0, 12);
         
-        screen.add(type, 0, 14);
-        screen.add(type2, 1, 14);
+        screen.add(brand, 0, 14);
+        screen.add(brand2, 1, 14);
         
-        screen.add(brand, 0, 15);
-        screen.add(brand2, 1, 15);
+        screen.add(color, 0, 15);
+        screen.add(color2, 1, 15);
         
-        screen.add(color, 0, 16);
-        screen.add(color2, 1, 16);
+        screen.add(type, 0, 16);
+        screen.add(type2, 1, 16);
         
         screen.add(characteristics, 0, 17);
         screen.add(characteristics2, 1, 17);        

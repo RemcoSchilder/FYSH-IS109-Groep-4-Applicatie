@@ -25,7 +25,9 @@ public class Homepage_Manager {
     private static Label graph = new Label("Graph");
     private static Button lost = new Button("Lost");
     private static Button found = new Button("Found");
+    private static Button edit = new Button("Edit");
     private static Button logout = new Button("Log out");
+    private static HBox hbox = new HBox();
 
    //methode voor het scherm
     public static VBox vbox() {
@@ -48,10 +50,10 @@ public class Homepage_Manager {
     }
     
     public static HBox hboxBottom() {
-        HBox hbox = new HBox();
         
         //buttons
         logout.setMinSize(230, 48);
+        edit.setMinSize(230, 48);
         
         //alles wordt in de vbox gestopt
         hbox.getChildren().addAll(logout);
@@ -75,8 +77,8 @@ public class Homepage_Manager {
         bagageLijst.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-              
                 pane.setCenter(HM_luggageList.getScreen());
+                hbox.getChildren().add(edit);
             }
         });
         
@@ -87,7 +89,7 @@ public class Homepage_Manager {
 
                 pane.getChildren().clear();
                 pane.getScene().setRoot(Start.getScreen());
-
+                hbox.getChildren().remove(edit);
             }
         });
         
@@ -97,6 +99,7 @@ public class Homepage_Manager {
             public void handle(ActionEvent event) {
               
                 pane.setCenter(HM_Graphlost.getScreen());
+                hbox.getChildren().remove(edit);
             }
         });
         
@@ -106,6 +109,14 @@ public class Homepage_Manager {
             public void handle(ActionEvent event) {
               
                 pane.setCenter(HM_Graphfound.getScreen());
+                hbox.getChildren().remove(edit);
+            }
+        });
+        
+        edit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                pane.setCenter(HM_luggageList.getScreenTwo());
             }
         });
 
