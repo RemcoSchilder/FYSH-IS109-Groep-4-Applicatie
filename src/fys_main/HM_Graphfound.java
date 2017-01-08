@@ -14,7 +14,6 @@ import javafx.geometry.Pos;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.GridPane;
 
@@ -57,18 +56,61 @@ public class HM_Graphfound {
             int totalFound[] = new int[4];
             int totalNumberFound = 0;
             
+            double MAX_yAxis = 0;
+            
             while(getTotalLost.next()) {
                 totalLost[totalNumberLost] = getTotalLost.getInt("totalLost");
                 totalNumberLost++;
+                
+                if(MAX_yAxis < totalLost[0]){
+                    
+                MAX_yAxis = Math.round(totalLost[0] * 1.20);
+                }
+                
+                if(MAX_yAxis < totalLost[1]){
+                    
+                MAX_yAxis = Math.round(totalLost[1] * 1.20);
+                }
+                
+                if(MAX_yAxis < totalLost[2]){
+                
+                MAX_yAxis = Math.round(totalLost[2] * 1.20);
+                }
+                
+                if(MAX_yAxis < totalLost[3]){
+                    
+                MAX_yAxis = Math.round(totalLost[3] * 1.20);
+                }
             }
             
             while(getTotalFound.next()) {
                 totalFound[totalNumberFound] = getTotalFound.getInt("totalFound");
                 totalNumberFound++;
+                
+                if(MAX_yAxis < totalFound[0]){
+                    
+                MAX_yAxis = Math.round(totalFound[0] * 1.20);
+                }
+                
+                if(MAX_yAxis < totalFound[1]){
+                
+                MAX_yAxis = Math.round(totalFound[1] * 1.20);
+                }
+                
+                if(MAX_yAxis < totalFound[2]){
+                    
+                
+                MAX_yAxis = Math.round(totalFound[2] * 1.20);
+                }
+                
+                if(MAX_yAxis < totalFound[3]){
+                
+                MAX_yAxis = Math.round(totalFound[3] * 1.20);
+                }
             }
 
         final CategoryAxis xAxis = new CategoryAxis();
-        final NumberAxis yAxis = new NumberAxis(0, 15, 1);
+        final NumberAxis yAxis = new NumberAxis(0, MAX_yAxis, 1);
         final BarChart<String, Number> bc = new BarChart<String, Number>(xAxis, yAxis);
         
         bc.setTitle("Status Graph " + dateFormat.format(date));
@@ -89,7 +131,7 @@ public class HM_Graphfound {
         foundColumn.getData().add(new XYChart.Data(send, totalFound[2]));
         foundColumn.getData().add(new XYChart.Data(returned, totalFound[3]));
 
-            bc.setMinSize(600, 600);  //grote aanpassen
+            bc.setMinSize(1200, 800);  //grote aanpassen
 
             pane.setAlignment(Pos.CENTER);
             pane.getChildren().addAll(bc);
