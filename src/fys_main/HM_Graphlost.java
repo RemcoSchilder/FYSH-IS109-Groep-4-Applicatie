@@ -74,7 +74,7 @@ public class HM_Graphlost {
         
         bc.setTitle("Month overview " + dateFormat.format(date));
         xAxis.setLabel("Status");
-        yAxis.setLabel("Value");
+        yAxis.setLabel("Number of bagagge");
 
         XYChart.Series lostColumn = new XYChart.Series();
         lostColumn.setName("Lost");

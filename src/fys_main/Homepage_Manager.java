@@ -23,8 +23,8 @@ public class Homepage_Manager {
     private static Label see = new Label("See");
     private static Button bagageLijst = new Button("Bagage List");
     private static Label graph = new Label("Graph");
-    private static Button lost = new Button("Lost");
-    private static Button found = new Button("Found");
+    private static Button lost = new Button("Month overview");
+    private static Button found = new Button("Status Graph");
     private static Button edit = new Button("Edit");
     private static Button logout = new Button("Log out");
     private static HBox hbox = new HBox();
@@ -56,6 +56,7 @@ public class Homepage_Manager {
         edit.setMinSize(230, 48);
         
         //alles wordt in de vbox gestopt
+        hbox.getChildren().clear();
         hbox.getChildren().addAll(logout);
 
         //style voor de vbox

@@ -95,7 +95,7 @@ public class HM_Graphfound {
         
         bc.setTitle("Status Graph " + dateFormat.format(date));
         xAxis.setLabel("Status");
-        yAxis.setLabel("Value");
+        yAxis.setLabel("Number of bagagge");
 
         XYChart.Series lostColumn = new XYChart.Series();
         lostColumn.setName("Lost");
