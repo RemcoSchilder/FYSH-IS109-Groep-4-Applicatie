@@ -63,23 +63,13 @@ public class HM_Graphfound {
                 totalNumberLost++;
                 
                 if(MAX_yAxis < totalLost[0]){
-                    
-                MAX_yAxis = Math.round(totalLost[0] * 1.20);
-                }
-                
-                if(MAX_yAxis < totalLost[1]){
-                    
-                MAX_yAxis = Math.round(totalLost[1] * 1.20);
-                }
-                
-                if(MAX_yAxis < totalLost[2]){
-                
-                MAX_yAxis = Math.round(totalLost[2] * 1.20);
-                }
-                
-                if(MAX_yAxis < totalLost[3]){
-                    
-                MAX_yAxis = Math.round(totalLost[3] * 1.20);
+                    MAX_yAxis = Math.round(totalLost[0] * 1.20);
+                } else if(MAX_yAxis < totalLost[1]){
+                    MAX_yAxis = Math.round(totalLost[1] * 1.20);
+                } else if(MAX_yAxis < totalLost[2]){
+                    MAX_yAxis = Math.round(totalLost[2] * 1.20);
+                } else if(MAX_yAxis < totalLost[3]){
+                    MAX_yAxis = Math.round(totalLost[3] * 1.20);
                 }
             }
             
@@ -88,24 +78,14 @@ public class HM_Graphfound {
                 totalNumberFound++;
                 
                 if(MAX_yAxis < totalFound[0]){
-                    
-                MAX_yAxis = Math.round(totalFound[0] * 1.20);
-                }
+                    MAX_yAxis = Math.round(totalFound[0] * 1.20);
+                } else if(MAX_yAxis < totalFound[1]){
+                    MAX_yAxis = Math.round(totalFound[1] * 1.20);
+                } else if(MAX_yAxis < totalFound[2]){
+                    MAX_yAxis = Math.round(totalFound[2] * 1.20);
+                } else if(MAX_yAxis < totalFound[3]){
                 
-                if(MAX_yAxis < totalFound[1]){
-                
-                MAX_yAxis = Math.round(totalFound[1] * 1.20);
-                }
-                
-                if(MAX_yAxis < totalFound[2]){
-                    
-                
-                MAX_yAxis = Math.round(totalFound[2] * 1.20);
-                }
-                
-                if(MAX_yAxis < totalFound[3]){
-                
-                MAX_yAxis = Math.round(totalFound[3] * 1.20);
+                    MAX_yAxis = Math.round(totalFound[3] * 1.20);
                 }
             }
 
