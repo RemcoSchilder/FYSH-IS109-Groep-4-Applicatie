@@ -12,6 +12,7 @@
 .vbox {
     -fx-background-color: #d81e05;
     -fx-min-width: 230px;
+    -fx-spacing: 8;
 }
 
 .gridpane {

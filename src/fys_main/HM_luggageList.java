@@ -34,6 +34,7 @@ public class HM_luggageList {
 
     private static Button search = new Button("Search");
     private static Button details = new Button("Details");
+    private static Button edit = new Button("Edit");
     private static TextField searchLabelNr = new TextField();
     private static TextField searchBrand = new TextField();
     private static TextField searchType = new TextField();
@@ -42,6 +43,7 @@ public class HM_luggageList {
     private static Label Brand = new Label("Brand: ");
     private static Label Type = new Label("Type: ");
     private static Label Color = new Label("Color: ");
+    private static Label error = new Label();
     
     /* Buttons */
     private static Button cancel = new Button("Cancel");
@@ -64,6 +66,7 @@ public class HM_luggageList {
         searchType.setMinSize(230, 48);
         searchColor.setMinSize(230, 48);
         details.setMinSize(230, 48);
+        edit.setMinSize(230, 48);
 
         LabelNumber.getStyleClass().add("labels");
         Brand.getStyleClass().add("labels");
@@ -72,7 +75,7 @@ public class HM_luggageList {
 
         //alles wordt in de vbox gestopt
         vbox.getChildren().addAll(LabelNumber, searchLabelNr, Brand,
-                searchBrand, Color, searchColor, Type, searchType, search, details);
+                searchBrand, Color, searchColor, Type, searchType, search, details, edit);
 
         //style voor de vbox
         vbox.getStyleClass().add("vbox");
@@ -255,6 +258,13 @@ public class HM_luggageList {
                 screen.setCenter(getScreenDetails());
             }
         });
+        
+        edit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                screen.setCenter(HM_luggageList.getScreenTwo());
+            }
+        });
  
         return screen;
 
@@ -336,11 +346,36 @@ public class HM_luggageList {
         
         grid.add(cancel, 0, 15);
         grid.add(save, 1, 15, 10, 1);
+        grid.add(error, 0, 16, 10, 1);
         
         // All event handlers from screen two
         save.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                
+                if (
+                        airportT.getText() == null || 
+                        airportT.getText().trim().isEmpty() ||
+                        labelNumberT.getText() == null || 
+                        labelNumberT.getText().trim().isEmpty() ||
+                        flightNumberT.getText() == null || 
+                        flightNumberT.getText().trim().isEmpty() ||
+                        destinationT.getText() == null || 
+                        destinationT.getText().trim().isEmpty() ||
+                        brandT.getText() == null || 
+                        brandT.getText().trim().isEmpty() ||
+                        colorL.getText() == null || 
+                        colorL.getText().trim().isEmpty() ||
+                        typeT.getText() == null || 
+                        typeT.getText().trim().isEmpty() ||
+                        characteristicsT.getText() == null || 
+                        characteristicsT.getText().trim().isEmpty()) {
+
+                    error.setText("You have not filled all the fields");
+                    
+                    return;
+                }
+                
                 Database DB = new Database();
                 DB.setConn();
                 DB.setQuery("UPDATE " + baggage.getLost_found() + " "
@@ -355,7 +390,7 @@ public class HM_luggageList {
                         + "characteristics='" + characteristicsT.getText() + "' "
                         + "WHERE labelNumber='" + baggage.getLabel_number() + "'");
                
-                pane.setCenter(HM_luggageList.getScreen());
+                pane.setCenter(HM_luggageList.getScreenOne());
             }
         });
         

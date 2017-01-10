@@ -79,7 +79,6 @@ public class Homepage_Manager {
             @Override
             public void handle(ActionEvent event) {
                 pane.setCenter(HM_luggageList.getScreen());
-                hbox.getChildren().add(edit);
             }
         });
         
@@ -90,7 +89,6 @@ public class Homepage_Manager {
 
                 pane.getChildren().clear();
                 pane.getScene().setRoot(Start.getScreen());
-                hbox.getChildren().remove(edit);
             }
         });
         
@@ -100,7 +98,6 @@ public class Homepage_Manager {
             public void handle(ActionEvent event) {
               
                 pane.setCenter(HM_Graphlost.getScreen());
-                hbox.getChildren().remove(edit);
             }
         });
         
@@ -110,14 +107,6 @@ public class Homepage_Manager {
             public void handle(ActionEvent event) {
               
                 pane.setCenter(HM_Graphfound.getScreen());
-                hbox.getChildren().remove(edit);
-            }
-        });
-        
-        edit.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                pane.setCenter(HM_luggageList.getScreenTwo());
             }
         });
 

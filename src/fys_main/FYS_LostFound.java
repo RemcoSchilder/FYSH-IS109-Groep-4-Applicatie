@@ -33,7 +33,7 @@ public class FYS_LostFound extends Application {
         //aanmaken primary stage
         thestage = primaryStage;
         primaryStage.setTitle("FYS Lost & Found");
-        primaryStage.getIcons().add(new Image("logo.jpg"));
+        primaryStage.getIcons().add(new Image("SterLogo.png"));
 
         //scene aangemaakt
         Scene scene = new Scene(Start.getScreen(), 1400, 800);
