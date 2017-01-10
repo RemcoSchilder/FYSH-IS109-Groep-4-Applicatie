@@ -50,7 +50,7 @@ public class Start {
         grid2.setVgap(5);
         grid2.setPadding(new Insets(100, 100, 100, 100));
         
-        Image image = new Image("http://www.corendonairlines.nl/corendon_logo.jpg", 600, 200, false, false);
+        Image image = new Image("logo.jpg", 600, 200, false, false);
 
         ImageView iv1 = new ImageView(image);
         iv1.setImage(image);

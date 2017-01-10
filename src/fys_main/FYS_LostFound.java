@@ -33,7 +33,7 @@ public class FYS_LostFound extends Application {
         //aanmaken primary stage
         thestage = primaryStage;
         primaryStage.setTitle("FYS Lost & Found");
-        primaryStage.getIcons().add(new Image("https://www.corendon.be/apple-touch-icon-152x152.png"));
+        primaryStage.getIcons().add(new Image("logo.jpg"));
 
         //scene aangemaakt
         Scene scene = new Scene(Start.getScreen(), 1400, 800);
