@@ -1,6 +1,5 @@
 package fys_main;
 
-import static fys_main.FYS_LostFound.grid;
 import static fys_main.FYS_LostFound.pane;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,6 +33,7 @@ public class HB_SearchBaggage {
     private static ObservableList<TableBaggage> data = FXCollections.observableArrayList();
 
     private static Button search = new Button("Search");
+    private static Button edit = new Button("Edit");
     private static TextField searchLabelNr = new TextField();
     private static TextField searchBrand = new TextField();
     private static TextField searchType = new TextField();
@@ -65,14 +65,15 @@ public class HB_SearchBaggage {
         searchBrand.setMinSize(230, 48);
         searchType.setMinSize(230, 48);
         searchColor.setMinSize(230, 48);
-
+        edit.setMinSize(230, 48);
+        
         LabelNumber.getStyleClass().add("labels");
         Brand.getStyleClass().add("labels");
         Type.getStyleClass().add("labels");
         Color.getStyleClass().add("labels");
 
         //alles wordt in de vbox gestopt
-        vbox.getChildren().addAll(LabelNumber, searchLabelNr, Brand, searchBrand, Color, searchColor,Type, searchType, search);
+        vbox.getChildren().addAll(LabelNumber, searchLabelNr, Brand, searchBrand, Color, searchColor,Type, searchType, search, edit);
 
         //style voor de vbox
         vbox.getStyleClass().add("vbox");
@@ -250,6 +251,14 @@ public class HB_SearchBaggage {
             }
         });
 
+        
+        edit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                pane.setCenter(getScreenTwo());
+            }
+        });
+        
         return screen;
     }
     

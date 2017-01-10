@@ -63,7 +63,7 @@ public class Start {
         pane.setCenter(grid);
         pane.setTop(grid2);
         
-     // AudioClip sound = new AudioClip("https://ia600501.us.archive.org/33/items/nyannyannyan/NyanCatoriginal.mp3");
+      //AudioClip sound = new AudioClip("https://ia600501.us.archive.org/33/items/nyannyannyan/NyanCatoriginal.mp3");
    
        
         btnBalie.setOnAction(new EventHandler<ActionEvent>() {
