@@ -20,7 +20,7 @@ import javafx.scene.layout.VBox;
 public class Homepage_Baliemedewerker {
 
     //aanmaken allover borderpane
-    private static BorderPane pane = new BorderPane();
+    public static BorderPane pane = new BorderPane();
     private static GridPane grid = new GridPane();
 
     private static TableView<TableBaggage> table = new TableView<>();

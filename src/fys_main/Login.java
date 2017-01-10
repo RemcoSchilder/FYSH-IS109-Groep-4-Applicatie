@@ -83,7 +83,7 @@ public class Login {
                             } else if (checkLogin.getString("function").equals("Manager")) {
                                 pane.getChildren().clear();
                                 pane.getScene().setRoot(Homepage_Manager.getScreen());
-                            } else if (checkLogin.getString("function").equals("Counterassistent")) {
+                            } else if (checkLogin.getString("function").equals("Counter Assistant")) {
                                 pane.getChildren().clear();
                                 pane.getScene().setRoot(Homepage_Baliemedewerker.getScreen());
                             } else {
