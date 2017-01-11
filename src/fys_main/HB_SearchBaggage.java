@@ -384,8 +384,7 @@ public class HB_SearchBaggage {
         private final SimpleStringProperty lost_found;
         private final SimpleStringProperty status;
 
-        private TableBaggage(String date, String time, String airport, String label_number, String flight_number, String destination, String brand, String color, String type, String characteristics, String lost_found, String status) {
-
+        public TableBaggage(String date, String time, String airport, String label_number, String flight_number, String destination, String brand, String color, String type, String characteristics, String lost_found, String status) {
             this.date = new SimpleStringProperty(date);
             this.time = new SimpleStringProperty(time);
             this.airport = new SimpleStringProperty(airport);
@@ -398,7 +397,21 @@ public class HB_SearchBaggage {
             this.characteristics = new SimpleStringProperty(characteristics);
             this.lost_found = new SimpleStringProperty(lost_found);
             this.status = new SimpleStringProperty(status);
-
+        }
+        
+        public TableBaggage(String brand, String color, String type, String characteristics) {
+            this.date = new SimpleStringProperty();
+            this.time = new SimpleStringProperty();
+            this.airport = new SimpleStringProperty();
+            this.label_number = new SimpleStringProperty();
+            this.flight_number = new SimpleStringProperty();
+            this.destination = new SimpleStringProperty();
+            this.brand = new SimpleStringProperty(brand);
+            this.color = new SimpleStringProperty(color);
+            this.type = new SimpleStringProperty(type);
+            this.characteristics = new SimpleStringProperty(characteristics);
+            this.lost_found = new SimpleStringProperty();
+            this.status = new SimpleStringProperty();
         }
 
         public String getDate() {
