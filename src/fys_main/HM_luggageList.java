@@ -1,8 +1,11 @@
 package fys_main;
 
 import static fys_main.FYS_LostFound.pane;
+import static fys_main.Homepage_Systeem.alertPopup;
+import static fys_main.Homepage_Systeem.createTable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,7 +13,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -34,6 +39,7 @@ public class HM_luggageList {
 
     private static Button search = new Button("Search");
     private static Button details = new Button("Details");
+    private static Button delete = new Button("Delete");
     private static TextField searchLabelNr = new TextField();
     private static TextField searchBrand = new TextField();
     private static TextField searchType = new TextField();
@@ -46,6 +52,7 @@ public class HM_luggageList {
     /* Buttons */
     private static Button cancel = new Button("Cancel");
     private static Button save = new Button("Save");
+    private static ButtonType yesButton, cancelButton;
 
     public static BorderPane getScreen() {
         getScreenOne();
@@ -64,6 +71,7 @@ public class HM_luggageList {
         searchType.setMinSize(230, 48);
         searchColor.setMinSize(230, 48);
         details.setMinSize(230, 48);
+        delete.setMinSize(230,48);
 
         LabelNumber.getStyleClass().add("labels");
         Brand.getStyleClass().add("labels");
@@ -72,7 +80,7 @@ public class HM_luggageList {
 
         //alles wordt in de vbox gestopt
         vbox.getChildren().addAll(LabelNumber, searchLabelNr, Brand,
-                searchBrand, Color, searchColor, Type, searchType, search, details);
+                searchBrand, Color, searchColor, Type, searchType, search, details, delete);
 
         //style voor de vbox
         vbox.getStyleClass().add("vbox");
@@ -255,11 +263,42 @@ public class HM_luggageList {
                 screen.setCenter(getScreenDetails());
             }
         });
+        
+        
+               delete.setOnAction(new EventHandler<ActionEvent>()  {
+            @Override
+            public void handle(ActionEvent event) {
+                
+                
+                
+             String labelnumber = table.getSelectionModel().getSelectedItem().getLabel_number();
+                      
+                Optional<ButtonType> result = alertPopup().showAndWait();
+                
+                if(result.get() == yesButton)
+                {                       
+                    Database deleteluggage = new Database();
+                    Database.setConn();
+                    deleteluggage.setQuery("DELETE FROM lost WHERE labelNumber = '" + labelnumber + "'" );
+                    deleteluggage.setQuery("DELETE FROM found WHERE labelNumber = '" + labelnumber + "'");
+                    createTable();
+                }
+                else if(result.get() == cancelButton)
+                {
+                    alertPopup().close();
+                }  
+
+            }
+            
+            
+            
+        });
  
+        
         return screen;
 
     }
-
+        
     public static BorderPane getScreenTwo() {
         /* GridPane with properties */
         GridPane grid = new GridPane();
@@ -458,6 +497,19 @@ public class HM_luggageList {
         screen.add(characteristics2, 1, 17);        
         
        return screen;
+    }
+    
+    public static Alert alertPopup() {
+        yesButton = new ButtonType("DELETE");
+        cancelButton = new ButtonType("No");
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        
+        alert.setTitle("Delete");
+        alert.setHeaderText("Delete Luggage");
+        alert.setContentText("Are u sure you want to delete this Luggage?");
+        alert.getButtonTypes().setAll(cancelButton, yesButton);
+        
+        return alert;
     }
     
     public static class TableLuggage {
