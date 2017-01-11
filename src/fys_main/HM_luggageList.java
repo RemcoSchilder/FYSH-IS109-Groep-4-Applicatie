@@ -1,6 +1,5 @@
 package fys_main;
 
-import static fys_main.FYS_LostFound.pane;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.beans.property.SimpleStringProperty;
@@ -51,11 +50,12 @@ public class HM_luggageList {
 
     public static BorderPane getScreen() {
         getScreenOne();
+        vboxRight();
 
         return screen;
     }
 
-    public static VBox vboxRight() {
+    public static void vboxRight() {
         VBox vbox = new VBox();
         //image
 
@@ -79,11 +79,11 @@ public class HM_luggageList {
 
         //style voor de vbox
         vbox.getStyleClass().add("vbox");
-
-        return vbox;
+        
+        screen.setRight(vbox);
     }
 
-    private static BorderPane getScreenOne() {
+    private static void getScreenOne() {
 
         table = new TableView<>();
         data.removeAll(data);
@@ -165,7 +165,6 @@ public class HM_luggageList {
         /* Create fields with labels */
         screen.setCenter(table);
         screen.setTop(searchLuggage);
-        screen.setRight(vboxRight());
 
         search.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -255,22 +254,19 @@ public class HM_luggageList {
             @Override
             public void handle(ActionEvent event) {
 
-                screen.setCenter(getScreenDetails());
+                getScreenDetails();
             }
         });
         
         edit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                screen.setCenter(HM_luggageList.getScreenTwo());
+                getScreenTwo();
             }
         });
- 
-        return screen;
-
     }
 
-    public static BorderPane getScreenTwo() {
+    public static void getScreenTwo() {
         /* GridPane with properties */
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -390,7 +386,7 @@ public class HM_luggageList {
                         + "characteristics='" + characteristicsT.getText() + "' "
                         + "WHERE labelNumber='" + baggage.getLabel_number() + "'");
                
-                pane.setCenter(HM_luggageList.getScreenOne());
+                getScreenOne();
             }
         });
         
@@ -398,16 +394,14 @@ public class HM_luggageList {
         cancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                pane.setCenter(HM_luggageList.getScreen());
+                getScreenOne();
             }
         });
         
-        pane.setCenter(grid);
-        
-        return pane;
+        screen.setCenter(grid);
     }
     
-    public static GridPane getScreenDetails(){
+    public static void getScreenDetails(){
     
      /* Make GridPane with properties */
         GridPane screen = new GridPane();
@@ -490,9 +484,7 @@ public class HM_luggageList {
         screen.add(type2, 1, 16);
         
         screen.add(characteristics, 0, 17);
-        screen.add(characteristics2, 1, 17);        
-        
-       return screen;
+        screen.add(characteristics2, 1, 17);
     }
     
     public static class TableLuggage {
