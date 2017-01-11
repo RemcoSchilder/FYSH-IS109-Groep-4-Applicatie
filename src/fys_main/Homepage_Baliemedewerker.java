@@ -1,19 +1,13 @@
 package fys_main;
 
-import static fys_main.FYS_LostFound.pane;
 import fys_main.HB_SearchBaggage.TableBaggage;
-import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -26,7 +20,7 @@ import javafx.scene.layout.VBox;
 public class Homepage_Baliemedewerker {
 
     //aanmaken allover borderpane
-    private static BorderPane pane = new BorderPane();
+    public static BorderPane pane = new BorderPane();
     private static GridPane grid = new GridPane();
 
     private static TableView<TableBaggage> table = new TableView<>();
@@ -70,37 +64,31 @@ public class Homepage_Baliemedewerker {
 
         //buttons
         logout.setMinSize(230, 48);
-        edit.setMinSize(230, 48);
+        //edit.setMinSize(230, 48);
         //alles wordt in de vbox gestopt
         hbox.getChildren().addAll(logout);
 
         //style voor de vbox
         hbox.getStyleClass().add("vbox");
-        //VBox.setMargin(edit, new Insets(566, 0, 0, 0));
+        
 
         return hbox;
     }
 
-    public static VBox vboxRight() {
-
-        //style voor de vbox
-        vbox.getStyleClass().add("vbox");
-
-        return vbox;
-    }
+    
 
     public static BorderPane getScreen() {
 
         pane.setLeft(vboxLeft());
         pane.setBottom(HboxBottom());
-        pane.setRight(vboxRight());
+       
 
         //eventhander knop lost openen lost invoer
         lost.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 pane.setCenter(HB_CreateLost.getScreen());
-                hbox.getChildren().remove(edit);
+//                hbox.getChildren().remove(edit);
             }
         });
 
@@ -108,7 +96,7 @@ public class Homepage_Baliemedewerker {
             @Override
             public void handle(ActionEvent event) {
                 pane.setCenter(HB_CreateFound.getScreen());
-                hbox.getChildren().remove(edit);
+//                hbox.getChildren().remove(edit);
             }
         });
 
@@ -116,7 +104,7 @@ public class Homepage_Baliemedewerker {
             @Override
             public void handle(ActionEvent event) {
                 pane.setCenter(HB_SearchBaggage.getScreen());
-                hbox.getChildren().add(edit);
+//                hbox.getChildren().add(edit);
 
             }
         });
@@ -126,16 +114,16 @@ public class Homepage_Baliemedewerker {
             public void handle(ActionEvent event) {
                 pane.getChildren().clear();
                 pane.getScene().setRoot(Start.getScreen());
-                hbox.getChildren().remove(edit);
+//                hbox.getChildren().remove(edit);
             }
         });
 
-        edit.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                pane.setCenter(HB_SearchBaggage.getScreenTwo());
-            }
-        });
+//        edit.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                pane.setCenter(HB_SearchBaggage.getScreenTwo());
+//            }
+//        });
 
         return pane;
     }

@@ -1,8 +1,11 @@
 package fys_main;
 
+
 import static fys_main.FYS_LostFound.pane;
 import static fys_main.Homepage_Systeem.alertPopup;
 import static fys_main.Homepage_Systeem.createTable;
+
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -39,7 +42,11 @@ public class HM_luggageList {
 
     private static Button search = new Button("Search");
     private static Button details = new Button("Details");
+
     private static Button delete = new Button("Delete");
+
+    private static Button edit = new Button("Edit");
+
     private static TextField searchLabelNr = new TextField();
     private static TextField searchBrand = new TextField();
     private static TextField searchType = new TextField();
@@ -48,6 +55,7 @@ public class HM_luggageList {
     private static Label Brand = new Label("Brand: ");
     private static Label Type = new Label("Type: ");
     private static Label Color = new Label("Color: ");
+    private static Label error = new Label();
     
     /* Buttons */
     private static Button cancel = new Button("Cancel");
@@ -56,11 +64,12 @@ public class HM_luggageList {
 
     public static BorderPane getScreen() {
         getScreenOne();
+        vboxRight();
 
         return screen;
     }
 
-    public static VBox vboxRight() {
+    public static void vboxRight() {
         VBox vbox = new VBox();
         //image
 
@@ -71,7 +80,11 @@ public class HM_luggageList {
         searchType.setMinSize(230, 48);
         searchColor.setMinSize(230, 48);
         details.setMinSize(230, 48);
+
         delete.setMinSize(230,48);
+
+        edit.setMinSize(230, 48);
+
 
         LabelNumber.getStyleClass().add("labels");
         Brand.getStyleClass().add("labels");
@@ -80,12 +93,16 @@ public class HM_luggageList {
 
         //alles wordt in de vbox gestopt
         vbox.getChildren().addAll(LabelNumber, searchLabelNr, Brand,
-                searchBrand, Color, searchColor, Type, searchType, search, details, delete);
+
+                searchBrand, Color, searchColor, Type, searchType, search, details, edit,delete);
+
+        
+
 
         //style voor de vbox
         vbox.getStyleClass().add("vbox");
-
-        return vbox;
+        
+        screen.setRight(vbox);
     }
 
     private static BorderPane getScreenOne() {
@@ -170,7 +187,6 @@ public class HM_luggageList {
         /* Create fields with labels */
         screen.setCenter(table);
         screen.setTop(searchLuggage);
-        screen.setRight(vboxRight());
 
         search.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -260,10 +276,11 @@ public class HM_luggageList {
             @Override
             public void handle(ActionEvent event) {
 
-                screen.setCenter(getScreenDetails());
+                getScreenDetails();
             }
         });
         
+
         
                delete.setOnAction(new EventHandler<ActionEvent>()  {
             @Override
@@ -281,7 +298,7 @@ public class HM_luggageList {
                     Database.setConn();
                     deleteluggage.setQuery("DELETE FROM lost WHERE labelNumber = '" + labelnumber + "'" );
                     deleteluggage.setQuery("DELETE FROM found WHERE labelNumber = '" + labelnumber + "'");
-                    createTable();
+                    getScreenOne();
                 }
                 else if(result.get() == cancelButton)
                 {
@@ -289,6 +306,8 @@ public class HM_luggageList {
                 }  
 
             }
+                
+            
             
             
             
@@ -296,10 +315,16 @@ public class HM_luggageList {
  
         
         return screen;
+    
+
+        
 
     }
+
         
-    public static BorderPane getScreenTwo() {
+    
+    public static void getScreenTwo() {
+
         /* GridPane with properties */
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -375,11 +400,36 @@ public class HM_luggageList {
         
         grid.add(cancel, 0, 15);
         grid.add(save, 1, 15, 10, 1);
+        grid.add(error, 0, 16, 10, 1);
         
         // All event handlers from screen two
         save.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                
+                if (
+                        airportT.getText() == null || 
+                        airportT.getText().trim().isEmpty() ||
+                        labelNumberT.getText() == null || 
+                        labelNumberT.getText().trim().isEmpty() ||
+                        flightNumberT.getText() == null || 
+                        flightNumberT.getText().trim().isEmpty() ||
+                        destinationT.getText() == null || 
+                        destinationT.getText().trim().isEmpty() ||
+                        brandT.getText() == null || 
+                        brandT.getText().trim().isEmpty() ||
+                        colorL.getText() == null || 
+                        colorL.getText().trim().isEmpty() ||
+                        typeT.getText() == null || 
+                        typeT.getText().trim().isEmpty() ||
+                        characteristicsT.getText() == null || 
+                        characteristicsT.getText().trim().isEmpty()) {
+
+                    error.setText("You have not filled all the fields");
+                    
+                    return;
+                }
+                
                 Database DB = new Database();
                 DB.setConn();
                 DB.setQuery("UPDATE " + baggage.getLost_found() + " "
@@ -394,7 +444,7 @@ public class HM_luggageList {
                         + "characteristics='" + characteristicsT.getText() + "' "
                         + "WHERE labelNumber='" + baggage.getLabel_number() + "'");
                
-                pane.setCenter(HM_luggageList.getScreen());
+                getScreenOne();
             }
         });
         
@@ -402,16 +452,14 @@ public class HM_luggageList {
         cancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                pane.setCenter(HM_luggageList.getScreen());
+                getScreenOne();
             }
         });
         
-        pane.setCenter(grid);
-        
-        return pane;
+        screen.setCenter(grid);
     }
     
-    public static GridPane getScreenDetails(){
+    public static void getScreenDetails(){
     
      /* Make GridPane with properties */
         GridPane screen = new GridPane();
@@ -494,9 +542,7 @@ public class HM_luggageList {
         screen.add(type2, 1, 16);
         
         screen.add(characteristics, 0, 17);
-        screen.add(characteristics2, 1, 17);        
-        
-       return screen;
+        screen.add(characteristics2, 1, 17);
     }
     
     public static Alert alertPopup() {

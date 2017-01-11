@@ -1,18 +1,24 @@
 package fys_main;
 
+import fys_main.HB_SearchBaggage.TableBaggage;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -25,6 +31,10 @@ public class HB_CreateLost {
     
     /* Create grid pane */
     private static GridPane screen = new GridPane();
+    
+    /* Table */
+    private static TableView<TableBaggage> table = new TableView<>();
+    private static ObservableList<TableBaggage> data = FXCollections.observableArrayList();
     
     /* Buttons */
     private static Button cancel = new Button("Cancel");
@@ -279,7 +289,6 @@ public class HB_CreateLost {
                         + " 'open')");
                
                 screenThree();
-                /*FYS_LostFound.pane.setCenter(HB_SearchBaggage.getScreen());*/
             }
         });
     }
@@ -314,13 +323,52 @@ public class HB_CreateLost {
                 
                 screen.add(buttons, 0, 3);
             } else {
-                ResultSet otherMatch = DB.getQuery("SELECT * FROM found WHERE (brand='" + brandT.getText() + "' "
-                        + "OR color='" + colorT.getText() + "' "
-                        + "OR type='" + typeT.getText() + "') "
+                ResultSet otherMatch = DB.getQuery("SELECT * FROM found WHERE (brand LIKE '%" + brandT.getText() + "%' "
+                        + "OR color LIKE '%" + colorT.getText() + "%' "
+                        + "OR type LIKE '%" + typeT.getText() + "%') "
                         + "AND status='open'");
                 
                 Text error = new Text("Label number not found, check if the following results have a match:");
-                screen.add(error, 0, 0);
+                                
+                /* Initialize table */
+                table = new TableView<>();
+                data.removeAll(data);
+                
+                /* Create columns and assign them the right values */
+                TableColumn brand = new TableColumn("Brand");
+                brand.setCellValueFactory(new PropertyValueFactory<>("brand"));
+
+                TableColumn color = new TableColumn("Color");
+                color.setCellValueFactory(new PropertyValueFactory<>("color"));
+
+                TableColumn type = new TableColumn("Type");
+                type.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+                TableColumn characteristics = new TableColumn("characteristics");
+                characteristics.setCellValueFactory(new PropertyValueFactory<>("characteristics"));
+                
+                /* For each row insert them into the data from the table */
+                while (otherMatch.next()) {
+                    data.add(new TableBaggage(
+                            otherMatch.getString("brand"),
+                            otherMatch.getString("color"),
+                            otherMatch.getString("type"),
+                            otherMatch.getString("characteristics"))
+                    );
+                }
+                
+                if(data.size() > 0) {
+                    /* Set table colums and rows */
+                    table.setItems(data);
+                    table.getColumns().addAll(brand, color, type, characteristics);
+
+                    /* Add all to screen */
+                    screen.add(error, 0, 0);
+                    screen.add(table, 0, 1);
+                } else {
+                    /* NIET GEVONDEN */
+                    screen.add(new Text("Kapoet"), 0, 0);
+                }
             }
         }  catch(SQLException se) {
             //Handle errors for JDBC

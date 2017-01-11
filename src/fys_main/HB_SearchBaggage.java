@@ -1,7 +1,5 @@
 package fys_main;
 
-import static fys_main.FYS_LostFound.grid;
-import static fys_main.FYS_LostFound.pane;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.beans.property.SimpleStringProperty;
@@ -34,6 +32,7 @@ public class HB_SearchBaggage {
     private static ObservableList<TableBaggage> data = FXCollections.observableArrayList();
 
     private static Button search = new Button("Search");
+    private static Button edit = new Button("Edit");
     private static TextField searchLabelNr = new TextField();
     private static TextField searchBrand = new TextField();
     private static TextField searchType = new TextField();
@@ -50,12 +49,13 @@ public class HB_SearchBaggage {
     
     public static BorderPane getScreen() {
         getScreenOne();
+        vboxRight();
 
         return screen;
     }
     
 
-    public static VBox vboxRight() {
+    public static void vboxRight() {
         VBox vbox = new VBox();
         //image
 
@@ -65,23 +65,23 @@ public class HB_SearchBaggage {
         searchBrand.setMinSize(230, 48);
         searchType.setMinSize(230, 48);
         searchColor.setMinSize(230, 48);
-
+        edit.setMinSize(230, 48);
+        
         LabelNumber.getStyleClass().add("labels");
         Brand.getStyleClass().add("labels");
         Type.getStyleClass().add("labels");
         Color.getStyleClass().add("labels");
 
         //alles wordt in de vbox gestopt
-        vbox.getChildren().addAll(LabelNumber, searchLabelNr, Brand, searchBrand, Color, searchColor,Type, searchType, search);
+        vbox.getChildren().addAll(LabelNumber, searchLabelNr, Brand, searchBrand, Color, searchColor,Type, searchType, search, edit);
 
         //style voor de vbox
         vbox.getStyleClass().add("vbox");
 
-        return vbox;
+        screen.setRight(vbox);
     }
 
-    private static BorderPane getScreenOne() {
-
+    private static void getScreenOne() {
         table = new TableView<>();
         data.removeAll(data);
 
@@ -122,7 +122,6 @@ public class HB_SearchBaggage {
         TableColumn status = new TableColumn("status");
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
         
-       
 
         /* Initialize Database */
         Database db = new Database();
@@ -164,7 +163,6 @@ public class HB_SearchBaggage {
         /* Create fields with labels */
         screen.setCenter(table);
         screen.setTop(searchLuggage);
-        screen.setRight(vboxRight());
 
         search.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -250,11 +248,17 @@ public class HB_SearchBaggage {
             }
         });
 
-        return screen;
+        
+        edit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                getScreenTwo();
+            }
+        });
     }
     
     
-    public static BorderPane getScreenTwo() {
+    public static void getScreenTwo() {
         /* GridPane with properties */
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -349,7 +353,7 @@ public class HB_SearchBaggage {
                         + "characteristics='" + characteristicsT.getText() + "' "
                         + "WHERE labelNumber='" + baggage.getLabel_number() + "'");
                
-                pane.setCenter(HB_SearchBaggage.getScreen());
+                getScreenOne();
             }
         });
         
@@ -357,13 +361,11 @@ public class HB_SearchBaggage {
         cancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                pane.setCenter(HB_SearchBaggage.getScreen());
+                getScreenOne();
             }
         });
         
-        pane.setCenter(grid);
-        
-        return pane;
+        screen.setCenter(grid);
     }
     
     
@@ -382,8 +384,7 @@ public class HB_SearchBaggage {
         private final SimpleStringProperty lost_found;
         private final SimpleStringProperty status;
 
-        private TableBaggage(String date, String time, String airport, String label_number, String flight_number, String destination, String brand, String color, String type, String characteristics, String lost_found, String status) {
-
+        public TableBaggage(String date, String time, String airport, String label_number, String flight_number, String destination, String brand, String color, String type, String characteristics, String lost_found, String status) {
             this.date = new SimpleStringProperty(date);
             this.time = new SimpleStringProperty(time);
             this.airport = new SimpleStringProperty(airport);
@@ -396,7 +397,21 @@ public class HB_SearchBaggage {
             this.characteristics = new SimpleStringProperty(characteristics);
             this.lost_found = new SimpleStringProperty(lost_found);
             this.status = new SimpleStringProperty(status);
-
+        }
+        
+        public TableBaggage(String brand, String color, String type, String characteristics) {
+            this.date = new SimpleStringProperty();
+            this.time = new SimpleStringProperty();
+            this.airport = new SimpleStringProperty();
+            this.label_number = new SimpleStringProperty();
+            this.flight_number = new SimpleStringProperty();
+            this.destination = new SimpleStringProperty();
+            this.brand = new SimpleStringProperty(brand);
+            this.color = new SimpleStringProperty(color);
+            this.type = new SimpleStringProperty(type);
+            this.characteristics = new SimpleStringProperty(characteristics);
+            this.lost_found = new SimpleStringProperty();
+            this.status = new SimpleStringProperty();
         }
 
         public String getDate() {
