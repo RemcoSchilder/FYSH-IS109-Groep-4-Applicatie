@@ -8,7 +8,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -20,8 +19,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
@@ -41,7 +38,7 @@ public class Homepage_Systeem {
     public static HBox hboxTop() {
         HBox hbox = new HBox();
         
-        Image image = new Image("https://www.corendon.be/apple-touch-icon-152x152.png", 230, 80, false, false);
+        Image image = new Image("logo.jpg", 230, 48, false, false);
         ImageView v1 = new ImageView(image);
         
         hbox.getChildren().add(v1);
@@ -53,7 +50,10 @@ public class Homepage_Systeem {
     public static HBox hboxBottom() {
         HBox hbox = new HBox();
         
-        hbox.setMinHeight(48);
+        logout = new Button("logout");
+        logout.setMinSize(230, 48);
+        
+        hbox.getChildren().add(logout);
         hbox.getStyleClass().add("hbox");
         
         return hbox;
@@ -61,16 +61,7 @@ public class Homepage_Systeem {
     
     public static VBox vboxLeft() {
         VBox vbox = new VBox();
-        StackPane stack = new StackPane();
-        
-        logout = new Button("logout");
-        logout.setMinSize(230, 48);
-        
-        stack.getChildren().add(logout);
-        stack.setAlignment(Pos.BOTTOM_CENTER);
-        
-        vbox.getChildren().add(stack);
-        VBox.setVgrow(stack, Priority.ALWAYS);
+          
         vbox.getStyleClass().add("vbox");
         
         return vbox;
@@ -85,7 +76,7 @@ public class Homepage_Systeem {
         searchEmail = new TextField();
         
         search = new Button("Search"); 
-        addUser = new Button("user");
+        addUser = new Button("Add User");
         edit = new Button("edit");
         delete = new Button("delete"); 
 
@@ -238,7 +229,7 @@ public class Homepage_Systeem {
                     Database.setConn();
                     test.setQuery("DELETE FROM users WHERE username = '" + username + "'" );
                     
-                    createTable();
+                    pane.setCenter(createTable());
                 }
                 else if(result.get() == cancelButton)
                 {

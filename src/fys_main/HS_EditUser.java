@@ -101,14 +101,11 @@ public class HS_EditUser {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
         
-        if (!"Counter Assistant".equals(editUser.getFunction())) {
-            functionC.getSelectionModel().selectNext();   
-            
-            if (!"Manager".equals(editUser.getFunction())) {
-                functionC.getSelectionModel().selectNext();
-            }
-        }  else {
-            functionC.getSelectionModel().selectFirst(); 
+        functionC.getSelectionModel().selectFirst(); 
+        if ("Manager".equals(editUser.getFunction())) {
+            functionC.getSelectionModel().selectNext();
+        }  else if ("Manager".equals(editUser.getFunction())) {
+            functionC.getSelectionModel().selectLast();
         }
         
         cancel.setOnAction(new EventHandler<ActionEvent>() {
