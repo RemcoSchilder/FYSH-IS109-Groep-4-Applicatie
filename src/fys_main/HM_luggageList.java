@@ -1,9 +1,6 @@
 package fys_main;
 
 
-import static fys_main.FYS_LostFound.pane;
-import static fys_main.Homepage_Systeem.alertPopup;
-import static fys_main.Homepage_Systeem.createTable;
 
 
 import java.sql.ResultSet;
@@ -38,6 +35,8 @@ public class HM_luggageList {
 
     private static BorderPane screen = new BorderPane();
     private static TableView<TableLuggage> table = new TableView<>();
+    private static TableLuggage editTraveller;
+    private static TableLuggage detailsTraveller;
     private static ObservableList<TableLuggage> data = FXCollections.observableArrayList();
 
     private static Button search = new Button("Search");
@@ -271,24 +270,35 @@ public class HM_luggageList {
 
             }
         });
+        
+        edit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                editTraveller = table.getSelectionModel().getSelectedItem();
+
+                if (editTraveller != null) {
+                    getScreenTwo();
+                }
+            }
+        });
 
         details.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                detailsTraveller = table.getSelectionModel().getSelectedItem();
 
-                getScreenDetails();
+                if (detailsTraveller != null) {
+                    getScreenDetails();
+                }
+                
             }
         });
         
-
-        
-               delete.setOnAction(new EventHandler<ActionEvent>()  {
+        delete.setOnAction(new EventHandler<ActionEvent>()  {
             @Override
             public void handle(ActionEvent event) {
-                
-                
-                
-             String labelnumber = table.getSelectionModel().getSelectedItem().getLabel_number();
+            
+            String labelnumber = table.getSelectionModel().getSelectedItem().getLabel_number();
                       
                 Optional<ButtonType> result = alertPopup().showAndWait();
                 
@@ -303,26 +313,13 @@ public class HM_luggageList {
                 else if(result.get() == cancelButton)
                 {
                     alertPopup().close();
-                }  
-
+                }
             }
-                
-            
-            
-            
-            
         });
- 
-        
         return screen;
     
-
-        
-
     }
 
-        
-    
     public static void getScreenTwo() {
 
         /* GridPane with properties */

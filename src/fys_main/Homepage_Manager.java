@@ -21,7 +21,8 @@ public class Homepage_Manager {
 
     //buttons en label voor sidebar menu
     private static Label see = new Label("See");
-    private static Button bagageLijst = new Button("Bagage List");
+    private static Button bagageList = new Button("Bagage List");
+    private static Button travellerList = new Button("Travellers List");
     private static Label graph = new Label("Graph");
     private static Button lost = new Button("Month overview");
     private static Button found = new Button("Status Graph");
@@ -35,12 +36,13 @@ public class Homepage_Manager {
         
 
         //buttons
-        bagageLijst.setMinSize(230, 48);
+        bagageList.setMinSize(230, 48);
+        travellerList.setMinSize(230, 48);
         lost.setMinSize(230, 48);
         found.setMinSize(230, 48);
 
         //alles wordt in de vbox gestopt
-        vbox.getChildren().addAll(see, bagageLijst, graph, lost, found);
+        vbox.getChildren().addAll(see, bagageList, travellerList, graph, lost, found);
 
         //style voor de vbox
         vbox.getStyleClass().add("vbox");
@@ -75,10 +77,17 @@ public class Homepage_Manager {
         
         
         //eventhandler knop bagagelijst opent bagagelijst info
-        bagageLijst.setOnAction(new EventHandler<ActionEvent>() {
+        bagageList.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 pane.setCenter(HM_luggageList.getScreen());
+            }
+        });
+        
+        travellerList.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                pane.setCenter(HM_TravellersList.getScreen());
             }
         });
         
