@@ -236,7 +236,7 @@ public class Homepage_Systeem {
             @Override
             public void handle(ActionEvent event) {
                 pane.getChildren().clear();
-                pane.getScene().setRoot(Start.getScreen());
+                pane.getScene().setRoot(Login.getScreen());
 
             }
         });

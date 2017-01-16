@@ -88,7 +88,7 @@ public class Homepage_Baliemedewerker {
             @Override
             public void handle(ActionEvent event) {
                 pane.setCenter(HB_CreateLost.getScreen());
-//                hbox.getChildren().remove(edit);
+
             }
         });
 
@@ -96,7 +96,7 @@ public class Homepage_Baliemedewerker {
             @Override
             public void handle(ActionEvent event) {
                 pane.setCenter(HB_CreateFound.getScreen());
-//                hbox.getChildren().remove(edit);
+
             }
         });
 
@@ -104,7 +104,7 @@ public class Homepage_Baliemedewerker {
             @Override
             public void handle(ActionEvent event) {
                 pane.setCenter(HB_SearchBaggage.getScreen());
-//                hbox.getChildren().add(edit);
+
 
             }
         });
@@ -113,17 +113,12 @@ public class Homepage_Baliemedewerker {
             @Override
             public void handle(ActionEvent event) {
                 pane.getChildren().clear();
-                pane.getScene().setRoot(Start.getScreen());
-//                hbox.getChildren().remove(edit);
+                pane.getScene().setRoot(Login.getScreen());
+
             }
         });
 
-//        edit.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                pane.setCenter(HB_SearchBaggage.getScreenTwo());
-//            }
-//        });
+
 
         return pane;
     }
