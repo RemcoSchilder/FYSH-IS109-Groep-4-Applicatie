@@ -57,8 +57,7 @@ public class HB_SearchBaggage {
 
     public static void vboxRight() {
         VBox vbox = new VBox();
-        //image
-
+        
         //buttons
         search.setMinSize(230, 48);
         searchLabelNr.setMinSize(230, 48);
@@ -185,34 +184,34 @@ public class HB_SearchBaggage {
                 
                 if (!searchLabelNr.getText().equals("")) {
                     if (where) {
-                        query += " AND labelNumber = '" + searchLabelNr.getText() + "'";
+                        query += " AND labelNumber LIKE '%" + searchLabelNr.getText() + "%'";
                     } else {
                         where = true;
-                        query += " WHERE labelNumber = '" + searchLabelNr.getText() + "'";
+                        query += " WHERE labelNumber LIKE '%" + searchLabelNr.getText() + "%'";
                     }
                 } 
                 if (!searchBrand.getText().equals("")) {
                     if (where) {
-                        query += " AND brand = '" + searchBrand.getText() + "'";
+                        query += " AND brand LIKE '%" + searchBrand.getText() + "%'";
                     } else {
                         where = true;
-                        query += " WHERE brand = '" + searchBrand.getText() + "'";
+                        query += " WHERE brand LIKE '%" + searchBrand.getText() + "%'";
                     }
                 } 
                 if (!searchColor.getText().equals("")) {
                     if (where) {
-                        query += " AND color = '" + searchColor.getText() + "'";
+                        query += " AND color LIKE '%" + searchColor.getText() + "%'";
                     } else {
                         where = true;
-                        query += " WHERE color = '" + searchColor.getText() + "'";
+                        query += " WHERE color LIKE '%" + searchColor.getText() + "%'";
                     }
                 } 
                 if (!searchType.getText().equals("")) {
                     if (where) {
-                        query += " AND type = '" + searchType.getText() + "'";
+                        query += " AND type LIKE '%" + searchType.getText() + "%'";
                     } else {
                         where = true;
-                        query += " WHERE type = '" + searchType.getText() + "'";
+                        query += " WHERE type LIKE '%" + searchType.getText() + "%'";
                     }
                 }
                 
@@ -369,8 +368,49 @@ public class HB_SearchBaggage {
     }
     
     
+    public static BorderPane getMatches() {
+        Database DB = new Database();
+        DB.setConn();
+
+        table = new TableView<>();
+        data.removeAll(data);
+
+        ResultSet searchResult = DB.getQuery("SELECT * FROM (SELECT * FROM lost UNION SELECT * FROM found) AS search WHERE status='matched'");
+
+        /* Get all the lost luggage */
+        try {
+            /* For each row insert them into the data from the table */
+            while (searchResult.next()) {
+                data.add(new TableBaggage(
+                        searchResult.getString("date"),
+                        searchResult.getString("time"),
+                        searchResult.getString("airport"),
+                        searchResult.getString("labelNumber"),
+                        searchResult.getString("flightNumber"),
+                        searchResult.getString("destination"),
+                        searchResult.getString("brand"),
+                        searchResult.getString("color"),
+                        searchResult.getString("type"),
+                        searchResult.getString("characteristics"),
+                        searchResult.getString("lost_found"),
+                        searchResult.getString("status"))
+                );
+            }
+        } catch (SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }
+
+        /* Set table colums and rows */
+        table.setItems(data);
+        
+        return screen;
+    }
+    
+    
     public static class TableBaggage {
 
+        private final SimpleStringProperty id;
         private final SimpleStringProperty date;
         private final SimpleStringProperty time;
         private final SimpleStringProperty airport;
@@ -385,6 +425,7 @@ public class HB_SearchBaggage {
         private final SimpleStringProperty status;
 
         public TableBaggage(String date, String time, String airport, String label_number, String flight_number, String destination, String brand, String color, String type, String characteristics, String lost_found, String status) {
+            this.id = new SimpleStringProperty();
             this.date = new SimpleStringProperty(date);
             this.time = new SimpleStringProperty(time);
             this.airport = new SimpleStringProperty(airport);
@@ -399,7 +440,8 @@ public class HB_SearchBaggage {
             this.status = new SimpleStringProperty(status);
         }
         
-        public TableBaggage(String brand, String color, String type, String characteristics) {
+        public TableBaggage(String id, String brand, String color, String type, String characteristics) {
+            this.id = new SimpleStringProperty(id);
             this.date = new SimpleStringProperty();
             this.time = new SimpleStringProperty();
             this.airport = new SimpleStringProperty();
@@ -414,6 +456,14 @@ public class HB_SearchBaggage {
             this.status = new SimpleStringProperty();
         }
 
+        public String getId() {
+            return id.get();
+        }
+
+        public void setId(String id) {
+            this.id.set(id);
+        }
+        
         public String getDate() {
             return date.get();
         }

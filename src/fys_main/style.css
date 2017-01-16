@@ -8,6 +8,11 @@
     -fx-font: 20px Tahoma;
 }
 
+.heading {
+    -fx-font: 24px Tahoma;
+    -fx-font-weight: bold;
+}
+
 .subheading {
     -fx-font: 16px Tahoma;
     -fx-font-weight: bold;

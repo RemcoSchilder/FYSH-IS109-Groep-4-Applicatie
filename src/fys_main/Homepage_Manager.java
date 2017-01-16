@@ -6,6 +6,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -34,15 +36,22 @@ public class Homepage_Manager {
     public static VBox vbox() {
         VBox vbox = new VBox();
         
+        //image
+        Image image = new Image("logo.jpg", 230, 48, false, false);
+        ImageView v1 = new ImageView(image);
 
         //buttons
         bagageList.setMinSize(230, 48);
         travellerList.setMinSize(230, 48);
         lost.setMinSize(230, 48);
         found.setMinSize(230, 48);
+        
+        //label styles
+        see.getStyleClass().add("labels");
+        graph.getStyleClass().add("labels");
 
         //alles wordt in de vbox gestopt
-        vbox.getChildren().addAll(see, bagageList, travellerList, graph, lost, found);
+        vbox.getChildren().addAll(v1, see, bagageList, travellerList, graph, lost, found);
 
         //style voor de vbox
         vbox.getStyleClass().add("vbox");

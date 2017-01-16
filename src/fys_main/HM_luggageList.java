@@ -449,8 +449,7 @@ public class HM_luggageList {
     }
     
     public static void getScreenDetails(){
-    
-     /* Make GridPane with properties */
+        /* Make GridPane with properties */
         GridPane pane = new GridPane();
         pane.setAlignment(Pos.CENTER);
         pane.setHgap(10);
@@ -464,11 +463,11 @@ public class HM_luggageList {
         Text labelinfo = new Text("Bagage label information:");
         labelinfo.getStyleClass().add("subheading");
         
-        Text bagageinfo = new Text("Bagage Information:");
+        Text bagageinfo = new Text("Bagage information:");
         bagageinfo.getStyleClass().add("subheading");
         
         /*Create labels */
-        Label date = new Label("Date(Y-D-M):");
+        Label date = new Label("Date (Y-D-M):");
         Label time = new Label("Time:");   
         Label airport = new Label("Airport");
         Label labelnumber = new Label("Label number:");
@@ -530,7 +529,7 @@ public class HM_luggageList {
         pane.add(characteristics, 0, 17);
         pane.add(characteristics2, 1, 17);
         
-    screen.setCenter(pane);
+        screen.setCenter(pane);
     }
     
     public static Alert alertPopup() {

@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -35,6 +36,9 @@ public class HB_CreateLost {
     /* Table */
     private static TableView<TableBaggage> table = new TableView<>();
     private static ObservableList<TableBaggage> data = FXCollections.observableArrayList();
+    
+    /* Store last lost ID */
+    private static int lastId;
     
     /* Buttons */
     private static Button cancel = new Button("Cancel");
@@ -76,6 +80,13 @@ public class HB_CreateLost {
 
     
     public static GridPane getScreen() {
+        /* Clear all textfields when screen is refreshing */
+        for (Node node : screen.getChildren()) {
+            if (node instanceof TextField) {
+                ((TextField)node).setText("");
+            }
+        }
+        
         /* GridPane properties */
         screen.setAlignment(Pos.CENTER);
         screen.setHgap(10);
@@ -201,7 +212,7 @@ public class HB_CreateLost {
         dateT.setDisable(true);
         
         Label airportL = new Label("Airport:");
-        Label labelNumberL = new Label("Lable number:");
+        Label labelNumberL = new Label("Label number:");
         Label flightNumberL = new Label("Flight number:");
         Label destinationL = new Label("Destination:");
         Label brandL = new Label("Brand:");
@@ -258,21 +269,8 @@ public class HB_CreateLost {
             public void handle(ActionEvent event) {
                 Database DB = new Database();
                 DB.setConn();
-                DB.setQuery("INSERT INTO travellers (firstName, lastName, street, city, zipCode, country, street2, city2, zipCode2, country2, email, telephone) "
-                        + "VALUES "
-                        + "('" + firstNameT.getText() + "',"
-                        + " '" + lastNameT.getText() + "',"
-                        + " '" + streetT.getText() + "',"
-                        + " '" + cityT.getText() + "',"
-                        + " '" + zipCodeT.getText() + "',"
-                        + " '" + countryT.getText() + "',"
-                        + " '" + street2T.getText() + "',"
-                        + " '" + city2T.getText() + "',"
-                        + " '" + zipCode2T.getText() + "',"
-                        + " '" + country2T.getText() + "',"
-                        + " '" + emailT.getText() + "',"
-                        + " '" + telephoneT.getText() + "')");
                 
+                /* Insert baggage into database */
                 DB.setQuery("INSERT INTO lost (date, time, airport, labelNumber, flightNumber, destination, brand, color, type, characteristics, lost_found, status) "
                         + "VALUES "
                         + "('" + dateFormat.format(date) + "',"
@@ -287,6 +285,36 @@ public class HB_CreateLost {
                         + " '" + characteristicsT.getText() + "',"
                         + " 'lost',"
                         + " 'open')");
+                
+                /* Get generated ID from the baggage */
+                ResultSet getId = DB.getQuery("SELECT id FROM lost WHERE "
+                        + "date='" + dateFormat.format(date) + "' AND "
+                        + "time='" + timeFormat.format(date) + "' AND "
+                        + "labelNumber='" + labelNumberT.getText() + "'");
+                
+                /* Insert the traveller into the database with the ID from the baggage */
+                try {
+                    getId.next();
+                    lastId = getId.getInt("id");
+                    DB.setQuery("INSERT INTO travellers (lost_id, firstName, lastName, street, city, zipCode, country, street2, city2, zipCode2, country2, email, telephone) "
+                            + "VALUES "
+                            + "(" + lastId + ","
+                            + " '" + firstNameT.getText() + "',"
+                            + " '" + lastNameT.getText() + "',"
+                            + " '" + streetT.getText() + "',"
+                            + " '" + cityT.getText() + "',"
+                            + " '" + zipCodeT.getText() + "',"
+                            + " '" + countryT.getText() + "',"
+                            + " '" + street2T.getText() + "',"
+                            + " '" + city2T.getText() + "',"
+                            + " '" + zipCode2T.getText() + "',"
+                            + " '" + country2T.getText() + "',"
+                            + " '" + emailT.getText() + "',"
+                            + " '" + telephoneT.getText() + "')");
+                }  catch(SQLException se) {
+                    //Handle errors for JDBC
+                    se.printStackTrace();
+                }
                
                 screenThree();
             }
@@ -312,16 +340,57 @@ public class HB_CreateLost {
                 
                 /* Create buttons */
                 HBox buttons = new HBox();
-                buttons.setMinWidth(200);
-                Button cancel = new Button("Cancel");
-                Button match = new Button("Match & send");
-                buttons.getChildren().addAll(cancel, match);
+                buttons.setPadding(new Insets(15, 12, 15, 12));
+                buttons.setSpacing(10);
+                Button ignore = new Button("Ignore");
+                Button match = new Button("Match");
+                buttons.getChildren().addAll(ignore, match);
                 
                 /* Add all elements to the grid */
                 screen.add(successTitle, 0, 0);
                 screen.add(successText, 0, 1);
-                
                 screen.add(buttons, 0, 3);
+                
+                // If ignore then go straight to the baggage list
+                ignore.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        Homepage_Baliemedewerker.pane.setCenter(HB_SearchBaggage.getScreen());
+                    }
+                });
+                
+                // If match then update the status to matched and go to success screen
+                match.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        /* Update status to matched */
+                        DB.setQuery("UPDATE lost SET status='matched' WHERE labelNumber='" + labelNumberT.getText() + "'");
+                        DB.setQuery("UPDATE found SET status='matched' WHERE labelNumber='" + labelNumberT.getText() + "'");
+                        
+                        /* Insert into matches table */
+                        ResultSet getIds = DB.getQuery("SELECT lost.id AS lost_id, found.id AS found_id FROM lost, found WHERE lost.labelNumber='" + labelNumberT.getText() + "' AND found.labelNumber='" + labelNumberT.getText() + "'");
+                        
+                        try {
+                            getIds.next();
+                            DB.setQuery("INSERT INTO matches(lost_id, found_id) VALUES ('" + getIds.getString("lost_id") + "', '" + getIds.getString("found_id") + "')");
+                        }  catch(SQLException se) {
+                            //Handle errors for JDBC
+                            se.printStackTrace();
+                        }
+                        
+                        /* Empty screen */
+                        screen.getChildren().clear();
+                        
+                        /* Create success message */
+                        Text successTitle = new Text("The baggage has been matched!");
+                        successTitle.getStyleClass().add("subheading");
+                        Text successText = new Text("The traveller will be informed by email when the baggage will be send to their house");
+
+                        /* Add all elements to the grid */
+                        screen.add(successTitle, 0, 0);
+                        screen.add(successText, 0, 1);
+                    }
+                });
             } else {
                 ResultSet otherMatch = DB.getQuery("SELECT * FROM found WHERE (brand LIKE '%" + brandT.getText() + "%' "
                         + "OR color LIKE '%" + colorT.getText() + "%' "
@@ -335,6 +404,9 @@ public class HB_CreateLost {
                 data.removeAll(data);
                 
                 /* Create columns and assign them the right values */
+                TableColumn id = new TableColumn("ID");
+                id.setCellValueFactory(new PropertyValueFactory<>("id"));
+                
                 TableColumn brand = new TableColumn("Brand");
                 brand.setCellValueFactory(new PropertyValueFactory<>("brand"));
 
@@ -350,6 +422,7 @@ public class HB_CreateLost {
                 /* For each row insert them into the data from the table */
                 while (otherMatch.next()) {
                     data.add(new TableBaggage(
+                            otherMatch.getString("id"),
                             otherMatch.getString("brand"),
                             otherMatch.getString("color"),
                             otherMatch.getString("type"),
@@ -358,16 +431,78 @@ public class HB_CreateLost {
                 }
                 
                 if(data.size() > 0) {
+                    HBox buttons = new HBox();
+                    buttons.setPadding(new Insets(15, 12, 15, 12));
+                    buttons.setSpacing(10);
+                    Button ignore = new Button("Ignore");
+                    Button match = new Button("Match");
+                    buttons.getChildren().addAll(ignore, match);
+                    
                     /* Set table colums and rows */
                     table.setItems(data);
-                    table.getColumns().addAll(brand, color, type, characteristics);
+                    table.getColumns().addAll(id, brand, color, type, characteristics);
 
                     /* Add all to screen */
                     screen.add(error, 0, 0);
                     screen.add(table, 0, 1);
+                    screen.add(buttons, 0, 3);
+                    
+                    // If ignore then go straight to the baggage list
+                    ignore.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            Homepage_Baliemedewerker.pane.setCenter(HB_SearchBaggage.getScreen());
+                        }
+                    });
+                    
+                    // If match then update the status to matched and go to success screen
+                    match.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            /* Get selected baggage */
+                            TableBaggage baggage = table.getSelectionModel().getSelectedItem();
+                            
+                            /* Update status to matched */
+                            DB.setQuery("UPDATE lost SET status='matched' WHERE id='" + lastId + "'");
+                            DB.setQuery("UPDATE found SET status='matched' WHERE id='" + baggage.getId() + "'");
+                            
+                            /* Insert into matches table */
+                            DB.setQuery("INSERT INTO matches(lost_id, found_id) VALUES ('" + lastId + "', '" + baggage.getId() + "')");
+
+                            /* Empty screen */
+                            screen.getChildren().clear();
+
+                            /* Create success message */
+                            Text successTitle = new Text("The baggage has been matched!");
+                            successTitle.getStyleClass().add("subheading");
+                            Text successText = new Text("The traveller will be informed by email when the baggage will be send to their house");
+
+                            /* Add all elements to the grid */
+                            screen.add(successTitle, 0, 0);
+                            screen.add(successText, 0, 1);
+                        }
+                    });
                 } else {
-                    /* NIET GEVONDEN */
-                    screen.add(new Text("Kapoet"), 0, 0);
+                    /* Create error message */
+                    Text errorTitle = new Text("There are no matches");
+                    errorTitle.getStyleClass().add("subheading");
+                    Text errorText = new Text("Go to the baggage list");
+
+                    /* Create button */
+                    Button go = new Button("Go");
+
+                    /* Add all elements to the grid */
+                    screen.add(errorTitle, 0, 0);
+                    screen.add(errorText, 0, 1);
+                    screen.add(go, 0, 3);
+
+                    // If ignore then go straight to the baggage list
+                    go.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            Homepage_Baliemedewerker.pane.setCenter(HB_SearchBaggage.getScreen());
+                        }
+                    });
                 }
             }
         }  catch(SQLException se) {
