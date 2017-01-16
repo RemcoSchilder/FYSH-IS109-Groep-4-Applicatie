@@ -91,6 +91,7 @@ public class Homepage_Baliemedewerker {
             @Override
             public void handle(ActionEvent event) {
                 pane.setCenter(HB_CreateFound.getScreen());
+
             }
         });
 
@@ -98,6 +99,8 @@ public class Homepage_Baliemedewerker {
             @Override
             public void handle(ActionEvent event) {
                 pane.setCenter(HB_SearchBaggage.getScreen());
+
+
             }
         });
 
@@ -112,9 +115,12 @@ public class Homepage_Baliemedewerker {
             @Override
             public void handle(ActionEvent event) {
                 pane.getChildren().clear();
-                pane.getScene().setRoot(Start.getScreen());
+                pane.getScene().setRoot(Login.getScreen());
+
             }
         });
+
+
 
         return pane;
     }

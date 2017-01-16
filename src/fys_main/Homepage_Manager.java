@@ -106,7 +106,7 @@ public class Homepage_Manager {
             public void handle(ActionEvent event) {
 
                 pane.getChildren().clear();
-                pane.getScene().setRoot(Start.getScreen());
+                pane.getScene().setRoot(Login.getScreen());
             }
         });
         

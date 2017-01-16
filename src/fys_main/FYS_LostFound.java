@@ -34,7 +34,7 @@ public class FYS_LostFound extends Application {
         primaryStage.getIcons().add(new Image("SterLogo.png"));
 
         //scene aangemaakt
-        Scene scene = new Scene(Start.getScreen(), 1400, 800);
+        Scene scene = new Scene(Login.getScreen(), 1400, 800);
         scene.getStylesheets().add(css);
 
         //begin van de eerste scene
