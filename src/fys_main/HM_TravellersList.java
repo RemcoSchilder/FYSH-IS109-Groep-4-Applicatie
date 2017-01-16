@@ -30,6 +30,7 @@ public class HM_TravellersList {
     private static BorderPane screen = new BorderPane();
     private static TableView<TableLuggage> table = new TableView<>();
     private static TableLuggage editTraveller;
+    private static TableLuggage detailsTraveller;
     private static ObservableList<TableLuggage> data = FXCollections.observableArrayList();
 
     private static Button search = new Button("Search");
@@ -163,13 +164,8 @@ public class HM_TravellersList {
         table.setItems(data);
         table.getColumns().addAll(ID, firstName, lastName, street, city, zipCode, country, street2, city2, zipCode2, country2, email, telephone);
 
-        /* Create subheading */
-        Text searchLuggage = new Text("Search travellers:");
-        searchLuggage.getStyleClass().add("subheading");
-
         /* Create fields with labels */
         screen.setCenter(table);
-        screen.setTop(searchLuggage);
 
         search.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -256,8 +252,11 @@ public class HM_TravellersList {
         details.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
-                getScreenDetails();
+                detailsTraveller = table.getSelectionModel().getSelectedItem();
+                
+                if (detailsTraveller != null) {
+                    getScreenDetails();
+                }
             }
         });
         
@@ -281,31 +280,29 @@ public class HM_TravellersList {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
         
-        TableLuggage baggage = table.getSelectionModel().getSelectedItem();
-        
        /* Create all subheadings */
-        Text lostInfo = new Text("Lost information:");
-        lostInfo.getStyleClass().add("subheading");
+        Text nameInfo = new Text("Name traveller:");
+        nameInfo.getStyleClass().add("subheading");
         
-        Text labelInfo = new Text("Luggage label information:");
-        labelInfo.getStyleClass().add("subheading");
+        Text adressInfo = new Text("Adress traveller:");
+        adressInfo.getStyleClass().add("subheading");
         
-        Text luggageInfo = new Text("Luggage information:");
-        luggageInfo.getStyleClass().add("subheading");
+        Text contactInfo = new Text("Contact information:");
+        contactInfo.getStyleClass().add("subheading");
         
         /* Textfields */
-        TextField firstnameT = new TextField(baggage.getFirstname());
-        TextField lastnameT = new TextField(baggage.getLastname());
-        TextField streetT = new TextField(baggage.getStreet());
-        TextField cityT = new TextField(baggage.getCity());
-        TextField zipcodeT = new TextField(baggage.getZipcode());
-        TextField countryT = new TextField(baggage.getCountry());
-        TextField street2T = new TextField(baggage.getStreet2());
-        TextField city2T = new TextField(baggage.getCity2());
-        TextField zipcode2T = new TextField(baggage.getZipcode2());
-        TextField country2T = new TextField(baggage.getCountry2());
-        TextField emailT = new TextField(baggage.getEmail());
-        TextField telephoneT = new TextField(baggage.getTelephone());
+        TextField firstnameT = new TextField(editTraveller.getFirstname());
+        TextField lastnameT = new TextField(editTraveller.getLastname());
+        TextField streetT = new TextField(editTraveller.getStreet());
+        TextField cityT = new TextField(editTraveller.getCity());
+        TextField zipcodeT = new TextField(editTraveller.getZipcode());
+        TextField countryT = new TextField(editTraveller.getCountry());
+        TextField street2T = new TextField(editTraveller.getStreet2());
+        TextField city2T = new TextField(editTraveller.getCity2());
+        TextField zipcode2T = new TextField(editTraveller.getZipcode2());
+        TextField country2T = new TextField(editTraveller.getCountry2());
+        TextField emailT = new TextField(editTraveller.getEmail());
+        TextField telephoneT = new TextField(editTraveller.getTelephone());
         
         /* Create all labels & inputs */
         Label firstnameL = new Label("First name:");
@@ -323,15 +320,15 @@ public class HM_TravellersList {
         
         
         /* Add everything to the grid */
-        grid.add(lostInfo, 0, 0);
+        grid.add(nameInfo, 0, 0);
         
         grid.add(firstnameL, 0, 3);
         grid.add(firstnameT, 1, 3, 10, 1);
         
-        grid.add(labelInfo, 0, 5);
+        grid.add(lastnameL, 0, 4);
+        grid.add(lastnameT, 1, 4, 10, 1);
         
-        grid.add(lastnameL, 0, 6);
-        grid.add(lastnameT, 1, 6, 10, 1);
+        grid.add(adressInfo, 0, 6);
         
         grid.add(streetL, 0, 7);
         grid.add(streetT, 1, 7, 10, 1);
@@ -339,25 +336,25 @@ public class HM_TravellersList {
         grid.add(cityL, 0, 8);
         grid.add(cityT, 1, 8, 10, 1);
         
-        grid.add(luggageInfo, 0, 10);
+        grid.add(zipcodeL, 0, 9);
+        grid.add(zipcodeT, 1, 9, 10, 1);
         
-        grid.add(zipcodeL, 0, 11);
-        grid.add(zipcodeT, 1, 11, 10, 1);
+        grid.add(countryL, 0, 10);
+        grid.add(countryT, 1, 10, 10, 1);
         
-        grid.add(countryL, 0, 12);
-        grid.add(countryT, 1, 12, 10, 1);
+        grid.add(street2L, 0, 11);
+        grid.add(street2T, 1, 11, 10, 1);
         
-        grid.add(street2L, 0, 13);
-        grid.add(street2T, 1, 13, 10, 1);
+        grid.add(city2L, 0, 12);
+        grid.add(city2T, 1, 12, 10, 1);
         
-        grid.add(city2L, 0, 14);
-        grid.add(city2T, 1, 14, 10, 1);
+        grid.add(zipcode2L, 0, 13);
+        grid.add(zipcode2T, 1, 13, 10, 1);
         
-        grid.add(zipcode2L, 0, 15);
-        grid.add(zipcode2T, 1, 15, 10, 1);
+        grid.add(country2L, 0, 14);
+        grid.add(country2T, 1, 14, 10, 1);
         
-        grid.add(country2L, 0, 16);
-        grid.add(country2T, 1, 16, 10, 1);
+        grid.add(contactInfo, 0, 16);
         
         grid.add(emailL, 0, 17);
         grid.add(emailT, 1, 17, 10, 1);
@@ -421,7 +418,7 @@ public class HM_TravellersList {
                         + "country2='" + country2T.getText() + "', "
                         + "email='" + emailT.getText() + "', "
                         + "telephone='" + telephoneT.getText() + "' "
-                        + "WHERE id='" + baggage.getId() + "'");
+                        + "WHERE id='" + editTraveller.getId() + "'");
                
                 getScreenOne();
             }
@@ -441,15 +438,12 @@ public class HM_TravellersList {
     public static void getScreenDetails(){
     
      /* Make GridPane with properties */
-        GridPane screen = new GridPane();
-        screen.setAlignment(Pos.CENTER);
-        screen.setHgap(10);
-        screen.setVgap(10);
-        screen.setPadding(new Insets(25, 25, 25, 25));
+        GridPane pane = new GridPane();
+        pane.setAlignment(Pos.CENTER_LEFT);
+        pane.setHgap(10);
+        pane.setVgap(10);
+        pane.setPadding(new Insets(25, 25, 25, 25));
     
-        TableLuggage details = table.getSelectionModel().getSelectedItem();
-        
-        
         /*Create subheadings */
         Text travellerdetails = new Text("Traveller details:");
         travellerdetails.getStyleClass().add("subheading");
@@ -475,63 +469,65 @@ public class HM_TravellersList {
         Label telephone = new Label("Telephone:");
         
         /*Create labels with information from the table */
-        Label firstname2 = new Label(details.getFirstname());
-        Label lastname2 = new Label(details.getLastname());
-        Label street2 = new Label(details.getStreet());
-        Label city2 = new Label(details.getCity());
-        Label zipcode2 = new Label(details.getZipcode());
-        Label country2 = new Label(details.getCountry());
-        Label streetTWO2 = new Label(details.getStreet2());
-        Label cityTWO2 = new Label(details.getCity2());
-        Label zipcodeTWO2 = new Label(details.getZipcode2());
-        Label countryTWO2 = new Label(details.getCountry2());
-        Label email2 = new Label(details.getEmail());
-        Label telephone2 = new Label(details.getTelephone());
+        Label firstname2 = new Label(detailsTraveller.getFirstname());
+        Label lastname2 = new Label(detailsTraveller.getLastname());
+        Label street2 = new Label(detailsTraveller.getStreet());
+        Label city2 = new Label(detailsTraveller.getCity());
+        Label zipcode2 = new Label(detailsTraveller.getZipcode());
+        Label country2 = new Label(detailsTraveller.getCountry());
+        Label streetTWO2 = new Label(detailsTraveller.getStreet2());
+        Label cityTWO2 = new Label(detailsTraveller.getCity2());
+        Label zipcodeTWO2 = new Label(detailsTraveller.getZipcode2());
+        Label countryTWO2 = new Label(detailsTraveller.getCountry2());
+        Label email2 = new Label(detailsTraveller.getEmail());
+        Label telephone2 = new Label(detailsTraveller.getTelephone());
         
        
         
         /*Add everything to the grid */
-        screen.add(travellerdetails, 0 , 0);
+        pane.add(travellerdetails, 0 , 0);
         
-        screen.add(firstname, 0, 2);
-        screen.add(firstname2, 1 ,2);
+        pane.add(firstname, 0, 2);
+        pane.add(firstname2, 1 ,2);
         
-        screen.add(lastname, 0, 3);
-        screen.add(lastname2,1, 3);
+        pane.add(lastname, 0, 3);
+        pane.add(lastname2,1, 3);
         
-        screen.add(street, 0, 4);
-        screen.add(street2, 1, 4);
+        pane.add(street, 0, 4);
+        pane.add(street2, 1, 4);
         
-        screen.add(adressinfo, 0, 6);
+        pane.add(adressinfo, 0, 6);
         
-        screen.add(city, 0, 8);
-        screen.add(city2, 1, 8);
+        pane.add(city, 0, 8);
+        pane.add(city2, 1, 8);
         
-        screen.add(zipcode, 0, 9);
-        screen.add(zipcode2, 1, 9);
+        pane.add(zipcode, 0, 9);
+        pane.add(zipcode2, 1, 9);
         
-        screen.add(country, 0,10);
-        screen.add(country2, 1, 10);
+        pane.add(country, 0,10);
+        pane.add(country2, 1, 10);
         
-        screen.add(travellerinfo, 0, 12);
+        pane.add(travellerinfo, 0, 12);
         
-        screen.add(streetTWO, 0, 14);
-        screen.add(streetTWO2, 1, 14);
+        pane.add(streetTWO, 0, 14);
+        pane.add(streetTWO2, 1, 14);
         
-        screen.add(cityTWO, 0, 15);
-        screen.add(cityTWO2, 1, 15);
+        pane.add(cityTWO, 0, 15);
+        pane.add(cityTWO2, 1, 15);
         
-        screen.add(zipcodeTWO, 0, 16);
-        screen.add(zipcodeTWO2, 1, 16);
+        pane.add(zipcodeTWO, 0, 16);
+        pane.add(zipcodeTWO2, 1, 16);
         
-        screen.add(countryTWO, 0, 17);
-        screen.add(countryTWO2, 1, 17);
+        pane.add(countryTWO, 0, 17);
+        pane.add(countryTWO2, 1, 17);
         
-        screen.add(email, 0, 18);
-        screen.add(email2, 1, 18);
+        pane.add(email, 0, 18);
+        pane.add(email2, 1, 18);
         
-        screen.add(telephone, 0, 19);
-        screen.add(telephone2, 1, 19);
+        pane.add(telephone, 0, 19);
+        pane.add(telephone2, 1, 19);
+        
+        screen.setCenter(pane);
     }
     
     public static class TableLuggage {
