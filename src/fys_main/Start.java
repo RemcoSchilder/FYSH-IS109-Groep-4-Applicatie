@@ -1,8 +1,6 @@
 package fys_main;
 
-import static fys_main.FYS_LostFound.grid;
 import static fys_main.FYS_LostFound.pane;
-import javafx.scene.media.AudioClip;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -30,7 +28,7 @@ public class Start {
     //mehtode voor het scherm
     public static BorderPane getScreen() {
         pane = new BorderPane();
-        grid = new GridPane();
+        GridPane grid = new GridPane();
         
         //gridpane voor center van de borderpane, buttons gebruikers
         grid.setMinSize(150, 150);

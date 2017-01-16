@@ -1,6 +1,5 @@
 package fys_main;
 
-import static fys_main.FYS_LostFound.grid;
 import static fys_main.FYS_LostFound.pane;
 import static fys_main.Homepage_Systeem.createTable;
 import javafx.collections.FXCollections;
@@ -26,14 +25,14 @@ public class HS_CreateUser {
     private static Button cancel, addUser;
 
     public static GridPane getScreen() {
-        grid = new GridPane();
-        
-        ObservableList<String> options = 
-        FXCollections.observableArrayList(
-            "Counter Assistant",
-            "Manager",
-            "System Manager"
-        );
+        GridPane grid = new GridPane();
+
+        ObservableList<String> options
+                = FXCollections.observableArrayList(
+                        "Counter Assistant",
+                        "Manager",
+                        "System Manager"
+                );
 
         Text name = new Text("Name:");
         name.getStyleClass().add("subheading");
@@ -58,7 +57,7 @@ public class HS_CreateUser {
 
         Label functionL = new Label("Type:");
         ComboBox functionC = new ComboBox(options);
-        
+
         error = new Label();
         cancel = new Button("Cancel");
         addUser = new Button("Add User");
@@ -86,15 +85,14 @@ public class HS_CreateUser {
         grid.add(functionC, 1, 8, 5, 1);
 
         grid.add(error, 0, 12, 10, 1);
-        
+
         grid.add(cancel, 0, 10);
         grid.add(addUser, 1, 10, 10, 1);
-        
+
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
-
 
         cancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -106,36 +104,38 @@ public class HS_CreateUser {
         addUser.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                        
-                if (
-                        firstNameT.getText() == null || 
-                        firstNameT.getText().trim().isEmpty() ||
-                        lastNameT.getText() == null || 
-                        lastNameT.getText().trim().isEmpty() ||
-                        usernameT.getText() == null || 
-                        usernameT.getText().trim().isEmpty() ||
-                        passwordT.getText() == null || 
-                        passwordT.getText().trim().isEmpty() ||
-                        emailT.getText() == null || 
-                        emailT.getText().trim().isEmpty() ||
-                        functionC.getValue() == null) {
+
+                if (firstNameT.getText() == null
+                        || firstNameT.getText().trim().isEmpty()
+                        || lastNameT.getText() == null
+                        || lastNameT.getText().trim().isEmpty()
+                        || usernameT.getText() == null
+                        || usernameT.getText().trim().isEmpty()
+                        || passwordT.getText() == null
+                        || passwordT.getText().trim().isEmpty()
+                        || emailT.getText() == null
+                        || emailT.getText().trim().isEmpty()
+                        || functionC.getValue() == null) {
 
                     error.setText("You have not filled all the fields");
-                    
+
                     return;
                 }
 
                 Database test = new Database();
                 Database.setConn();
-                test.setQuery("INSERT INTO users (firstname, lastname, "
-                        + "username, password, email, function) VALUES ('" 
+                test.setQuery("INSERT INTO users (firstname, lastname, username"
+                        + ", password, email, function, question, answer) "
+                        + "VALUES ('"
                         + firstNameT.getText() + "', '"
                         + lastNameT.getText() + "', '"
                         + usernameT.getText() + "', '"
                         + passwordT.getText() + "', '"
                         + emailT.getText() + "', '"
-                        + functionC.getValue() + "')");
-                
+                        + functionC.getValue() + "', '"
+                        + "" + "', '"
+                        + "" + "')");
+
                 pane.setCenter(createTable());
             }
         });
