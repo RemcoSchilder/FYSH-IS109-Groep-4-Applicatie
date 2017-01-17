@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +24,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import javax.mail.MessagingException;
 
 /**
  *
@@ -240,6 +243,7 @@ public class HB_CreateFound {
                         try {
                             getIds.next();
                             DB.setQuery("INSERT INTO matches(lost_id, found_id) VALUES ('" + getIds.getString("lost_id") + "', '" + getIds.getString("found_id") + "')");
+                            
                         }  catch(SQLException se) {
                             //Handle errors for JDBC
                             se.printStackTrace();
@@ -256,6 +260,19 @@ public class HB_CreateFound {
                         /* Add all elements to the grid */
                         screen.add(successTitle, 0, 0);
                         screen.add(successText, 0, 1);
+                        
+                       
+                        
+                        /* Sends email */
+                        try {
+                            ResultSet travelEmail = DB.getQuery("SELECT email FROM travellers WHERE lost_id='" + getIds.getString("lost_id") + "'");
+                            travelEmail.next();
+                            Email.sendMessage(travelEmail.getString("email"));
+                        } catch (MessagingException ex) {
+                            Logger.getLogger(HB_CreateLost.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(HB_CreateFound.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 });
             } else {

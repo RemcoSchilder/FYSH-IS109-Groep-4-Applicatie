@@ -90,44 +90,57 @@ public class HM_TravellersList {
         data.removeAll(data);
 
         /* Create columns and assign them the right values */
-        TableColumn ID = new TableColumn("Traveller id");
+        TableColumn ID = new TableColumn("ID");
         ID.setCellValueFactory(new PropertyValueFactory<>("id"));
-
+        ID.prefWidthProperty().bind(table.widthProperty().divide(26));
+                
         TableColumn firstName = new TableColumn("First name");
         firstName.setCellValueFactory(new PropertyValueFactory<>("firstname"));
+        firstName.prefWidthProperty().bind(table.widthProperty().divide(13));
 
         TableColumn lastName = new TableColumn("Last name");
         lastName.setCellValueFactory(new PropertyValueFactory<>("lastname"));
-
+        lastName.prefWidthProperty().bind(table.widthProperty().divide(13));
+        
         TableColumn street = new TableColumn("Street");
         street.setCellValueFactory(new PropertyValueFactory<>("street"));
+        street.prefWidthProperty().bind(table.widthProperty().divide(13));
 
         TableColumn city = new TableColumn("City");
         city.setCellValueFactory(new PropertyValueFactory<>("city"));
+        city.prefWidthProperty().bind(table.widthProperty().divide(13));
 
         TableColumn zipCode = new TableColumn("Zip code");
         zipCode.setCellValueFactory(new PropertyValueFactory<>("zipcode"));
+        zipCode.prefWidthProperty().bind(table.widthProperty().divide(13));
 
         TableColumn country = new TableColumn("Country");
         country.setCellValueFactory(new PropertyValueFactory<>("country"));
+        country.prefWidthProperty().bind(table.widthProperty().divide(13));
 
         TableColumn street2 = new TableColumn("Street (2nd)");
         street2.setCellValueFactory(new PropertyValueFactory<>("street2"));
+        street2.prefWidthProperty().bind(table.widthProperty().divide(13));
 
         TableColumn city2 = new TableColumn("City (2nd)");
         city2.setCellValueFactory(new PropertyValueFactory<>("city2"));
+        city2.prefWidthProperty().bind(table.widthProperty().divide(13));
 
         TableColumn zipCode2 = new TableColumn("Zip code (2nd)");
         zipCode2.setCellValueFactory(new PropertyValueFactory<>("zipcode2"));
+        zipCode2.prefWidthProperty().bind(table.widthProperty().divide(13));
 
         TableColumn country2 = new TableColumn("Country (2nd)");
         country2.setCellValueFactory(new PropertyValueFactory<>("country2"));
+        country2.prefWidthProperty().bind(table.widthProperty().divide(13));
         
         TableColumn email = new TableColumn("Email");
         email.setCellValueFactory(new PropertyValueFactory<>("email"));
+        email.prefWidthProperty().bind(table.widthProperty().divide(26).multiply(3));
 
         TableColumn telephone = new TableColumn("Telephone");
         telephone.setCellValueFactory(new PropertyValueFactory<>("telephone"));
+        telephone.prefWidthProperty().bind(table.widthProperty().divide(13));
 
         /* Initialize Database */
         Database db = new Database();

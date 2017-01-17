@@ -109,42 +109,55 @@ public class HM_luggageList {
         /* Create columns and assign them the right values */
         TableColumn id = new TableColumn("ID");
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        id.prefWidthProperty().bind(table.widthProperty().divide(26));
         
         TableColumn date = new TableColumn("Date");
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
+        date.prefWidthProperty().bind(table.widthProperty().divide(13));
 
         TableColumn time = new TableColumn("Time");
         time.setCellValueFactory(new PropertyValueFactory<>("time"));
+        time.prefWidthProperty().bind(table.widthProperty().divide(13));
 
         TableColumn airport = new TableColumn("Airport");
         airport.setCellValueFactory(new PropertyValueFactory<>("airport"));
+        airport.prefWidthProperty().bind(table.widthProperty().divide(13));
 
         TableColumn labelNumber = new TableColumn("Label number");
         labelNumber.setCellValueFactory(new PropertyValueFactory<>("label_number"));
+        labelNumber.prefWidthProperty().bind(table.widthProperty().divide(13));
 
         TableColumn flightNumber = new TableColumn("Flight number");
         flightNumber.setCellValueFactory(new PropertyValueFactory<>("flight_number"));
+        flightNumber.prefWidthProperty().bind(table.widthProperty().divide(13));
 
         TableColumn destination = new TableColumn("Destination");
         destination.setCellValueFactory(new PropertyValueFactory<>("destination"));
+        destination.prefWidthProperty().bind(table.widthProperty().divide(13));
 
         TableColumn brand = new TableColumn("Brand");
         brand.setCellValueFactory(new PropertyValueFactory<>("brand"));
+        brand.prefWidthProperty().bind(table.widthProperty().divide(13));
 
         TableColumn color = new TableColumn("Color");
         color.setCellValueFactory(new PropertyValueFactory<>("color"));
+        color.prefWidthProperty().bind(table.widthProperty().divide(13));
 
         TableColumn type = new TableColumn("Type");
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
+        type.prefWidthProperty().bind(table.widthProperty().divide(13));
 
         TableColumn characteristics = new TableColumn("characteristics");
         characteristics.setCellValueFactory(new PropertyValueFactory<>("characteristics"));
+        characteristics.prefWidthProperty().bind(table.widthProperty().divide(26).multiply(3));
 
         TableColumn lost_found = new TableColumn("lost_found");
         lost_found.setCellValueFactory(new PropertyValueFactory<>("lost_found"));
+        lost_found.prefWidthProperty().bind(table.widthProperty().divide(13));
 
         TableColumn status = new TableColumn("status");
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
+        status.prefWidthProperty().bind(table.widthProperty().divide(13));
 
         /* Initialize Database */
         Database db = new Database();

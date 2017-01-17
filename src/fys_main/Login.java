@@ -123,7 +123,7 @@ public class Login {
         resetPassword.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                pane.setCenter(RecoverPassword.getScreen());
+                pane.setCenter(Recover.getScreen());
             }
         });
 

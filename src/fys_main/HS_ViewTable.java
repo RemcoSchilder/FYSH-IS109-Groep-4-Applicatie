@@ -50,6 +50,7 @@ public class HS_ViewTable {
         function.setCellValueFactory(new PropertyValueFactory<>("function"));
         function.prefWidthProperty().bind(table.widthProperty().divide(6));
         
+        
         //ophalen van gegevens uit database
         Database db = new Database();
         db.setConn();
