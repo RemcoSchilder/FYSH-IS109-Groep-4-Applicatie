@@ -24,26 +24,20 @@ import javafx.scene.text.Text;
  */
 public class Login {
 
-    //aanmaken allover borderpane
-    //aanmaken buttons, labels, en fields voor inlogscherm
     protected static TextField usernameT = new TextField();
     protected static ResultSet checkLogin;
 
-    //methode voor het scherm van login naar baliemedewerker homepage
     public static BorderPane getScreen() {
-        //gridpane voor center van de borderpane, buttons, labels, en fields voor inlogscherm
-        
-        
 
-        Text error = new Text("");
+        Label error = new Label("");
         error.getStyleClass().add("error");
 
         Label usernameL = new Label("Username:");
         Label passwordL = new Label("Password:");
-        
+
         PasswordField passwordT = new PasswordField();
-        
-        Hyperlink resetPassword = new Hyperlink("Reset Password");
+
+        Hyperlink resetPassword = new Hyperlink("Reset Password/Email");
 
         Button login = new Button("Log in");
 
@@ -52,8 +46,6 @@ public class Login {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
         grid.setAlignment(Pos.CENTER);
-
-        
 
         grid.add(usernameL, 0, 1);
         grid.add(usernameT, 1, 1, 1, 1);
@@ -65,8 +57,6 @@ public class Login {
         grid.add(resetPassword, 0, 4);
         grid.add(error, 0, 5);
 
-        
-        GridPane grid2 = new GridPane();
         Image image = new Image("Logo-OBV-Nieuw.png", 700, 200, false, false);
 
         ImageView iv1 = new ImageView(image);
@@ -75,15 +65,15 @@ public class Login {
         iv1.setSmooth(true);
         iv1.setCache(true);
 
+        GridPane grid2 = new GridPane();
         grid2.add(iv1, 0, 1);
         grid2.setAlignment(Pos.TOP_CENTER);
-        
-        
         GridPane.setColumnSpan(error, 3);
+
         pane.setCenter(grid);
         pane.setTop(grid2);
         pane.getStyleClass().add("background");
-        
+
         // Eventhandler login
         login.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -117,6 +107,9 @@ public class Login {
                     //Handle errors for JDBC
 
                 }
+                
+                usernameT.clear();
+                passwordT.clear();
             }
         });
 

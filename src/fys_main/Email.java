@@ -32,7 +32,7 @@ public class Email {
     public static void sendMessage(String recipient)
             throws MessagingException {
 
-        //Set the host smtp address
+        
         Properties prop = new Properties();
         prop.put("mail.smtp.auth", "true");
         prop.put("mail.smtp.starttls.enable", "true");

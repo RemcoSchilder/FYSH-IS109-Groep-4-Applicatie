@@ -30,10 +30,10 @@ import javafx.scene.text.Text;
 public class FirstLogin {
 
     private static Label questionL, answerL1, answerL2;
-    private static TextField questionT = new TextField();
-    private static PasswordField answerT1 = new PasswordField();
-    private static PasswordField answerT2 = new PasswordField();
-    private static Button finish = new Button("Finish");
+    private static TextField questionT;
+    private static PasswordField answerT1;
+    private static PasswordField answerT2;
+    private static final Button finish = new Button("Finish");
     private static ButtonType yesButton, cancelButton;
 
     public static Alert alertPopup() {
@@ -45,13 +45,17 @@ public class FirstLogin {
         alert.setHeaderText("Answer & Question");
         alert.setContentText("Are u sure you want to use:\n\n"
                 + "Question: " + questionT.getText() + "\n"
-                + "Answer: " + answerT1.getText().toString());
+                + "Answer: " + answerT1.getText());
         alert.getButtonTypes().setAll(cancelButton, yesButton);
 
         return alert;
     }
 
     public static GridPane getScreen() {
+        questionT = new TextField();
+        answerT1 = new PasswordField();
+        answerT2 = new PasswordField();
+
         questionL = new Label("Question:");
         answerL1 = new Label("Answer:");
         answerL2 = new Label("Confirm Answer:");

@@ -27,22 +27,23 @@ import javafx.scene.text.Text;
  */
 public class Recover {
 
-    private static Text title, error;
-    protected static TextField usernameT = new TextField();
-    private static Button cancel = new Button("Cancel");
+    private static Text title;
+    private static Label error;
+    protected static TextField usernameT;
+    private static final Button cancel = new Button("Cancel");
 
     public static GridPane getScreen() {
+        usernameT = new TextField();
+        error = new Label("");
+        
         title = new Text("Recover Password");
         title.getStyleClass().add("title");
-
-        error = new Text("");
         error.getStyleClass().add("error");
 
         Label usernameL = new Label("Username");
         Button nextPassword = new Button("Go to password");
         Button nextEmail = new Button("Go to email");
 
-        
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -56,7 +57,7 @@ public class Recover {
         grid.add(nextEmail, 2, 2);
         grid.add(error, 0, 3);
         grid.setAlignment(Pos.CENTER);
-        
+
         GridPane.setColumnSpan(title, 3);
         GridPane.setColumnSpan(error, 3);
 
@@ -67,7 +68,7 @@ public class Recover {
                 pane.getScene().setRoot(Login.getScreen());
             }
         });
-        
+
         nextPassword.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -92,12 +93,13 @@ public class Recover {
                     } else {
                         pane.setCenter(passwordScreen());
                     }
-                } catch (SQLException se) {
-                    //Handle errors for JDBC
+                } catch (SQLException ex) {
+                    Logger.getLogger(Recover.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
             }
         });
-        
+
         nextEmail.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -122,8 +124,8 @@ public class Recover {
                     } else {
                         pane.setCenter(emailScreen());
                     }
-                } catch (SQLException se) {
-                    //Handle errors for JDBC
+                } catch (SQLException ex) {
+                    Logger.getLogger(Recover.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -171,12 +173,13 @@ public class Recover {
 
         Database DB = new Database();
         Database.setConn();
-        ResultSet controlFields = DB.getQuery("SELECT email, question, answer FROM users WHERE username='" + usernameT.getText() + "'");
+        ResultSet controlFields = DB.getQuery("SELECT email, question, answer "
+                + "FROM users WHERE username='" + usernameT.getText() + "'");
 
         if (controlFields.next()) {
             questionT.setText(controlFields.getString("question"));
         }
-        
+
         cancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -184,7 +187,7 @@ public class Recover {
                 pane.getScene().setRoot(Login.getScreen());
             }
         });
-        
+
         resetPassword.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -225,7 +228,7 @@ public class Recover {
 
         return grid;
     }
-    
+
     public static GridPane emailScreen() throws SQLException {
         Label questionL = new Label("Question:");
         Label questionT = new Label("");
@@ -236,7 +239,7 @@ public class Recover {
 
         Label emailL1 = new Label("Old email");
         Label emailT1 = new Label("");
-        
+
         Label emailL2 = new Label("New email:");
         TextField emailT2 = new TextField("");
 
@@ -261,19 +264,21 @@ public class Recover {
         grid.add(emailT1, 1, 4, 1, 1);
         grid.add(emailL2, 0, 5);
         grid.add(emailT2, 1, 5, 1, 1);
-        grid.add(resetEmail, 0, 5);
-        grid.add(error, 0, 6);
+        grid.add(cancel, 0, 6);
+        grid.add(resetEmail, 1, 6);
+        grid.add(error, 0, 7);
         grid.setAlignment(Pos.CENTER);
 
         Database DB = new Database();
         Database.setConn();
-        ResultSet controlFields = DB.getQuery("SELECT question, answer, email FROM users WHERE username='" + usernameT.getText() + "'");
+        ResultSet controlFields = DB.getQuery("SELECT question, answer, email "
+                + "FROM users WHERE username='" + usernameT.getText() + "'");
 
         if (controlFields.next()) {
             questionT.setText(controlFields.getString("question"));
             emailT1.setText(controlFields.getString("email"));
         }
-        
+
         cancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -281,7 +286,7 @@ public class Recover {
                 pane.getScene().setRoot(Login.getScreen());
             }
         });
-        
+
         resetEmail.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -306,7 +311,7 @@ public class Recover {
                 Database test = new Database();
                 Database.setConn();
                 test.setQuery("Update users SET "
-                        + "email='" + emailT2.getText() + "'"
+                        + "email='" + emailT2.getText() + "' "
                         + "WHERE username='" + usernameT.getText() + "'");
 
                 pane.getChildren().clear();
