@@ -33,7 +33,7 @@ public class HM_luggageList {
     private static BorderPane screen = new BorderPane();
     private static TableView<TableLuggage> table = new TableView<>();
     private static TableLuggage editTraveller;
-    private static TableLuggage detailsTraveller;
+    private static TableLuggage detailsBaggage;
     private static ObservableList<TableLuggage> data = FXCollections.observableArrayList();
 
     private static Button search = new Button("Search");
@@ -107,6 +107,9 @@ public class HM_luggageList {
         data.removeAll(data);
 
         /* Create columns and assign them the right values */
+        TableColumn id = new TableColumn("ID");
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        
         TableColumn date = new TableColumn("Date");
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
 
@@ -153,6 +156,7 @@ public class HM_luggageList {
             /* For each row insert them into the data from the table */
             while (result.next()) {
                 data.add(new TableLuggage(
+                        result.getString("id"),
                         result.getString("date"),
                         result.getString("time"),
                         result.getString("airport"),
@@ -174,7 +178,7 @@ public class HM_luggageList {
 
         /* Set table colums and rows */
         table.setItems(data);
-        table.getColumns().addAll(date, time, airport, labelNumber, flightNumber, destination, brand, color, type, characteristics, lost_found, status);
+        table.getColumns().addAll(id, date, time, airport, labelNumber, flightNumber, destination, brand, color, type, characteristics, lost_found, status);
 
         
 
@@ -240,6 +244,7 @@ public class HM_luggageList {
                     /* For each row insert them into the data from the table */
                     while (searchResult.next()) {
                         data.add(new TableLuggage(
+                                searchResult.getString("id"),
                                 searchResult.getString("date"),
                                 searchResult.getString("time"),
                                 searchResult.getString("airport"),
@@ -279,9 +284,9 @@ public class HM_luggageList {
         details.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                detailsTraveller = table.getSelectionModel().getSelectedItem();
+                detailsBaggage = table.getSelectionModel().getSelectedItem();
                 
-                if (detailsTraveller != null) {
+                if (detailsBaggage != null) {
                     getScreenDetails();
                 }
                 
@@ -292,7 +297,7 @@ public class HM_luggageList {
             @Override
             public void handle(ActionEvent event) {
             
-            String labelnumber = table.getSelectionModel().getSelectedItem().getLabel_number();
+            TableLuggage labelnumber = table.getSelectionModel().getSelectedItem();
                       
                 Optional<ButtonType> result = alertPopup().showAndWait();
                 
@@ -300,8 +305,7 @@ public class HM_luggageList {
                 {                       
                     Database deleteluggage = new Database();
                     Database.setConn();
-                    deleteluggage.setQuery("DELETE FROM lost WHERE labelNumber = '" + labelnumber + "'" );
-                    deleteluggage.setQuery("DELETE FROM found WHERE labelNumber = '" + labelnumber + "'");
+                    deleteluggage.setQuery("DELETE FROM " + labelnumber.getLost_found() + " WHERE id='" + labelnumber.getId() + "'" );
                     getScreenOne();
                 }
                 else if(result.get() == cancelButton)
@@ -322,6 +326,9 @@ public class HM_luggageList {
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
+        
+        /* Add style */
+        error.getStyleClass().add("error");
         
        /* Create all subheadings */
         Text lostInfo = new Text("Lost information:");
@@ -431,7 +438,7 @@ public class HM_luggageList {
                         + "color='" + colorT.getText() + "', "
                         + "type='" + typeT.getText() + "', "
                         + "characteristics='" + characteristicsT.getText() + "' "
-                        + "WHERE labelNumber='" + editTraveller.getLabel_number() + "'");
+                        + "WHERE id='" + editTraveller.getId() + "'");
                
                 getScreenOne();
             }
@@ -449,22 +456,49 @@ public class HM_luggageList {
     }
     
     public static void getScreenDetails(){
+        /* Initialize Database */
+        Database db = new Database();
+        db.setConn();
+
+        /* Get info from the traveller */
+        ResultSet traveller = db.getQuery("SELECT * FROM travellers WHERE lost_id='" + detailsBaggage.getId() + "'");
+        
         /* Make GridPane with properties */
         GridPane pane = new GridPane();
         pane.setAlignment(Pos.CENTER);
-        pane.setHgap(10);
+        pane.setHgap(75);
         pane.setVgap(10);
         pane.setPadding(new Insets(25, 25, 25, 25));
         
+        /* Create headings */
+        Text lostDetails = new Text("Lost");
+        lostDetails.getStyleClass().add("heading");
+
+        Text travellerDetails = new Text("Traveller");
+        travellerDetails.getStyleClass().add("heading");
+        
         /*Create subheadings */
-        Text bagagedetails = new Text("Bagage details:");
-        bagagedetails.getStyleClass().add("subheading");
+        Text baggageDetails = new Text("Baggage details:");
+        baggageDetails.getStyleClass().add("subheading");
         
-        Text labelinfo = new Text("Bagage label information:");
-        labelinfo.getStyleClass().add("subheading");
+        Text labelInfo = new Text("Baggage label information:");
+        labelInfo.getStyleClass().add("subheading");
         
-        Text bagageinfo = new Text("Bagage information:");
-        bagageinfo.getStyleClass().add("subheading");
+        Text baggageInfo = new Text("Baggage information:");
+        baggageInfo.getStyleClass().add("subheading");
+
+        Text name = new Text("Name:");
+        name.getStyleClass().add("subheading");
+
+        Text mainAddress = new Text("Main address:");
+        mainAddress.getStyleClass().add("subheading");
+
+        Text mainAddress2 = new Text("2nd address (optional):");
+        mainAddress2.getStyleClass().add("subheading");
+
+        Text contact = new Text("Contact:");
+        contact.getStyleClass().add("subheading");
+        
         
         /*Create labels */
         Label date = new Label("Date (Y-D-M):");
@@ -478,58 +512,117 @@ public class HM_luggageList {
         Label type = new Label("Type:");
         Label characteristics = new Label("Characteristics:");
         
-        /*Create labels with information from the table */
-        Label date2 = new Label(detailsTraveller.getDate());
-        Label time2 = new Label(detailsTraveller.getTime());
-        Label airport2 = new Label(detailsTraveller.getAirport());
-        Label labelnumber2 = new Label(detailsTraveller.getLabel_number());
-        Label flightnumber2 = new Label(detailsTraveller.getFlight_number());
-        Label lostfound2 = new Label(detailsTraveller.getLost_found());
-        Label brand2 = new Label(detailsTraveller.getBrand());
-        Label color2 = new Label(detailsTraveller.getColor());
-        Label type2 = new Label(detailsTraveller.getType());
-        Label characteristics2 = new Label(detailsTraveller.getCharacteristics());
+        Label firstNameL = new Label("First name:");
+        Label lastNameL = new Label("Last name:");
+        Label streetL = new Label("Street + nr:");
+        Label street2L = new Label("Street + nr:");
+        Label cityL = new Label("City:");
+        Label city2L = new Label("City:");
+        Label zipCodeL = new Label("Zip code:");
+        Label zipCode2L = new Label("Zip code:");
+        Label countryL = new Label("Country:");
+        Label country2L = new Label("Country:");
+        Label emailL = new Label("Email:");
+        Label telephoneL = new Label("Telephone:");
         
-       
-        
-        /*Add everything to the grid */
-        pane.add(bagagedetails, 0 , 0);
-        
-        pane.add(date, 0, 2);
-        pane.add(date2, 1 ,2);
-        
-        pane.add(time, 0, 3);
-        pane.add(time2,1, 3);
-        
-        pane.add(airport, 0, 4);
-        pane.add(airport2, 1, 4);
-        
-        pane.add(labelinfo, 0, 6);
-        
-        pane.add(labelnumber, 0, 8);
-        pane.add(labelnumber2, 1, 8);
-        
-        pane.add(flightnumber, 0, 9);
-        pane.add(flightnumber2, 1, 9);
-        
-        pane.add(lostfound, 0,10);
-        pane.add(lostfound2, 1, 10);
-        
-        pane.add(bagageinfo, 0, 12);
-        
-        pane.add(brand, 0, 14);
-        pane.add(brand2, 1, 14);
-        
-        pane.add(color, 0, 15);
-        pane.add(color2, 1, 15);
-        
-        pane.add(type, 0, 16);
-        pane.add(type2, 1, 16);
-        
-        pane.add(characteristics, 0, 17);
-        pane.add(characteristics2, 1, 17);
-        
-        screen.setCenter(pane);
+        try {
+            traveller.next();
+            
+            /*Create labels with information from the table */
+            Label date2 = new Label(detailsBaggage.getDate());
+            Label time2 = new Label(detailsBaggage.getTime());
+            Label airport2 = new Label(detailsBaggage.getAirport());
+            Label labelnumber2 = new Label(detailsBaggage.getLabel_number());
+            Label flightnumber2 = new Label(detailsBaggage.getFlight_number());
+            Label lostfound2 = new Label(detailsBaggage.getLost_found());
+            Label brand2 = new Label(detailsBaggage.getBrand());
+            Label color2 = new Label(detailsBaggage.getColor());
+            Label type2 = new Label(detailsBaggage.getType());
+            Label characteristics2 = new Label(detailsBaggage.getCharacteristics());
+
+            Label firstName = new Label(traveller.getString("firstName"));
+            Label lastName = new Label(traveller.getString("lastName"));
+            Label street = new Label(traveller.getString("street"));
+            Label street2 = new Label(traveller.getString("street2"));
+            Label city = new Label(traveller.getString("city"));
+            Label city2 = new Label(traveller.getString("city2"));
+            Label zipCode = new Label(traveller.getString("zipCode"));
+            Label zipCode2 = new Label(traveller.getString("zipCode2"));
+            Label country = new Label(traveller.getString("country"));
+            Label country2 = new Label(traveller.getString("country2"));
+            Label email = new Label(traveller.getString("email"));
+            Label telephone = new Label(traveller.getString("telephone"));
+
+
+            /* Add 'lost' to the grid */
+            pane.add(lostDetails, 0 , 0);
+            
+            pane.add(baggageDetails, 0 , 2);
+            pane.add(date, 0, 3);
+            pane.add(date2, 1 , 3);
+            pane.add(time, 0, 4);
+            pane.add(time2,1, 4);
+            pane.add(airport, 0, 5);
+            pane.add(airport2, 1, 5);
+            
+            pane.add(labelInfo, 0, 7);
+            pane.add(labelnumber, 0, 9);
+            pane.add(labelnumber2, 1, 9);
+            pane.add(flightnumber, 0, 10);
+            pane.add(flightnumber2, 1, 10);
+            pane.add(lostfound, 0, 11);
+            pane.add(lostfound2, 1, 11);
+
+            pane.add(baggageInfo, 0, 13);
+            pane.add(brand, 0, 15);
+            pane.add(brand2, 1, 15);
+            pane.add(color, 0, 16);
+            pane.add(color2, 1, 16);
+            pane.add(type, 0, 17);
+            pane.add(type2, 1, 17);
+            pane.add(characteristics, 0, 18);
+            pane.add(characteristics2, 1, 18);
+            
+            /* Add 'traveller' to the grid */
+            pane.add(travellerDetails, 2 , 0);
+            
+            pane.add(name, 2 , 2);
+            pane.add(firstNameL, 2, 3);
+            pane.add(firstName, 3, 3);
+            pane.add(lastNameL, 2, 4);
+            pane.add(lastName, 3, 4);
+            
+            pane.add(mainAddress, 2, 6);
+            pane.add(streetL, 2, 8);
+            pane.add(street, 3, 8);
+            pane.add(cityL, 2, 9);
+            pane.add(city, 3, 9);
+            pane.add(zipCodeL, 2, 10);
+            pane.add(zipCode, 3, 10);
+            pane.add(countryL, 2, 11);
+            pane.add(country, 3, 11);
+            
+            pane.add(mainAddress2, 2, 13);
+            pane.add(street2L, 2, 15);
+            pane.add(street2, 3, 15);
+            pane.add(city2L, 2, 16);
+            pane.add(city2, 3, 16);
+            pane.add(zipCode2L, 2, 17);
+            pane.add(zipCode2, 3, 17);
+            pane.add(country2L, 2, 18);
+            pane.add(country2, 3, 18);
+
+            pane.add(contact, 2, 20);
+            pane.add(emailL, 2, 22);
+            pane.add(email, 3, 22);
+            pane.add(telephoneL, 2, 23);
+            pane.add(telephone, 3, 23);
+
+            screen.setCenter(pane);
+        }  catch(SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }
     }
     
     public static Alert alertPopup() {
@@ -547,6 +640,7 @@ public class HM_luggageList {
     
     public static class TableLuggage {
 
+        private final SimpleStringProperty id;
         private final SimpleStringProperty date;
         private final SimpleStringProperty time;
         private final SimpleStringProperty airport;
@@ -560,8 +654,9 @@ public class HM_luggageList {
         private final SimpleStringProperty lost_found;
         private final SimpleStringProperty status;
 
-        private TableLuggage(String date, String time, String airport, String label_number, String flight_number, String destination, String brand, String color, String type, String characteristics, String lost_found, String status) {
+        private TableLuggage(String id, String date, String time, String airport, String label_number, String flight_number, String destination, String brand, String color, String type, String characteristics, String lost_found, String status) {
 
+            this.id = new SimpleStringProperty(id);
             this.date = new SimpleStringProperty(date);
             this.time = new SimpleStringProperty(time);
             this.airport = new SimpleStringProperty(airport);
@@ -577,6 +672,14 @@ public class HM_luggageList {
 
         }
 
+        public String getId() {
+            return id.get();
+        }
+
+        public void setId(String id) {
+            this.id.set(id);
+        }
+        
         public String getDate() {
             return date.get();
         }

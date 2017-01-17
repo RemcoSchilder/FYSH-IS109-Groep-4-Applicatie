@@ -332,7 +332,7 @@ public class HB_CreateLost {
         /* Get matched results */
         Database DB = new Database();
         DB.setConn();
-        ResultSet labelMatch = DB.getQuery("SELECT * FROM found WHERE labelNumber='" + labelNumberT.getText() + "'");
+        ResultSet labelMatch = DB.getQuery("SELECT * FROM found WHERE labelNumber='" + labelNumberT.getText() + "' AND labelNumber <> ''");
         
         try {
             if (labelMatch.next()) {

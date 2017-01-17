@@ -25,7 +25,6 @@ public class HM_Graphfound {
     
     final static String open = "Open";
     final static String matched = "Matched";
-    final static String send = "Send";
     final static String returned = "Returned";
     
     public static GridPane getScreen() {
@@ -40,13 +39,11 @@ public class HM_Graphfound {
         ResultSet getTotalLost = DB.getQuery("SELECT COUNT(*) AS totalLost FROM lost GROUP BY status\n" +
                "ORDER BY CASE WHEN status = 'open' THEN '1'\n" +
                "WHEN status = 'matched' THEN '2'\n" +
-               "WHEN status = 'send' THEN '3'\n" +
                "ELSE status END ASC");
         
         ResultSet getTotalFound = DB.getQuery("SELECT COUNT(*) AS totalFound FROM found GROUP BY status\n" +
                "ORDER BY CASE WHEN status = 'open' THEN '1'\n" +
                "WHEN status = 'matched' THEN '2'\n" +
-               "WHEN status = 'send' THEN '3'\n" +
                "ELSE status END ASC");
         
         try {
@@ -101,15 +98,13 @@ public class HM_Graphfound {
         lostColumn.setName("Lost");
         lostColumn.getData().add(new XYChart.Data(open, totalLost[0]));
         lostColumn.getData().add(new XYChart.Data(matched, totalLost[1]));
-        lostColumn.getData().add(new XYChart.Data(send, totalLost[2]));
-        lostColumn.getData().add(new XYChart.Data(returned, totalLost[3]));
+        lostColumn.getData().add(new XYChart.Data(returned, totalLost[2]));
 
         XYChart.Series foundColumn = new XYChart.Series();
         foundColumn.setName("Found");
         foundColumn.getData().add(new XYChart.Data(open, totalFound[0]));
         foundColumn.getData().add(new XYChart.Data(matched, totalFound[1]));
-        foundColumn.getData().add(new XYChart.Data(send, totalFound[2]));
-        foundColumn.getData().add(new XYChart.Data(returned, totalFound[3]));
+        foundColumn.getData().add(new XYChart.Data(returned, totalFound[2]));
 
             bc.setMinSize(1200, 800);  //grote aanpassen
 

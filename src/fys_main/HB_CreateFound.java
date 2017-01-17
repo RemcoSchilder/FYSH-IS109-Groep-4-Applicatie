@@ -196,7 +196,7 @@ public class HB_CreateFound {
         /* Get matched results */
         Database DB = new Database();
         DB.setConn();
-        ResultSet labelMatch = DB.getQuery("SELECT * FROM lost WHERE labelNumber='" + labelNumberT.getText() + "'");
+        ResultSet labelMatch = DB.getQuery("SELECT * FROM lost WHERE labelNumber='" + labelNumberT.getText() + "' AND labelNumber <> ''");
         
         try {
             if (labelMatch.next()) {

@@ -38,5 +38,5 @@
 }
 
 .error {
-    -fx-text-fill: red;
+    -fx-text-fill: #FF0000;
 }

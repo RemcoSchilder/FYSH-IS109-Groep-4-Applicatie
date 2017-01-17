@@ -27,7 +27,8 @@ import javafx.scene.text.Text;
  */
 public class RecoverPassword {
 
-    private static Text title, error;
+    private static Text title;
+    private static Label error;
     protected static TextField usernameT = new TextField();
     private static Button cancel = new Button("Cancel");
 
@@ -35,7 +36,7 @@ public class RecoverPassword {
         title = new Text("Recover Password");
         title.getStyleClass().add("title");
 
-        error = new Text("");
+        error = new Label("");
         error.getStyleClass().add("error");
 
         Label usernameL = new Label("Username");
