@@ -29,6 +29,7 @@ public class RecoverPassword {
 
     private static Text title, error;
     protected static TextField usernameT = new TextField();
+    private static Button cancel = new Button("Cancel");
 
     public static GridPane getScreen() {
         title = new Text("Recover Password");
@@ -48,13 +49,22 @@ public class RecoverPassword {
         grid.add(title, 0, 0);
         grid.add(usernameL, 0, 1);
         grid.add(usernameT, 1, 1, 5, 1);
-        grid.add(next, 0, 2);
+        grid.add(cancel, 0, 2);
+        grid.add(next, 1, 2);
         grid.add(error, 0, 3);
         grid.setAlignment(Pos.CENTER);
         
         GridPane.setColumnSpan(title, 3);
         GridPane.setColumnSpan(error, 3);
 
+        cancel.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                pane.getChildren().clear();
+                pane.getScene().setRoot(Login.getScreen());
+            }
+        });
+        
         next.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -133,7 +143,15 @@ public class RecoverPassword {
         if (controlFields.next()) {
             questionT.setText(controlFields.getString("question"));
         }
-
+        
+        cancel.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                pane.getChildren().clear();
+                pane.getScene().setRoot(Login.getScreen());
+            }
+        });
+        
         resetPassword.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

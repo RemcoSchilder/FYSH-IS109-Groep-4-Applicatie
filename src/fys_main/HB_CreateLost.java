@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,6 +25,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import javax.mail.MessagingException;
 
 /**
  *
@@ -389,6 +392,13 @@ public class HB_CreateLost {
                         /* Add all elements to the grid */
                         screen.add(successTitle, 0, 0);
                         screen.add(successText, 0, 1);
+                        
+                        /* Sends email */
+                        try {
+                            Email.sendMessage(emailT.getText());
+                        } catch (MessagingException ex) {
+                            Logger.getLogger(HB_CreateLost.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 });
             } else {
