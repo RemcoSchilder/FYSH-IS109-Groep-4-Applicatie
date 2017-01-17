@@ -12,6 +12,8 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
@@ -30,8 +32,8 @@ public class Login {
     //methode voor het scherm van login naar baliemedewerker homepage
     public static BorderPane getScreen() {
         //gridpane voor center van de borderpane, buttons, labels, en fields voor inlogscherm
-        Text title = new Text("Welcome");
-        title.getStyleClass().add("title");
+        
+        
 
         Text error = new Text("");
         error.getStyleClass().add("error");
@@ -51,7 +53,7 @@ public class Login {
         grid.setPadding(new Insets(25, 25, 25, 25));
         grid.setAlignment(Pos.CENTER);
 
-        grid.add(title, 0, 0);
+        
 
         grid.add(usernameL, 0, 1);
         grid.add(usernameT, 1, 1, 1, 1);
@@ -63,9 +65,25 @@ public class Login {
         grid.add(resetPassword, 0, 4);
         grid.add(error, 0, 5);
 
+        
+        GridPane grid2 = new GridPane();
+        Image image = new Image("Logo-OBV-Nieuw.png", 700, 200, false, false);
+
+        ImageView iv1 = new ImageView(image);
+        iv1.setImage(image);
+        iv1.setPreserveRatio(true);
+        iv1.setSmooth(true);
+        iv1.setCache(true);
+
+        grid2.add(iv1, 0, 1);
+        grid2.setAlignment(Pos.TOP_CENTER);
+        
+        
         GridPane.setColumnSpan(error, 3);
         pane.setCenter(grid);
-
+        pane.setTop(grid2);
+        pane.getStyleClass().add("background");
+        
         // Eventhandler login
         login.setOnAction(new EventHandler<ActionEvent>() {
             @Override

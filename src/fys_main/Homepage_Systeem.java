@@ -139,7 +139,8 @@ public class Homepage_Systeem {
         pane.setCenter(createTable());
         pane.setRight(vboxRight());
         pane.setBottom(hboxBottom());
-
+        pane.getStyleClass().add("background");
+        
         search.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
