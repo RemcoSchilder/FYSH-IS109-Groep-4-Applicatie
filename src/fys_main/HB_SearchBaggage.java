@@ -85,6 +85,9 @@ public class HB_SearchBaggage {
         data.removeAll(data);
 
         /* Create columns and assign them the right values */
+        TableColumn id = new TableColumn("ID");
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        
         TableColumn date = new TableColumn("Date");
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
 
@@ -132,6 +135,7 @@ public class HB_SearchBaggage {
             /* For each row insert them into the data from the table */
             while (result.next()) {
                 data.add(new TableBaggage(
+                        result.getString("id"),
                         result.getString("date"),
                         result.getString("time"),
                         result.getString("airport"),
@@ -153,7 +157,7 @@ public class HB_SearchBaggage {
 
         /* Set table colums and rows */
         table.setItems(data);
-        table.getColumns().addAll(date, time, airport, labelNumber, flightNumber, destination, brand, color, type, characteristics, lost_found, status);
+        table.getColumns().addAll(id, date, time, airport, labelNumber, flightNumber, destination, brand, color, type, characteristics, lost_found, status);
 
         /* Create subheading */
         Text searchLuggage = new Text("Search luggage:");
@@ -169,8 +173,8 @@ public class HB_SearchBaggage {
                 Database DB = new Database();
                 DB.setConn();
 
-                table = new TableView<>();
-                data.removeAll(data);
+                data.clear();
+                table.getItems().clear();
                 
                 boolean where = false;
 
@@ -222,6 +226,7 @@ public class HB_SearchBaggage {
                     /* For each row insert them into the data from the table */
                     while (searchResult.next()) {
                         data.add(new TableBaggage(
+                                searchResult.getString("id"),
                                 searchResult.getString("date"),
                                 searchResult.getString("time"),
                                 searchResult.getString("airport"),
@@ -350,7 +355,7 @@ public class HB_SearchBaggage {
                         + "color='" + colorT.getText() + "', "
                         + "type='" + typeT.getText() + "', "
                         + "characteristics='" + characteristicsT.getText() + "' "
-                        + "WHERE labelNumber='" + baggage.getLabel_number() + "'");
+                        + "WHERE id='" + baggage.getId() + "'");
                
                 getScreenOne();
             }
@@ -365,46 +370,6 @@ public class HB_SearchBaggage {
         });
         
         screen.setCenter(grid);
-    }
-    
-    
-    public static BorderPane getMatches() {
-        Database DB = new Database();
-        DB.setConn();
-
-        table = new TableView<>();
-        data.removeAll(data);
-
-        ResultSet searchResult = DB.getQuery("SELECT * FROM (SELECT * FROM lost UNION SELECT * FROM found) AS search WHERE status='matched'");
-
-        /* Get all the lost luggage */
-        try {
-            /* For each row insert them into the data from the table */
-            while (searchResult.next()) {
-                data.add(new TableBaggage(
-                        searchResult.getString("date"),
-                        searchResult.getString("time"),
-                        searchResult.getString("airport"),
-                        searchResult.getString("labelNumber"),
-                        searchResult.getString("flightNumber"),
-                        searchResult.getString("destination"),
-                        searchResult.getString("brand"),
-                        searchResult.getString("color"),
-                        searchResult.getString("type"),
-                        searchResult.getString("characteristics"),
-                        searchResult.getString("lost_found"),
-                        searchResult.getString("status"))
-                );
-            }
-        } catch (SQLException se) {
-            //Handle errors for JDBC
-            se.printStackTrace();
-        }
-
-        /* Set table colums and rows */
-        table.setItems(data);
-        
-        return screen;
     }
     
     
@@ -424,8 +389,8 @@ public class HB_SearchBaggage {
         private final SimpleStringProperty lost_found;
         private final SimpleStringProperty status;
 
-        public TableBaggage(String date, String time, String airport, String label_number, String flight_number, String destination, String brand, String color, String type, String characteristics, String lost_found, String status) {
-            this.id = new SimpleStringProperty();
+        public TableBaggage(String id, String date, String time, String airport, String label_number, String flight_number, String destination, String brand, String color, String type, String characteristics, String lost_found, String status) {
+            this.id = new SimpleStringProperty(id);
             this.date = new SimpleStringProperty(date);
             this.time = new SimpleStringProperty(time);
             this.airport = new SimpleStringProperty(airport);

@@ -191,8 +191,8 @@ public class HM_luggageList {
                 Database DB = new Database();
                 DB.setConn();
 
-                table = new TableView<>();
-                data.removeAll(data);
+                data.clear();
+                table.getItems().clear();
 
                 boolean where = false;
 
