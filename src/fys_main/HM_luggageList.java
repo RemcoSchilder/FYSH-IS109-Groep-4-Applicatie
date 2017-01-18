@@ -378,7 +378,7 @@ public class HM_luggageList {
         TextArea characteristicsT = new TextArea(editTraveller.getCharacteristics());
         
         /* Create all labels & inputs */
-        Label verplichtL = new Label("* is verplicht");
+        Label verplichtL = new Label("* is required");
         Label airportL = new Label("Airport: *");
         Label labelNumberL = new Label("Lable number:");
         Label flightNumberL = new Label("Flight number: *");
@@ -432,7 +432,6 @@ public class HM_luggageList {
         save.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                
                 if (
                         //Check if all the textfields are filled in
                         airportT.getText() == null || 

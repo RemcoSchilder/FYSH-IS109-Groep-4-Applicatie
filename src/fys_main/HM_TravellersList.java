@@ -334,7 +334,7 @@ public class HM_TravellersList {
         TextField telephoneT = new TextField(editTraveller.getTelephone());
         
         /* Create all labels & inputs */
-        Label verplichtL = new Label("* is verplicht");
+        Label verplichtL = new Label("* is required");
         Label firstnameL = new Label("First name: *");
         Label lastnameL = new Label("Last name: *");
         Label streetL = new Label("Street: *");
@@ -403,10 +403,8 @@ public class HM_TravellersList {
         save.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-            
                 if (
                         //Check if all the textfields are filled in
-                        
                         firstnameT.getText() == null || 
                         firstnameT.getText().trim().isEmpty() ||
                         lastnameT.getText() == null || 

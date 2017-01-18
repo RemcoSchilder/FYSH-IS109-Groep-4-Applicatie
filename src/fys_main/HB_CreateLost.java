@@ -48,6 +48,7 @@ public class HB_CreateLost {
     private static Button previous = new Button("Previous");
     private static Button next = new Button("Next");
     private static Button addLostLuggage = new Button("Add lost luggage");
+    private static Label error = new Label();
     
     /* Get date and time */
     private static DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
@@ -103,6 +104,30 @@ public class HB_CreateLost {
         next.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                if (
+                        //Check if all the textfields are filled in
+                        firstNameT.getText() == null || 
+                        firstNameT.getText().trim().isEmpty() ||
+                        lastNameT.getText() == null || 
+                        lastNameT.getText().trim().isEmpty() ||
+                        streetT.getText() == null || 
+                        streetT.getText().trim().isEmpty() ||
+                        cityT.getText() == null || 
+                        cityT.getText().trim().isEmpty() ||
+                        zipCodeT.getText() == null || 
+                        zipCodeT.getText().trim().isEmpty() ||
+                        countryT.getText() == null || 
+                        countryT.getText().trim().isEmpty() ||
+                        emailT.getText() == null || 
+                        emailT.getText().trim().isEmpty() ||
+                        telephoneT.getText() == null || 
+                        telephoneT.getText().trim().isEmpty()) {
+
+                    error.setText("You have not filled all the required fields");
+                    
+                    return;
+                }
+                
                 nameData.setText(firstNameT.getText() + " " + lastNameT.getText());
                 screenTwo();
             }
@@ -135,62 +160,69 @@ public class HB_CreateLost {
         Text contact = new Text("Contact:");
         contact.getStyleClass().add("subheading");
         
+        /* Add style */
+        error.getStyleClass().add("error");
+        
         /* Create all labels */
-        Label firstNameL = new Label("First name:");
-        Label lastNameL = new Label("Last name:");
-        Label streetL = new Label("Street + nr:");
+        Label verplichtL = new Label("* is verplicht");
+        Label firstNameL = new Label("First name: *");
+        Label lastNameL = new Label("Last name: *");
+        Label streetL = new Label("Street + nr: *");
         Label street2L = new Label("Street + nr:");
-        Label cityL = new Label("City:");
+        Label cityL = new Label("City: *");
         Label city2L = new Label("City:");
-        Label zipCodeL = new Label("Zip code:");
+        Label zipCodeL = new Label("Zip code: *");
         Label zipCode2L = new Label("Zip code:");
-        Label countryL = new Label("Country:");
+        Label countryL = new Label("Country: *");
         Label country2L = new Label("Country:");
-        Label emailL = new Label("Email:");
-        Label telephoneL = new Label("Telephone:");
+        Label emailL = new Label("Email: *");
+        Label telephoneL = new Label("Telephone: *");
         
         /* Add everything to the grid */
         screen.add(name, 0, 0);
         
-        screen.add(firstNameL, 0, 1);
-        screen.add(firstNameT, 1, 1, 5, 1);
+        screen.add(verplichtL, 0, 1);
         
-        screen.add(lastNameL, 0, 2);
-        screen.add(lastNameT, 1, 2, 5, 1);
+        screen.add(firstNameL, 0, 2);
+        screen.add(firstNameT, 1, 2, 5, 1);
         
-        screen.add(mainAddress, 0, 4);
-        screen.add(mainAddress2, 6, 4, 5, 1);
+        screen.add(lastNameL, 0, 3);
+        screen.add(lastNameT, 1, 3, 5, 1);
         
-        screen.add(streetL, 0, 5);
-        screen.add(streetT, 1, 5, 5, 1);
+        screen.add(mainAddress, 0, 5);
+        screen.add(mainAddress2, 6, 5, 5, 1);
         
-        screen.add(street2L, 6, 5);
-        screen.add(street2T, 8, 5, 5, 1);
+        screen.add(streetL, 0, 6);
+        screen.add(streetT, 1, 6, 5, 1);
         
-        screen.add(cityL, 0, 6);
-        screen.add(cityT, 1, 6, 5, 1);
-        screen.add(city2L, 6, 6);
-        screen.add(city2T, 8, 6, 5, 1);
+        screen.add(street2L, 6, 6);
+        screen.add(street2T, 8, 6, 5, 1);
         
-        screen.add(zipCodeL, 0, 7);
-        screen.add(zipCodeT, 1, 7, 5, 1);
-        screen.add(zipCode2L, 6, 7);
-        screen.add(zipCode2T, 8, 7, 5, 1);
+        screen.add(cityL, 0, 7);
+        screen.add(cityT, 1, 7, 5, 1);
+        screen.add(city2L, 6, 7);
+        screen.add(city2T, 8, 7, 5, 1);
         
-        screen.add(countryL, 0, 8);
-        screen.add(countryT, 1, 8, 5, 1);
-        screen.add(country2L, 6, 8);
-        screen.add(country2T, 8, 8, 5, 1);
+        screen.add(zipCodeL, 0, 8);
+        screen.add(zipCodeT, 1, 8, 5, 1);
+        screen.add(zipCode2L, 6, 8);
+        screen.add(zipCode2T, 8, 8, 5, 1);
         
-        screen.add(contact, 0, 10);
+        screen.add(countryL, 0, 9);
+        screen.add(countryT, 1, 9, 5, 1);
+        screen.add(country2L, 6, 9);
+        screen.add(country2T, 8, 9, 5, 1);
         
-        screen.add(emailL, 0, 11);
-        screen.add(emailT, 1, 11, 5, 1);
+        screen.add(contact, 0, 11);
         
-        screen.add(telephoneL, 0, 12);
-        screen.add(telephoneT, 1, 12, 5, 1);
+        screen.add(emailL, 0, 12);
+        screen.add(emailT, 1, 12, 5, 1);
         
-        screen.add(next, 4, 14, 5, 1);
+        screen.add(telephoneL, 0, 13);
+        screen.add(telephoneT, 1, 13, 5, 1);
+        
+        screen.add(next, 4, 15, 5, 1);
+        screen.add(error, 0, 16, 10, 1);
     }
     
     private static void screenTwo() {
@@ -210,10 +242,14 @@ public class HB_CreateLost {
         Text nameInfo = new Text("Name traveller:");
         nameInfo.getStyleClass().add("subheading");
         
+        /* Add style */
+        error.getStyleClass().add("error");
+        
         /* Create all labels & inputs */
         Label dateL = new Label("Date:");
         dateT.setDisable(true);
         
+        Label verplichtL = new Label("* is required");
         Label airportL = new Label("Airport:");
         Label labelNumberL = new Label("Label number:");
         Label flightNumberL = new Label("Flight number:");
@@ -232,44 +268,61 @@ public class HB_CreateLost {
         
         screen.add(lostInfo, 0, 0);
         
-        screen.add(dateL, 0, 1);
-        screen.add(dateT, 1, 1, 10, 1);
+        screen.add(verplichtL, 0, 1);
         
-        screen.add(airportL, 0, 3);
-        screen.add(airportT, 1, 3, 10, 1);
+        screen.add(dateL, 0, 2);
+        screen.add(dateT, 1, 2, 10, 1);
         
-        screen.add(labelInfo, 0, 5);
+        screen.add(airportL, 0, 4);
+        screen.add(airportT, 1, 4, 10, 1);
         
-        screen.add(labelNumberL, 0, 6);
-        screen.add(labelNumberT, 1, 6, 10, 1);
+        screen.add(labelInfo, 0, 6);
         
-        screen.add(flightNumberL, 0, 7);
-        screen.add(flightNumberT, 1, 7, 10, 1);
+        screen.add(labelNumberL, 0, 7);
+        screen.add(labelNumberT, 1, 7, 10, 1);
         
-        screen.add(destinationL, 0, 8);
-        screen.add(destinationT, 1, 8, 10, 1);
+        screen.add(flightNumberL, 0, 8);
+        screen.add(flightNumberT, 1, 8, 10, 1);
         
-        screen.add(luggageInfo, 0, 10);
+        screen.add(destinationL, 0, 9);
+        screen.add(destinationT, 1, 9, 10, 1);
         
-        screen.add(brandL, 0, 11);
-        screen.add(brandT, 1, 11, 10, 1);
+        screen.add(luggageInfo, 0, 11);
         
-        screen.add(colorL, 0, 12);
-        screen.add(colorT, 1, 12, 10, 1);
+        screen.add(brandL, 0, 12);
+        screen.add(brandT, 1, 12, 10, 1);
         
-        screen.add(typeL, 0, 13);
-        screen.add(typeT, 1, 13, 10, 1);
+        screen.add(colorL, 0, 13);
+        screen.add(colorT, 1, 13, 10, 1);
         
-        screen.add(characteristicsL, 0, 14);
-        screen.add(characteristicsT, 1, 14, 10, 1);
+        screen.add(typeL, 0, 14);
+        screen.add(typeT, 1, 14, 10, 1);
         
-        screen.add(previous, 0, 15);
-        screen.add(addLostLuggage, 1, 15, 10, 1);
+        screen.add(characteristicsL, 0, 15);
+        screen.add(characteristicsT, 1, 15, 10, 1);
+        
+        screen.add(previous, 0, 16);
+        screen.add(addLostLuggage, 1, 16, 10, 1);
+        screen.add(error, 0, 17, 10, 1);
         
         // All event handlers from screen two
         addLostLuggage.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                if (
+                        //Check if all the textfields are filled in
+                        airportT.getText() == null || 
+                        airportT.getText().trim().isEmpty() ||
+                        flightNumberT.getText() == null || 
+                        flightNumberT.getText().trim().isEmpty() ||
+                        destinationT.getText() == null || 
+                        destinationT.getText().trim().isEmpty()) {
+
+                    error.setText("You have not filled all the required fields");
+                    
+                    return;
+                }
+                
                 Database DB = new Database();
                 DB.setConn();
                 

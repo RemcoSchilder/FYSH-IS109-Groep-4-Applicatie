@@ -39,12 +39,13 @@ public class HB_CreateFound {
     private static ObservableList<HB_SearchBaggage.TableBaggage> data = FXCollections.observableArrayList();
     
     /* Store last lost ID */
-    private static int lastId;
+    private static int lostId;
 
     // Create Buttons
     private static Button cancel = new Button("Cancel");
     private static Button next = new Button("Next");
     private static Button addFoundLuggage = new Button("Add Found luggage");
+    private static Label error = new Label();
     
     /* Get date and time */
     private static DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
@@ -101,11 +102,15 @@ public class HB_CreateFound {
         // Aanmaken van de labels en textfields
         Label dateL = new Label("Date:");
         dateT.setDisable(true);
+        
+        /* Add style */
+        error.getStyleClass().add("error");
 
-        Label airportL = new Label("Airport:");
+        Label verplichtL = new Label("* is required");
+        Label airportL = new Label("Airport: *");
         Label labelNumberL = new Label("Label number:");
-        Label flightNumberL = new Label("Flight number:");
-        Label destinationL = new Label("Destination:");
+        Label flightNumberL = new Label("Flight number: *");
+        Label destinationL = new Label("Destination: *");
         Label brandL = new Label("Brand:");
         Label colorL = new Label("Color:");
         Label typeL = new Label("Type:");
@@ -116,6 +121,8 @@ public class HB_CreateFound {
 
         // Alles toevoegen aan de gridpane
         screen.add(lostInfo, 0, 0);
+        
+        screen.add(verplichtL, 0, 1);
         
         screen.add(dateL, 0, 1);
         screen.add(dateT, 1, 1, 10, 1);
@@ -149,11 +156,26 @@ public class HB_CreateFound {
         screen.add(characteristicsT, 1, 14, 10, 1);
 
         screen.add(addFoundLuggage, 1, 15, 10, 1);
+        screen.add(error, 0, 16, 10, 1);
 
         // Eventhandler voor toevoegen aan database
         addFoundLuggage.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                if (
+                        //Check if all the textfields are filled in
+                        airportT.getText() == null || 
+                        airportT.getText().trim().isEmpty() ||
+                        flightNumberT.getText() == null || 
+                        flightNumberT.getText().trim().isEmpty() ||
+                        destinationT.getText() == null || 
+                        destinationT.getText().trim().isEmpty()) {
+
+                    error.setText("You have not filled all the required fields");
+                    
+                    return;
+                }
+                
                 Database DB = new Database();
                 DB.setConn();
                 DB.setQuery("INSERT INTO found (date, time, airport, labelNumber, flightNumber, destination, brand, color, type, characteristics, lost_found, status) "
@@ -180,7 +202,7 @@ public class HB_CreateFound {
                 /* Insert the traveller into the database with the ID from the baggage */
                 try {
                     getId.next();
-                    lastId = getId.getInt("id");
+                    lostId = getId.getInt("id");
                 }  catch(SQLException se) {
                     //Handle errors for JDBC
                     se.printStackTrace();
@@ -347,11 +369,11 @@ public class HB_CreateFound {
                             HB_SearchBaggage.TableBaggage baggage = table.getSelectionModel().getSelectedItem();
                             
                             /* Update status to matched */
-                            DB.setQuery("UPDATE found SET status='matched' WHERE id='" + lastId + "'");
+                            DB.setQuery("UPDATE found SET status='matched' WHERE id='" + lostId + "'");
                             DB.setQuery("UPDATE lost SET status='matched' WHERE id='" + baggage.getId() + "'");
                             
                             /* Insert into matches table */
-                            DB.setQuery("INSERT INTO matches(lost_id, found_id) VALUES ('" + baggage.getId() + "', '" + lastId + "')");
+                            DB.setQuery("INSERT INTO matches(lost_id, found_id) VALUES ('" + baggage.getId() + "', '" + lostId + "')");
 
                             /* Empty screen */
                             screen.getChildren().clear();

@@ -45,6 +45,7 @@ public class HB_SearchBaggage {
     /* Buttons */
     private static Button cancel = new Button("Cancel");
     private static Button save = new Button("Save");
+    private static Label error = new Label();
 
     
     public static BorderPane getScreen() {
@@ -288,6 +289,9 @@ public class HB_SearchBaggage {
         
         TableBaggage baggage = table.getSelectionModel().getSelectedItem();
         
+        /* Add style */
+        error.getStyleClass().add("error");
+        
        /* Create all subheadings */
         Text lostInfo = new Text("Lost information:");
         lostInfo.getStyleClass().add("subheading");
@@ -309,10 +313,11 @@ public class HB_SearchBaggage {
         TextArea characteristicsT = new TextArea(baggage.getCharacteristics());
         
         /* Create all labels & inputs */
-        Label airportL = new Label("Airport:");
+        Label verplichtL = new Label("* is required");
+        Label airportL = new Label("Airport: *");
         Label labelNumberL = new Label("Lable number:");
-        Label flightNumberL = new Label("Flight number:");
-        Label destinationL = new Label("Destination:");
+        Label flightNumberL = new Label("Flight number: *");
+        Label destinationL = new Label("Destination: *");
         Label brandL = new Label("Brand:");
         Label colorL = new Label("Color:");
         Label typeL = new Label("Type:");
@@ -323,6 +328,8 @@ public class HB_SearchBaggage {
         
         /* Add everything to the grid */
         grid.add(lostInfo, 0, 0);
+        
+        grid.add(verplichtL, 0, 1);
         
         grid.add(airportL, 0, 3);
         grid.add(airportT, 1, 3, 10, 1);
@@ -354,11 +361,26 @@ public class HB_SearchBaggage {
         
         grid.add(cancel, 0, 15);
         grid.add(save, 1, 15, 10, 1);
+        grid.add(error, 0, 16, 10, 1);
         
         // All event handlers from screen two
         save.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                if (
+                        //Check if all the textfields are filled in
+                        airportT.getText() == null || 
+                        airportT.getText().trim().isEmpty() ||
+                        flightNumberT.getText() == null || 
+                        flightNumberT.getText().trim().isEmpty() ||
+                        destinationT.getText() == null || 
+                        destinationT.getText().trim().isEmpty()) {
+
+                    error.setText("You have not filled all the required fields");
+                    
+                    return;
+                }
+                
                 Database DB = new Database();
                 DB.setConn();
                 DB.setQuery("UPDATE " + baggage.getLost_found() + " "
