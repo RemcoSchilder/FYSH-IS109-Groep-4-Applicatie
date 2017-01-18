@@ -91,7 +91,7 @@ public class Login {
                 checkLogin = DB.getQuery("SELECT function, question "
                         + "FROM users "
                         + "WHERE username='" + usernameT.getText() + "' "
-                        + "AND password='" + passwordT.getText() + "'");
+                        + "AND password=MD5('" + passwordT.getText() + "')");
 
                 try {
                     if (checkLogin.next()) {

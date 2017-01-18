@@ -38,10 +38,6 @@ public class HS_ViewTable {
         username.setCellValueFactory(new PropertyValueFactory<>("username"));
         username.prefWidthProperty().bind(table.widthProperty().divide(6));
         
-        TableColumn password = new TableColumn("Password");
-        password.setCellValueFactory(new PropertyValueFactory<>("password"));
-        password.prefWidthProperty().bind(table.widthProperty().divide(6));
-        
         TableColumn email = new TableColumn("Email");
         email.setCellValueFactory(new PropertyValueFactory<>("email"));
         email.prefWidthProperty().bind(table.widthProperty().divide(6));
@@ -57,7 +53,7 @@ public class HS_ViewTable {
 
         if (searchResult == null) {
             ResultSet result = db.getQuery("SELECT firstname, lastname"
-                + ", username, password, email, function FROM users");
+                + ", username, email, function FROM users");
             
             try {
                 while (result.next()) {
@@ -65,7 +61,6 @@ public class HS_ViewTable {
                             result.getString("firstname"),
                             result.getString("lastname"),
                             result.getString("username"),
-                            result.getString("password"),
                             result.getString("email"),
                             result.getString("function")
                     ));
@@ -83,7 +78,6 @@ public class HS_ViewTable {
                             searchResult.getString("firstname"),
                             searchResult.getString("lastname"),
                             searchResult.getString("username"),
-                            searchResult.getString("password"),
                             searchResult.getString("email"),
                             searchResult.getString("function")
                     ));
@@ -99,7 +93,7 @@ public class HS_ViewTable {
 
         /* Set table colums and rows */
         table.setItems(data);
-        table.getColumns().addAll(firstname, lastname, username, password, 
+        table.getColumns().addAll(firstname, lastname, username, 
                 email, function);
         
         
@@ -112,17 +106,14 @@ public class HS_ViewTable {
         private final SimpleStringProperty firstname;
         private final SimpleStringProperty lastname;
         private final SimpleStringProperty username;
-        private final SimpleStringProperty password;
         private final SimpleStringProperty email;
         private final SimpleStringProperty function;
 
-        private TableUsers(String firstname, String lastname, String username,
-                String password, String email, String function) {
+        private TableUsers(String firstname, String lastname, String username, String email, String function) {
             
             this.firstname = new SimpleStringProperty(firstname);
             this.lastname = new SimpleStringProperty(lastname);
             this.username = new SimpleStringProperty(username);
-            this.password = new SimpleStringProperty(password);
             this.email = new SimpleStringProperty(email);
             this.function = new SimpleStringProperty(function);
         }
@@ -149,14 +140,6 @@ public class HS_ViewTable {
 
         public void setUsername(String username) {
             this.username.set(username);
-        }
-
-        public String getPassword() {
-            return password.get();
-        }
-
-        public void setPassword(String password) {
-            this.password.set(password);
         }
 
         public String getEmail() {

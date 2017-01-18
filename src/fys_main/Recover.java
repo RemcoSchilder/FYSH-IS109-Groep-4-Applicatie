@@ -217,7 +217,7 @@ public class Recover {
                 Database test = new Database();
                 Database.setConn();
                 test.setQuery("Update users SET "
-                        + "password='" + passwordT1.getText() + "'"
+                        + "password=MD5('" + passwordT1.getText() + "')"
                         + "WHERE username='" + usernameT.getText() + "'");
 
                 pane.getChildren().clear();

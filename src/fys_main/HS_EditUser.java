@@ -55,8 +55,8 @@ public class HS_EditUser {
         Label usernameL = new Label("Username:");
         Label usernameT = new Label(editUser.getUsername());
 
-        Label passwordL = new Label("password:");
-        TextField passwordT = new TextField(editUser.getPassword());
+        Label passwordL = new Label("Password:");
+        TextField passwordT = new TextField();
 
         Label emailL = new Label("Email:");
         TextField emailT = new TextField(editUser.getEmail());
@@ -124,8 +124,6 @@ public class HS_EditUser {
                         || lastNameT.getText().trim().isEmpty()
                         || usernameT.getText() == null
                         || usernameT.getText().trim().isEmpty()
-                        || passwordT.getText() == null
-                        || passwordT.getText().trim().isEmpty()
                         || emailT.getText() == null
                         || emailT.getText().trim().isEmpty()
                         || functionC.getValue() == null) {
@@ -137,13 +135,18 @@ public class HS_EditUser {
 
                 Database test = new Database();
                 Database.setConn();
-                test.setQuery("Update users SET "
+                test.setQuery("UPDATE users SET "
                         + "firstname='" + firstNameT.getText() + "', "
                         + "lastname='" + lastNameT.getText() + "', "
-                        + "password='" + passwordT.getText() + "', "
                         + "email='" + emailT.getText() + "', "
                         + "function='" + functionC.getValue() + "' "
                         + "WHERE username = '" + editUser.getUsername() + "'");
+                
+                if (passwordT.getText() != null && !passwordT.getText().trim().isEmpty()) {
+                    test.setQuery("UPDATE users SET "
+                        + "password=MD5('" + passwordT.getText() + "') "
+                        + "WHERE username = '" + editUser.getUsername() + "'");
+                }
 
                 pane.setCenter(createTable());
             }

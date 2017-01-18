@@ -1,8 +1,6 @@
 package fys_main;
 
 import static fys_main.FYS_LostFound.pane;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -11,8 +9,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
-import javax.mail.MessagingException;
 
 /**
  *
