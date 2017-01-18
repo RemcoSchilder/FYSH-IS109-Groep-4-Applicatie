@@ -24,9 +24,12 @@ public class HS_CreateUser {
     private static Label error;
     private static Button cancel, addUser;
 
+    //create screen
     public static GridPane getScreen() {
+        //creates gridpane
         GridPane grid = new GridPane();
 
+        //creates combobox options
         ObservableList<String> options
                 = FXCollections.observableArrayList(
                         "Counter Assistant",
@@ -34,6 +37,7 @@ public class HS_CreateUser {
                         "System Manager"
                 );
 
+        //creates text with style
         Text name = new Text("Name:");
         name.getStyleClass().add("subheading");
 
@@ -58,10 +62,12 @@ public class HS_CreateUser {
         Label functionL = new Label("Type:");
         ComboBox functionC = new ComboBox(options);
 
+        //creates label and buttons
         error = new Label();
         cancel = new Button("Cancel");
         addUser = new Button("Add User");
 
+        //adds components to gridpane
         grid.add(name, 0, 0);
 
         grid.add(firstNameL, 0, 1);
@@ -94,17 +100,20 @@ public class HS_CreateUser {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
+        //cancel button pressed
         cancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                //sets table to center
                 pane.setCenter(createTable());
             }
         });
 
+        //adduser button pressed
         addUser.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
+                //checks fields
                 if (firstNameT.getText() == null
                         || firstNameT.getText().trim().isEmpty()
                         || lastNameT.getText() == null
@@ -117,13 +126,17 @@ public class HS_CreateUser {
                         || emailT.getText().trim().isEmpty()
                         || functionC.getValue() == null) {
 
+                    //sets error text
                     error.setText("You have not filled all the fields");
 
                     return;
                 }
 
+                //conncets to database
                 Database test = new Database();
                 Database.setConn();
+                
+                //sets query
                 test.setQuery("INSERT INTO users (firstname, lastname, username"
                         + ", password, email, function, question, answer) "
                         + "VALUES ('"
@@ -136,6 +149,7 @@ public class HS_CreateUser {
                         + "" + "', '"
                         + "" + "')");
 
+                //sets table to center
                 pane.setCenter(createTable());
             }
         });

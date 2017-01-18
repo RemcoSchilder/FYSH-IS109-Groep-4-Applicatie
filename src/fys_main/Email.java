@@ -32,7 +32,7 @@ public class Email {
     public static void sendMessage(String recipient)
             throws MessagingException {
 
-        
+        //creates properties and adds object
         Properties prop = new Properties();
         prop.put("mail.smtp.auth", "true");
         prop.put("mail.smtp.starttls.enable", "true");
@@ -40,8 +40,10 @@ public class Email {
         prop.put("mail.smtp.host", host);
         prop.put("mail.smtp.port", port);
 
+        //create boolean
         boolean check = true;
-        //
+        
+        //validate email from
         try {
             InternetAddress e = new InternetAddress(from);
             e.validate();
@@ -49,7 +51,8 @@ public class Email {
             e.getStackTrace();
             check = false;
         }
-
+        
+        //checks password authentication
         if (check) {
             sesh = Session.getInstance(prop,
                     new javax.mail.Authenticator() {
@@ -59,14 +62,16 @@ public class Email {
                 }
             });
         }
-
+        
+        //create subject and content Strings
         String subject = "Corendon: Your baggage has been found!";
         String content = "Best traveller, \n\n"
                 + "Today whe have found your baggage.\n"
                 + "At this moment we are sending your baggage right to the address you registered at the time.\n" 
                 + "If this is incorrect or you moved at the time, please contact us immediatly with the number: 0639573906\n\n"
                 + "Best of regards, Corendon";
-
+        
+        //creates message and sends to recipient
         try {
             Message m = new MimeMessage(sesh);
             m.setFrom(new InternetAddress(from));

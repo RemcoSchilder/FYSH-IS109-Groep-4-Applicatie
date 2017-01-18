@@ -3,6 +3,8 @@ package fys_main;
 import static fys_main.Homepage_Systeem.searchResult;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,46 +17,45 @@ import javafx.scene.control.cell.PropertyValueFactory;
  * @author freek
  */
 public class HS_ViewTable {
-    
+
     private static TableView<TableUsers> table;
     private static ObservableList<TableUsers> data;
-    
+
     public static TableView<TableUsers> users() {
-        
+
         //vernieuw gegevens
         table = new TableView<>();
         data = FXCollections.observableArrayList();
-        
+
         //create colums voor table
         TableColumn firstname = new TableColumn("Firstname");
         firstname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
-        firstname.prefWidthProperty().bind(table.widthProperty().divide(6));
-        
+        firstname.prefWidthProperty().bind(table.widthProperty().divide(5));
+
         TableColumn lastname = new TableColumn("Lastname");
         lastname.setCellValueFactory(new PropertyValueFactory<>("lastname"));
-        lastname.prefWidthProperty().bind(table.widthProperty().divide(6));
-        
+        lastname.prefWidthProperty().bind(table.widthProperty().divide(5));
+
         TableColumn username = new TableColumn("Username");
         username.setCellValueFactory(new PropertyValueFactory<>("username"));
-        username.prefWidthProperty().bind(table.widthProperty().divide(6));
-        
+        username.prefWidthProperty().bind(table.widthProperty().divide(5));
+
         TableColumn email = new TableColumn("Email");
         email.setCellValueFactory(new PropertyValueFactory<>("email"));
-        email.prefWidthProperty().bind(table.widthProperty().divide(6));
-        
+        email.prefWidthProperty().bind(table.widthProperty().divide(5));
+
         TableColumn function = new TableColumn("Function");
         function.setCellValueFactory(new PropertyValueFactory<>("function"));
-        function.prefWidthProperty().bind(table.widthProperty().divide(6));
-        
-        
+        function.prefWidthProperty().bind(table.widthProperty().divide(5));
+
         //ophalen van gegevens uit database
         Database db = new Database();
-        db.setConn();
+        Database.setConn();
 
         if (searchResult == null) {
             ResultSet result = db.getQuery("SELECT firstname, lastname"
-                + ", username, email, function FROM users");
-            
+                    + ", username, email, function FROM users");
+
             try {
                 while (result.next()) {
                     data.add(new TableUsers(
@@ -64,14 +65,14 @@ public class HS_ViewTable {
                             result.getString("email"),
                             result.getString("function")
                     ));
+
                 }
-            } catch (SQLException se) {
-            
-            //Handle errors for JDBC
-            se.printStackTrace();
+            } catch (SQLException ex) {
+                Logger.getLogger(HS_ViewTable.class.getName()).log(Level.SEVERE, null, ex);
             }
-           
+
         } else {
+
             try {
                 while (searchResult.next()) {
                     data.add(new TableUsers(
@@ -82,26 +83,23 @@ public class HS_ViewTable {
                             searchResult.getString("function")
                     ));
                 }
-            } catch (SQLException se) {
-            
-            //Handle errors for JDBC
-            se.printStackTrace();
+            } catch (SQLException ex) {
+                Logger.getLogger(HS_ViewTable.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             searchResult = null;
         }
 
         /* Set table colums and rows */
         table.setItems(data);
-        table.getColumns().addAll(firstname, lastname, username, 
+        table.getColumns().addAll(firstname, lastname, username,
                 email, function);
-        
-        
+
         return table;
     }
 
     public static class TableUsers {
-        
+
         /* haalt gegevens uit database */
         private final SimpleStringProperty firstname;
         private final SimpleStringProperty lastname;
@@ -110,14 +108,14 @@ public class HS_ViewTable {
         private final SimpleStringProperty function;
 
         private TableUsers(String firstname, String lastname, String username, String email, String function) {
-            
+
             this.firstname = new SimpleStringProperty(firstname);
             this.lastname = new SimpleStringProperty(lastname);
             this.username = new SimpleStringProperty(username);
             this.email = new SimpleStringProperty(email);
             this.function = new SimpleStringProperty(function);
         }
-        
+
         public String getFirstname() {
             return firstname.get();
         }
@@ -125,7 +123,7 @@ public class HS_ViewTable {
         public void setFirstname(String firstname) {
             this.firstname.set(firstname);
         }
-        
+
         public String getLastname() {
             return lastname.get();
         }

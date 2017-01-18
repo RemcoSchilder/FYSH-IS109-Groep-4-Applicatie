@@ -30,9 +30,12 @@ public class HS_EditUser {
     private static Label error;
     private static Button cancel, save;
 
+    //creates screen
     public static GridPane getScreen() {
+        //create gridpane
         GridPane grid = new GridPane();
 
+        //creates combobox options
         ObservableList<String> options
                 = FXCollections.observableArrayList(
                         "Counter Assistant",
@@ -40,6 +43,7 @@ public class HS_EditUser {
                         "System Manager"
                 );
 
+        //creates text and with style
         Text name = new Text("Name:");
         name.getStyleClass().add("subheading");
 
@@ -56,7 +60,7 @@ public class HS_EditUser {
         Label usernameT = new Label(editUser.getUsername());
 
         Label passwordL = new Label("Password:");
-        TextField passwordT = new TextField();
+        Label passwordT = new Label("XXX");
 
         Label emailL = new Label("Email:");
         TextField emailT = new TextField(editUser.getEmail());
@@ -64,10 +68,12 @@ public class HS_EditUser {
         Label functionL = new Label("Type:");
         ComboBox functionC = new ComboBox(options);
 
+        //creates labels text
         error = new Label();
         cancel = new Button("Cancel");
         save = new Button("Save");
 
+        //adds components to gridpane
         grid.add(name, 0, 0);
 
         grid.add(firstNameL, 0, 1);
@@ -100,6 +106,7 @@ public class HS_EditUser {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
+        //checks and sets correct combobox option
         functionC.getSelectionModel().selectFirst();
         if ("Manager".equals(editUser.getFunction())) {
             functionC.getSelectionModel().selectNext();
@@ -107,9 +114,11 @@ public class HS_EditUser {
             functionC.getSelectionModel().selectLast();
         }
 
+        //cancel button pressed
         cancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                //sets table as center
                 pane.setCenter(createTable());
             }
         });
@@ -117,7 +126,7 @@ public class HS_EditUser {
         save.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
+                //checks fields
                 if (firstNameT.getText() == null
                         || firstNameT.getText().trim().isEmpty()
                         || lastNameT.getText() == null
@@ -128,26 +137,25 @@ public class HS_EditUser {
                         || emailT.getText().trim().isEmpty()
                         || functionC.getValue() == null) {
 
+                    //sets error text
                     error.setText("You have not filled all the fields");
 
                     return;
                 }
 
+                //connects to database
                 Database test = new Database();
                 Database.setConn();
+                
+                //sets query
                 test.setQuery("UPDATE users SET "
                         + "firstname='" + firstNameT.getText() + "', "
                         + "lastname='" + lastNameT.getText() + "', "
                         + "email='" + emailT.getText() + "', "
                         + "function='" + functionC.getValue() + "' "
                         + "WHERE username = '" + editUser.getUsername() + "'");
-                
-                if (passwordT.getText() != null && !passwordT.getText().trim().isEmpty()) {
-                    test.setQuery("UPDATE users SET "
-                        + "password=MD5('" + passwordT.getText() + "') "
-                        + "WHERE username = '" + editUser.getUsername() + "'");
-                }
 
+                //sets table as center
                 pane.setCenter(createTable());
             }
         });
