@@ -334,22 +334,25 @@ public class HM_TravellersList {
         TextField telephoneT = new TextField(editTraveller.getTelephone());
         
         /* Create all labels & inputs */
-        Label firstnameL = new Label("First name:");
-        Label lastnameL = new Label("Last name:");
-        Label streetL = new Label("Street:");
-        Label cityL = new Label("City:");
-        Label zipcodeL = new Label("Zip code:");
-        Label countryL = new Label("Country:");
+        Label verplichtL = new Label("* is verplicht");
+        Label firstnameL = new Label("First name: *");
+        Label lastnameL = new Label("Last name: *");
+        Label streetL = new Label("Street: *");
+        Label cityL = new Label("City: *");
+        Label zipcodeL = new Label("Zip code: *");
+        Label countryL = new Label("Country: *");
         Label street2L = new Label("Street (2nd):");
         Label city2L = new Label("City (2nd):");
         Label zipcode2L = new Label("Zip code (2nd):");
         Label country2L = new Label("Country (2nd):");
-        Label emailL = new Label("Email:");
-        Label telephoneL = new Label("Telephone:");
+        Label emailL = new Label("Email: *");
+        Label telephoneL = new Label("Telephone: *");
         
         
         /* Add everything to the grid */
         grid.add(nameInfo, 0, 0);
+        
+        grid.add(verplichtL, 0, 1);
         
         grid.add(firstnameL, 0, 3);
         grid.add(firstnameT, 1, 3, 10, 1);
@@ -416,20 +419,12 @@ public class HM_TravellersList {
                         zipcodeT.getText().trim().isEmpty() ||
                         countryT.getText() == null || 
                         countryT.getText().trim().isEmpty() ||
-                        street2T.getText() == null || 
-                        street2T.getText().trim().isEmpty() ||
-                        city2T.getText() == null || 
-                        city2T.getText().trim().isEmpty() ||
-                        zipcode2T.getText() == null || 
-                        zipcode2T.getText().trim().isEmpty() ||
-                        country2T.getText() == null || 
-                        country2T.getText().trim().isEmpty() ||
                         emailT.getText() == null || 
                         emailT.getText().trim().isEmpty() ||
                         telephoneT.getText() == null || 
                         telephoneT.getText().trim().isEmpty()) {
 
-                    error.setText("You have not filled all the fields");
+                    error.setText("You have not filled all the required fields");
                     
                     return;
                 }

@@ -378,10 +378,11 @@ public class HM_luggageList {
         TextArea characteristicsT = new TextArea(editTraveller.getCharacteristics());
         
         /* Create all labels & inputs */
-        Label airportL = new Label("Airport:");
+        Label verplichtL = new Label("* is verplicht");
+        Label airportL = new Label("Airport: *");
         Label labelNumberL = new Label("Lable number:");
-        Label flightNumberL = new Label("Flight number:");
-        Label destinationL = new Label("Destination:");
+        Label flightNumberL = new Label("Flight number: *");
+        Label destinationL = new Label("Destination: *");
         Label brandL = new Label("Brand:");
         Label colorL = new Label("Color:");
         Label typeL = new Label("Type:");
@@ -392,6 +393,8 @@ public class HM_luggageList {
         
         /* Add everything to the grid */
         grid.add(lostInfo, 0, 0);
+        
+        grid.add(verplichtL, 0, 1);
         
         grid.add(airportL, 0, 3);
         grid.add(airportT, 1, 3, 10, 1);
@@ -434,22 +437,12 @@ public class HM_luggageList {
                         //Check if all the textfields are filled in
                         airportT.getText() == null || 
                         airportT.getText().trim().isEmpty() ||
-                        labelNumberT.getText() == null || 
-                        labelNumberT.getText().trim().isEmpty() ||
                         flightNumberT.getText() == null || 
                         flightNumberT.getText().trim().isEmpty() ||
                         destinationT.getText() == null || 
-                        destinationT.getText().trim().isEmpty() ||
-                        brandT.getText() == null || 
-                        brandT.getText().trim().isEmpty() ||
-                        colorL.getText() == null || 
-                        colorL.getText().trim().isEmpty() ||
-                        typeT.getText() == null || 
-                        typeT.getText().trim().isEmpty() ||
-                        characteristicsT.getText() == null || 
-                        characteristicsT.getText().trim().isEmpty()) {
+                        destinationT.getText().trim().isEmpty()) {
 
-                    error.setText("You have not filled all the fields");
+                    error.setText("You have not filled all the required fields");
                     
                     return;
                 }
