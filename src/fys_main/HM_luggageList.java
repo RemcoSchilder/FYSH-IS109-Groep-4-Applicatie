@@ -29,24 +29,23 @@ import javafx.scene.text.Text;
  * @author Remco Schilder
  */
 public class HM_luggageList {
-
+    
+    /* Create BorderPane */
     private static BorderPane screen = new BorderPane();
+    
+    /* Table */
     private static TableView<TableLuggage> table = new TableView<>();
     private static TableLuggage editTraveller;
     private static TableLuggage detailsBaggage;
     private static ObservableList<TableLuggage> data = FXCollections.observableArrayList();
 
-    private static Button search = new Button("Search");
-    private static Button details = new Button("Details");
-
-    private static Button delete = new Button("Delete");
-
-    private static Button edit = new Button("Edit");
-
+    /* TextFields */
     private static TextField searchLabelNr = new TextField();
     private static TextField searchBrand = new TextField();
     private static TextField searchType = new TextField();
     private static TextField searchColor = new TextField();
+   
+    /* Labels */
     private static Label LabelNumber = new Label("Label Number: ");
     private static Label Brand = new Label("Brand: ");
     private static Label Type = new Label("Type: ");
@@ -54,10 +53,15 @@ public class HM_luggageList {
     private static Label error = new Label();
     
     /* Buttons */
+    private static Button search = new Button("Search");
+    private static Button details = new Button("Details");
+    private static Button delete = new Button("Delete");
+    private static Button edit = new Button("Edit");
     private static Button cancel = new Button("Cancel");
     private static Button save = new Button("Save");
     private static ButtonType yesButton, cancelButton;
 
+    //Method to open the screen with the luggagelist
     public static BorderPane getScreen() {
         getScreenOne();
         vboxRight();
@@ -65,29 +69,29 @@ public class HM_luggageList {
         return screen;
     }
 
+    //Method to create the sidebar at the right
     public static void vboxRight() {
         VBox vbox = new VBox();
-        //image
 
-        //buttons
-        search.setMinSize(230, 48);
+        /* Set size for the textfields */
         searchLabelNr.setMinSize(230, 48);
         searchBrand.setMinSize(230, 48);
         searchType.setMinSize(230, 48);
         searchColor.setMinSize(230, 48);
+       
+        /* Set size for the buttons */
+        search.setMinSize(230, 48);
         details.setMinSize(230, 48);
-
         delete.setMinSize(230,48);
-
         edit.setMinSize(230, 48);
 
-
+        /* Set label styles */
         LabelNumber.getStyleClass().add("labels");
         Brand.getStyleClass().add("labels");
         Type.getStyleClass().add("labels");
         Color.getStyleClass().add("labels");
 
-        //alles wordt in de vbox gestopt
+        //Add everything to the vbox
         vbox.getChildren().addAll(LabelNumber, searchLabelNr, Brand,
 
                 searchBrand, Color, searchColor, Type, searchType, search, details, edit,delete);
@@ -95,12 +99,13 @@ public class HM_luggageList {
         
 
 
-        //style voor de vbox
+        //Set vbox style
         vbox.getStyleClass().add("vbox");
         
         screen.setRight(vbox);
     }
 
+    /* Method to open the screen with the luggagelist */
     private static BorderPane getScreenOne() {
 
         table = new TableView<>();
@@ -198,6 +203,8 @@ public class HM_luggageList {
         /* Create fields with labels */
         screen.setCenter(table);
 
+        
+        /* Event handlers */
         search.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -209,6 +216,7 @@ public class HM_luggageList {
 
                 boolean where = false;
 
+              /* Create query */
                 String query = "SELECT * "
                         + " FROM ( SELECT *"
                         + " FROM lost "
@@ -217,6 +225,8 @@ public class HM_luggageList {
                         + " FROM found "
                         + ") AS search";
 
+                /* Check if the filled in textfields are equal to 
+                data in the database */
                 if (!searchLabelNr.getText().equals("")) {
                     if (where) {
                         query += " AND labelNumber = '" + searchLabelNr.getText() + "'";
@@ -250,6 +260,7 @@ public class HM_luggageList {
                     }
                 }
 
+                /* Excecute query */
                 ResultSet searchResult = DB.getQuery(query);
 
                 /* Get all the lost luggage */
@@ -311,13 +322,15 @@ public class HM_luggageList {
             public void handle(ActionEvent event) {
             
             TableLuggage labelnumber = table.getSelectionModel().getSelectedItem();
-                      
+                 
+                //Open popup
                 Optional<ButtonType> result = alertPopup().showAndWait();
                 
                 if(result.get() == yesButton)
                 {                       
                     Database deleteluggage = new Database();
                     Database.setConn();
+                    //Delete selected luggage from the database
                     deleteluggage.setQuery("DELETE FROM " + labelnumber.getLost_found() + " WHERE id='" + labelnumber.getId() + "'" );
                     getScreenOne();
                 }
@@ -331,6 +344,7 @@ public class HM_luggageList {
     
     }
 
+    /*Method to open the edit screen */
     public static void getScreenTwo() {
 
         /* GridPane with properties */
@@ -417,6 +431,7 @@ public class HM_luggageList {
             public void handle(ActionEvent event) {
                 
                 if (
+                        //Check if all the textfields are filled in
                         airportT.getText() == null || 
                         airportT.getText().trim().isEmpty() ||
                         labelNumberT.getText() == null || 
@@ -439,6 +454,7 @@ public class HM_luggageList {
                     return;
                 }
                 
+                //Update the data in the database with the filled in data
                 Database DB = new Database();
                 DB.setConn();
                 DB.setQuery("UPDATE " + editTraveller.getLost_found() + " "
@@ -467,8 +483,10 @@ public class HM_luggageList {
         
         screen.setCenter(grid);
     }
-    
+   
+    /* Method to open the details screen */
     public static void getScreenDetails(){
+        
         /* Initialize Database */
         Database db = new Database();
         db.setConn();
@@ -638,6 +656,7 @@ public class HM_luggageList {
         }
     }
     
+    /*Method to open a popup to make sure nothing gets deleted by accident */
     public static Alert alertPopup() {
         yesButton = new ButtonType("DELETE");
         cancelButton = new ButtonType("No");
@@ -651,6 +670,7 @@ public class HM_luggageList {
         return alert;
     }
     
+     /* Class to create a table with the correct colums for the luggagelist */
     public static class TableLuggage {
 
         private final SimpleStringProperty id;
@@ -685,6 +705,8 @@ public class HM_luggageList {
 
         }
 
+        /* Getters & Setters */
+        
         public String getId() {
             return id.get();
         }

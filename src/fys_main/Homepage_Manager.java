@@ -33,7 +33,7 @@ public class Homepage_Manager {
     private static HBox hbox = new HBox();
 
         
-        //Method to create the left sidebar    
+        //Method to create the sidebar on the left   
         public static VBox vbox() {
         
         VBox vbox = new VBox();
@@ -62,7 +62,7 @@ public class Homepage_Manager {
         return vbox;
     }
     
-    //Method to create the bottom sidebar    
+    //Method to create the sidebar at the bottom    
     public static HBox hboxBottom() {
         
         //Buttonsize
@@ -80,14 +80,14 @@ public class Homepage_Manager {
         return hbox;
     }
     
-   //Method to create the screen
+   //Method to create the homepagescreen
     public static BorderPane getScreen() {
 
         pane.setLeft(vbox());
         pane.setBottom(hboxBottom());
         
         
-        /* Event handlers for the buttons */
+        /* Event handlers */
         bagageList.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

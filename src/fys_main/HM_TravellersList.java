@@ -55,7 +55,7 @@ public class HM_TravellersList {
     private static Button cancel = new Button("Cancel");
     private static Button save = new Button("Save");
 
-    //Method to open the screen with the travellerslist aswell as the right vbox
+    //Method to open the screen with the travellerslist
     public static BorderPane getScreen() {
         getScreenOne();
         vboxRight();
@@ -63,7 +63,7 @@ public class HM_TravellersList {
         return screen;
     }
 
-    //Method to create the vbox for the right side of the screen
+    //Method to create the sidebar at the right
     public static void vboxRight() {
         VBox vbox = new VBox();
         
@@ -92,7 +92,7 @@ public class HM_TravellersList {
         screen.setRight(vbox);
     }
     
-    //Method to create the screen with the travellerslist
+    //Method to open the screen with the travellerslist
     private static void getScreenOne() {
 
         table = new TableView<>();
@@ -188,7 +188,7 @@ public class HM_TravellersList {
         /* Create fields with labels */
         screen.setCenter(table);
 
-        /* Event handlers for the buttons */
+        /* Event handlers */
         
         search.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -201,6 +201,7 @@ public class HM_TravellersList {
 
                 boolean where = false;
 
+                /* Create query */
                 String query = "SELECT * "
                         + " FROM ( SELECT *"
                         + " FROM travellers "
@@ -241,6 +242,7 @@ public class HM_TravellersList {
                     }
                 }
 
+                /* Execute query */
                 ResultSet searchResult = DB.getQuery(query);
 
                 /* Get all the lost luggage */
@@ -297,6 +299,7 @@ public class HM_TravellersList {
         });
     }
 
+    /*Method to open the edit screen */
     public static void getScreenTwo() {
         
         /* GridPane with properties */
@@ -393,13 +396,13 @@ public class HM_TravellersList {
         grid.add(save, 1, 19, 10, 1);
         grid.add(error, 0, 20, 10, 1);
         
-        // All event handlers from screen two
+        /* Event handlers */
         save.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
             
                 if (
-                        //Check if all the fields are filled in
+                        //Check if all the textfields are filled in
                         
                         firstnameT.getText() == null || 
                         firstnameT.getText().trim().isEmpty() ||
@@ -431,9 +434,9 @@ public class HM_TravellersList {
                     return;
                 }
                 
+                //Update the data in the database with the filled in data
                 Database DB = new Database();
                 DB.setConn();
-                //Update the data in the database with the filled in data
                 DB.setQuery("UPDATE travellers SET "
                         + "firstName='" + firstnameT.getText() + "', "
                         + "lastName='" + lastnameT.getText() + "', "
@@ -465,6 +468,7 @@ public class HM_TravellersList {
         screen.setCenter(grid);
     }
     
+    /* Method to open the details screen*/
     public static void getScreenDetails(){
     
      /* Make GridPane with properties */
@@ -560,7 +564,7 @@ public class HM_TravellersList {
         screen.setCenter(pane);
     }
     
-  /* Class to generate a table with the correct colums for the travellerslist */
+  /* Class to create a table with the correct colums for the travellerslist */
     public static class TableLuggage {
 
         private final SimpleStringProperty id;
