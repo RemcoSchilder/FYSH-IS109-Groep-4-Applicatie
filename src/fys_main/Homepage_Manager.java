@@ -18,7 +18,7 @@ import javafx.scene.layout.VBox;
  */
 public class Homepage_Manager {
 
-    //aanmaken allover borderpane
+    //Create BorderPane
     private static BorderPane pane = new BorderPane();
 
     //buttons en label voor sidebar menu
@@ -32,60 +32,62 @@ public class Homepage_Manager {
     private static Button logout = new Button("Log out");
     private static HBox hbox = new HBox();
 
-   //methode voor het scherm
-    public static VBox vbox() {
+        
+        //Method to create the left sidebar    
+        public static VBox vbox() {
+        
         VBox vbox = new VBox();
         
-        //image
+        //Image
         Image image = new Image("logo.jpg", 230, 48, false, false);
         ImageView v1 = new ImageView(image);
 
-        //buttons
+        //Set buttonsize
         bagageList.setMinSize(230, 48);
         travellerList.setMinSize(230, 48);
         lost.setMinSize(230, 48);
         found.setMinSize(230, 48);
         
-        //label styles
+        //Label styles
         see.getStyleClass().add("labels");
         graph.getStyleClass().add("labels");
 
-        //alles wordt in de vbox gestopt
+        //Add everything to the vbox
         vbox.getChildren().addAll(v1, see, bagageList, travellerList, graph, lost, found);
 
-        //style voor de vbox
+        //Vbox style
         vbox.getStyleClass().add("vbox");
        
 
         return vbox;
     }
     
+    //Method to create the bottom sidebar    
     public static HBox hboxBottom() {
         
-        //buttons
+        //Buttonsize
         logout.setMinSize(230, 48);
         edit.setMinSize(230, 48);
         
-        //alles wordt in de vbox gestopt
+        //Add everything to the vbox
         hbox.getChildren().clear();
         hbox.getChildren().addAll(logout);
 
-        //style voor de vbox
+        //Set vbox style
         hbox.getStyleClass().add("vbox");
-       // VBox.setMargin(logout, new Insets(566, 0, 0, 0));
        
        
         return hbox;
     }
     
-    //methode voor het scherm
+   //Method to create the screen
     public static BorderPane getScreen() {
 
         pane.setLeft(vbox());
         pane.setBottom(hboxBottom());
         
         
-        //eventhandler knop bagagelijst opent bagagelijst info
+        /* Event handlers for the buttons */
         bagageList.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -93,6 +95,7 @@ public class Homepage_Manager {
             }
         });
         
+       
         travellerList.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -100,7 +103,7 @@ public class Homepage_Manager {
             }
         });
         
-        //eventhandler terug naar start
+       
         logout.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -110,7 +113,7 @@ public class Homepage_Manager {
             }
         });
         
-        //eventhandler naar lost pie chart
+       
         lost.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -119,7 +122,7 @@ public class Homepage_Manager {
             }
         });
         
-        //eventhandler naar found pie chart
+      
         found.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

@@ -22,7 +22,8 @@ import javafx.scene.layout.GridPane;
  * @author wessel
  */
 public class HM_Graphlost {
-
+ 
+    /* Create Strings */
     final static String january = "January";
     final static String february = "February";
     final static String march = "March";
@@ -36,6 +37,7 @@ public class HM_Graphlost {
     final static String november = "November";
     final static String december = "December";
     
+  //Method to create the screen with the monthly overvieuw graph
     public static GridPane getScreen() {
         GridPane pane = new GridPane();
 
@@ -43,7 +45,7 @@ public class HM_Graphlost {
         DateFormat dateFormat = new SimpleDateFormat("YYYY");
         Date date = new Date();
         
-        // all database queries
+        /* All database queries */
         Database DB = new Database();
         DB.setConn();
         ResultSet getTotalLost = DB.getQuery("SELECT COUNT(*) AS total, MONTH(date) AS month FROM lost GROUP BY MONTH(date) ORDER BY MONTH(date)");
@@ -68,14 +70,18 @@ public class HM_Graphlost {
             }
             
         getTotal.next();
+        
+        /* Create BarChart */
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis(0, Math.round(getTotal.getInt("total") * 1.20), 1);
         final BarChart<String, Number> bc = new BarChart<String, Number>(xAxis, yAxis);
         
+        /*Set title and x/y axis names */
         bc.setTitle("Month overview " + dateFormat.format(date));
         xAxis.setLabel("Status");
         yAxis.setLabel("Number of bagagge");
 
+        //Add everything to lost
         XYChart.Series lostColumn = new XYChart.Series();
         lostColumn.setName("Lost");
         lostColumn.getData().add(new XYChart.Data(january, totalLost[0]));
@@ -91,6 +97,8 @@ public class HM_Graphlost {
         lostColumn.getData().add(new XYChart.Data(november, totalLost[10]));
         lostColumn.getData().add(new XYChart.Data(december, totalLost[11]));
 
+        
+        /* Add everything to the right column */
         XYChart.Series matchedColumn = new XYChart.Series();
         matchedColumn.setName("Matched");
         matchedColumn.getData().add(new XYChart.Data(january, totalMatched[0]));
@@ -106,8 +114,9 @@ public class HM_Graphlost {
         matchedColumn.getData().add(new XYChart.Data(november, totalMatched[10]));
         matchedColumn.getData().add(new XYChart.Data(december, totalMatched[11]));
 
-            bc.setMinSize(1200, 800);  //grote aanpassen
-
+            bc.setMinSize(1200, 800);  //Changing size
+            
+            /* Add the BarChart to the grid */
             pane.setAlignment(Pos.CENTER);
             pane.getChildren().addAll(bc);
             bc.getData().addAll(lostColumn, matchedColumn);

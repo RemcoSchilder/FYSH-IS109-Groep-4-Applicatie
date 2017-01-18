@@ -26,19 +26,22 @@ import javafx.scene.text.Text;
  */
 public class HM_TravellersList {
 
+    /* Create Borderpane */
     private static BorderPane screen = new BorderPane();
+    
+     /* Table */
     private static TableView<TableLuggage> table = new TableView<>();
     private static TableLuggage editTraveller;
     private static TableLuggage detailsTraveller;
     private static ObservableList<TableLuggage> data = FXCollections.observableArrayList();
 
-    private static Button search = new Button("Search");
-    private static Button details = new Button("Details");
-    private static Button edit = new Button("Edit");
+    /* Textfields */
     private static TextField searchTravellerID = new TextField();
     private static TextField searchFirstname = new TextField();
     private static TextField searchLastname = new TextField();
     private static TextField searchTelephone = new TextField();
+   
+    /* Labels */
     private static Label TravellerID = new Label("Traveller id: ");
     private static Label Firstname = new Label("First name: ");
     private static Label Lastname = new Label("Last name: ");
@@ -46,9 +49,13 @@ public class HM_TravellersList {
     private static Label error = new Label();
     
     /* Buttons */
+    private static Button search = new Button("Search");
+    private static Button details = new Button("Details");
+    private static Button edit = new Button("Edit");
     private static Button cancel = new Button("Cancel");
     private static Button save = new Button("Save");
 
+    //Method to open the screen with the travellerslist aswell as the right vbox
     public static BorderPane getScreen() {
         getScreenOne();
         vboxRight();
@@ -56,11 +63,12 @@ public class HM_TravellersList {
         return screen;
     }
 
+    //Method to create the vbox for the right side of the screen
     public static void vboxRight() {
         VBox vbox = new VBox();
-        //image
+        
 
-        //buttons
+        //Buttonsize and style
         search.setMinSize(230, 48);
         searchTravellerID.setMinSize(230, 48);
         searchFirstname.setMinSize(230, 48);
@@ -74,16 +82,17 @@ public class HM_TravellersList {
         Lastname.getStyleClass().add("labels");
         Telephone.getStyleClass().add("labels");
 
-        //alles wordt in de vbox gestopt
+        //Add everything to the vbox
         vbox.getChildren().addAll(TravellerID, searchTravellerID, Firstname,
                 searchFirstname, Lastname, searchLastname, Telephone, searchTelephone, search, details, edit);
 
-        //style voor de vbox
+        //Set vbox style
         vbox.getStyleClass().add("vbox");
         
         screen.setRight(vbox);
     }
-
+    
+    //Method to create the screen with the travellerslist
     private static void getScreenOne() {
 
         table = new TableView<>();
@@ -179,6 +188,8 @@ public class HM_TravellersList {
         /* Create fields with labels */
         screen.setCenter(table);
 
+        /* Event handlers for the buttons */
+        
         search.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -195,6 +206,8 @@ public class HM_TravellersList {
                         + " FROM travellers "
                         + ") AS search";
 
+                /* Check if the filled in textfields are equal to 
+                data in the database */
                 if (!searchTravellerID.getText().equals("")) {
                     if (where) {
                         query += " AND id = '" + searchTravellerID.getText() + "'";
@@ -285,6 +298,7 @@ public class HM_TravellersList {
     }
 
     public static void getScreenTwo() {
+        
         /* GridPane with properties */
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -385,6 +399,8 @@ public class HM_TravellersList {
             public void handle(ActionEvent event) {
             
                 if (
+                        //Check if all the fields are filled in
+                        
                         firstnameT.getText() == null || 
                         firstnameT.getText().trim().isEmpty() ||
                         lastnameT.getText() == null || 
@@ -417,6 +433,7 @@ public class HM_TravellersList {
                 
                 Database DB = new Database();
                 DB.setConn();
+                //Update the data in the database with the filled in data
                 DB.setQuery("UPDATE travellers SET "
                         + "firstName='" + firstnameT.getText() + "', "
                         + "lastName='" + lastnameT.getText() + "', "
@@ -432,6 +449,7 @@ public class HM_TravellersList {
                         + "telephone='" + telephoneT.getText() + "' "
                         + "WHERE id='" + editTraveller.getId() + "'");
                
+                //Return to the travellerlist
                 getScreenOne();
             }
         });
@@ -542,6 +560,7 @@ public class HM_TravellersList {
         screen.setCenter(pane);
     }
     
+  /* Class to generate a table with the correct colums for the travellerslist */
     public static class TableLuggage {
 
         private final SimpleStringProperty id;
@@ -575,6 +594,8 @@ public class HM_TravellersList {
             this.telephone = new SimpleStringProperty(telephone);
         }
 
+        /* Getters & Setters */
+        
         public String getId() {
             return id.get();
         }
