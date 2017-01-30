@@ -1,6 +1,5 @@
 package fys_main;
 
-import static fys_main.FYS_LostFound.pane;
 import fys_main.HS_ViewTable.TableUsers;
 import java.sql.ResultSet;
 import java.util.Optional;
@@ -34,6 +33,7 @@ public class Homepage_Systeem {
     private static ComboBox boxFunction;
     private static Button search, addUser, edit, delete, logout;
     private static ButtonType yesButton, cancelButton;
+    protected static BorderPane pane;
 
     //creates hbox for the top of the borderpane
     public static HBox hboxTop() {
@@ -150,6 +150,7 @@ public class Homepage_Systeem {
 
     //creates borderpane
     public static BorderPane getScreen() {
+        pane = new BorderPane();
         //sets hbox's and vbox's in borderpane
         pane.setTop(hboxTop());
         pane.setLeft(vboxLeft());
@@ -287,4 +288,5 @@ public class Homepage_Systeem {
 
         return pane;
     }
+
 }

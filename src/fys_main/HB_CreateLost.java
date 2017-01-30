@@ -371,7 +371,16 @@ public class HB_CreateLost {
                     //Handle errors for JDBC
                     se.printStackTrace();
                 }
-               
+                
+                makePDF.createPDF(dateFormat.format(date)
+                        , timeFormat.format(date), airportT.getText()
+                        , (firstNameT.getText() + " " + lastNameT.getText())
+                        , streetT.getText(), cityT.getText(), zipCodeT.getText()
+                        , countryT.getText(), telephoneT.getText()
+                        , emailT.getText(), labelNumberT.getText()
+                        , flightNumberT.getText(), destinationT.getText()
+                        , typeT.getText(), brandT.getText(), colorT.getText()
+                        , characteristicsT.getText());
                 screenThree();
             }
         });

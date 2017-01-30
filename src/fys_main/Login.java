@@ -1,6 +1,5 @@
 package fys_main;
 
-import static fys_main.FYS_LostFound.pane;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.event.ActionEvent;
@@ -25,10 +24,11 @@ public class Login {
 
     protected static TextField usernameT = new TextField();
     protected static ResultSet checkLogin;
+    protected static BorderPane pane;
 
     //creates screen
     public static BorderPane getScreen() {
-
+        pane = new BorderPane();
         //creates labels with style
         Label error = new Label("");
         error.getStyleClass().add("error");
@@ -85,6 +85,8 @@ public class Login {
         login.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                
+                
                 //checks fields
                 if (usernameT.getText().equals("")
                         || passwordT.getText().equals("")) {

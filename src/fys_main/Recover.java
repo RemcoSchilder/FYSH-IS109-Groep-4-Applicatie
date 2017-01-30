@@ -5,7 +5,7 @@
  */
 package fys_main;
 
-import static fys_main.FYS_LostFound.pane;
+import static fys_main.Login.pane;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -31,6 +31,7 @@ public class Recover {
     private static Label error;
     protected static TextField usernameT;
     private static final Button cancel = new Button("Cancel");
+    
 
     //creates screen
     public static GridPane getScreen() {
@@ -194,7 +195,8 @@ public class Recover {
         grid.add(passwordT1, 1, 4, 1, 1);
         grid.add(passwordL2, 0, 5);
         grid.add(passwordT2, 1, 5, 1, 1);
-        grid.add(resetPassword, 0, 6);
+        grid.add(cancel, 0, 6);
+        grid.add(resetPassword, 1, 6, 1, 1);
         grid.add(error, 0, 7);
         grid.setAlignment(Pos.CENTER);
 

@@ -66,9 +66,11 @@ public class Email {
         //create subject and content Strings
         String subject = "Corendon: Your baggage has been found!";
         String content = "Best traveller, \n\n"
-                + "Today whe have found your baggage.\n"
-                + "At this moment we are sending your baggage right to the address you registered at the time.\n" 
-                + "If this is incorrect or you moved at the time, please contact us immediatly with the number: 0639573906\n\n"
+                + "Today we have found your baggage.\n"
+                + "At this moment we are sending your baggage right to the address you printed on the Lost bagage form,\n"
+                + "that was signed by you and the counter assistent.\n\n"
+                + "If this is incorrect or you moved at the time, please contact us.\n"
+                + "The information you need is on our website: http://www.corendon.com/en-EN/a/contact \n\n"
                 + "Best of regards, Corendon";
         
         //creates message and sends to recipient
