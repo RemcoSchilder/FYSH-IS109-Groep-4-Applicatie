@@ -27,6 +27,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javax.mail.MessagingException;
 
+
 /**
  *
  * @author Menno
@@ -372,7 +373,7 @@ public class HB_CreateLost {
                     se.printStackTrace();
                 }
                 
-                makePDF.createPDF(dateFormat.format(date)
+                MakePDF.createPDF(dateFormat.format(date)
                         , timeFormat.format(date), airportT.getText()
                         , (firstNameT.getText() + " " + lastNameT.getText())
                         , streetT.getText(), cityT.getText(), zipCodeT.getText()

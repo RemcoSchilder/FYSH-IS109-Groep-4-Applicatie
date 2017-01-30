@@ -88,7 +88,6 @@ public class HM_Graphfound {
                 } else if(MAX_yAxis < totalFound[2]){
                     MAX_yAxis = Math.round(totalFound[2] * 1.20);
                 } else if(MAX_yAxis < totalFound[3]){
-                
                     MAX_yAxis = Math.round(totalFound[3] * 1.20);
                 }
             }
