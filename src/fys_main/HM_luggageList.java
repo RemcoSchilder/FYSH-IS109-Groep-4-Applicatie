@@ -493,9 +493,20 @@ public class HM_luggageList {
         pane.setVgap(10);
         pane.setPadding(new Insets(25, 25, 25, 25));
         
+        String typeDetail = detailsBaggage.getLost_found();
+        
+        if("lost".equals(typeDetail)){
+        typeDetail = "Lost";
+        }
+        
+        if("found".equals(typeDetail)){
+        typeDetail = "Found";
+        }
+        String status = detailsBaggage.getStatus();
+
         /* Create headings */
-        Text lostDetails = new Text("Lost");
-        lostDetails.getStyleClass().add("heading");
+        Text typeDetails = new Text(typeDetail);
+        typeDetails.getStyleClass().add("heading");
 
         Text travellerDetails = new Text("Traveller");
         travellerDetails.getStyleClass().add("heading");
@@ -578,7 +589,7 @@ public class HM_luggageList {
 
 
             /* Add 'lost' to the grid */
-            pane.add(lostDetails, 0 , 0);
+            pane.add(typeDetails, 0 , 0);
             
             pane.add(baggageDetails, 0 , 2);
             pane.add(date, 0, 3);
@@ -606,7 +617,13 @@ public class HM_luggageList {
             pane.add(characteristics, 0, 18);
             pane.add(characteristics2, 1, 18);
             
-            /* Add 'traveller' to the grid */
+            if("Found".equals(typeDetail) && "open".equals(status)){
+                //Do nothing
+            }
+            
+            
+            else{ /* Add 'traveller' to the grid if the luggage is not found
+                baggage with status open */
             pane.add(travellerDetails, 2 , 0);
             
             pane.add(name, 2 , 2);
@@ -640,6 +657,7 @@ public class HM_luggageList {
             pane.add(email, 3, 22);
             pane.add(telephoneL, 2, 23);
             pane.add(telephone, 3, 23);
+                }
 
             screen.setCenter(pane);
         }  catch(SQLException se) {
