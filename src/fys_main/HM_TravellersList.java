@@ -50,7 +50,6 @@ public class HM_TravellersList {
     
     /* Buttons */
     private static Button search = new Button("Search");
-    private static Button details = new Button("Details");
     private static Button edit = new Button("Edit");
     private static Button cancel = new Button("Cancel");
     private static Button save = new Button("Save");
@@ -74,7 +73,7 @@ public class HM_TravellersList {
         searchFirstname.setMinSize(230, 48);
         searchLastname.setMinSize(230, 48);
         searchTelephone.setMinSize(230, 48);
-        details.setMinSize(230, 48);
+
         edit.setMinSize(230, 48);
 
         TravellerID.getStyleClass().add("labels");
@@ -84,7 +83,7 @@ public class HM_TravellersList {
 
         //Add everything to the vbox
         vbox.getChildren().addAll(TravellerID, searchTravellerID, Firstname,
-                searchFirstname, Lastname, searchLastname, Telephone, searchTelephone, search, details, edit);
+                searchFirstname, Lastname, searchLastname, Telephone, searchTelephone, search, edit);
 
         //Set vbox style
         vbox.getStyleClass().add("vbox");
@@ -276,16 +275,6 @@ public class HM_TravellersList {
             }
         });
 
-        details.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                detailsTraveller = table.getSelectionModel().getSelectedItem();
-                
-                if (detailsTraveller != null) {
-                    getScreenDetails();
-                }
-            }
-        });
         
         edit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
