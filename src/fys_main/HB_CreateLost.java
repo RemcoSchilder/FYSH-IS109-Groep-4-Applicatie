@@ -382,6 +382,7 @@ public class HB_CreateLost {
                         , flightNumberT.getText(), destinationT.getText()
                         , typeT.getText(), brandT.getText(), colorT.getText()
                         , characteristicsT.getText());
+                
                 screenThree();
             }
         });
