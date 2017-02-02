@@ -86,7 +86,6 @@ public class Login {
             @Override
             public void handle(ActionEvent event) {
                 
-                
                 //checks fields
                 if (usernameT.getText().equals("")
                         || passwordT.getText().equals("")) {

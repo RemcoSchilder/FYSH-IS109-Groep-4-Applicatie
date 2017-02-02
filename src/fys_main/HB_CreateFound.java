@@ -31,27 +31,29 @@ import javax.mail.MessagingException;
  * @author Thijs Timmermans
  */
 public class HB_CreateFound {
+
     // Create gridpane
     private static GridPane screen = new GridPane();
-    
+
     /* Table */
     private static TableView<HB_SearchBaggage.TableBaggage> table = new TableView<>();
     private static ObservableList<HB_SearchBaggage.TableBaggage> data = FXCollections.observableArrayList();
-    
+
     /* Store last lost ID */
     private static int lostId;
+    private static String travellerLostId;
 
     // Create Buttons
     private static Button cancel = new Button("Cancel");
     private static Button next = new Button("Next");
     private static Button addFoundLuggage = new Button("Add Found luggage");
     private static Label error = new Label();
-    
+
     /* Get date and time */
     private static DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
     private static DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
     private static Date date = new Date();
-    
+
     /* Inputs */
     private static TextField dateT = new TextField(dateFormat.format(date));
     private static TextField airportT = new TextField();
@@ -62,7 +64,6 @@ public class HB_CreateFound {
     private static TextField colorT = new TextField();
     private static TextField typeT = new TextField();
     private static TextArea characteristicsT = new TextArea();
-    
 
     public static GridPane getScreen() {
         /* Pane properties */
@@ -70,25 +71,23 @@ public class HB_CreateFound {
         screen.setHgap(10);
         screen.setVgap(10);
         screen.setPadding(new Insets(25, 25, 25, 25));
-        
+
         screenOne();
 
         return screen;
     }
-    
-    
-    
+
     public static void screenOne() {
         /* Clear all textfields when screen is refreshing */
         for (Node node : screen.getChildren()) {
             if (node instanceof TextField) {
-                ((TextField)node).setText("");
+                ((TextField) node).setText("");
             }
         }
-        
+
         /* Clear screen */
         screen.getChildren().clear();
-        
+
         // Aanmaken van de subheadings
         Text lostInfo = new Text("Lost information:");
         lostInfo.getStyleClass().add("subheading");
@@ -102,7 +101,7 @@ public class HB_CreateFound {
         // Aanmaken van de labels en textfields
         Label dateL = new Label("Date:");
         dateT.setDisable(true);
-        
+
         /* Add style */
         error.getStyleClass().add("error");
 
@@ -121,9 +120,9 @@ public class HB_CreateFound {
 
         // Alles toevoegen aan de gridpane
         screen.add(lostInfo, 0, 0);
-        
+
         screen.add(verplichtL, 0, 1);
-        
+
         screen.add(dateL, 0, 1);
         screen.add(dateT, 1, 1, 10, 1);
 
@@ -162,20 +161,19 @@ public class HB_CreateFound {
         addFoundLuggage.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (
-                        //Check if all the textfields are filled in
-                        airportT.getText() == null || 
-                        airportT.getText().trim().isEmpty() ||
-                        flightNumberT.getText() == null || 
-                        flightNumberT.getText().trim().isEmpty() ||
-                        destinationT.getText() == null || 
-                        destinationT.getText().trim().isEmpty()) {
+                if ( //Check if all the textfields are filled in
+                        airportT.getText() == null
+                        || airportT.getText().trim().isEmpty()
+                        || flightNumberT.getText() == null
+                        || flightNumberT.getText().trim().isEmpty()
+                        || destinationT.getText() == null
+                        || destinationT.getText().trim().isEmpty()) {
 
                     error.setText("You have not filled all the required fields");
-                    
+
                     return;
                 }
-                
+
                 Database DB = new Database();
                 DB.setConn();
                 DB.setQuery("INSERT INTO found (date, time, airport, labelNumber, flightNumber, destination, brand, color, type, characteristics, lost_found, status) "
@@ -192,44 +190,43 @@ public class HB_CreateFound {
                         + " '" + characteristicsT.getText() + "',"
                         + " 'found',"
                         + " 'open')");
-                
+
                 /* Get generated ID from the baggage */
                 ResultSet getId = DB.getQuery("SELECT id FROM found WHERE "
                         + "date='" + dateFormat.format(date) + "' AND "
                         + "time='" + timeFormat.format(date) + "' AND "
                         + "labelNumber='" + labelNumberT.getText() + "'");
-                
+
                 /* Insert the traveller into the database with the ID from the baggage */
                 try {
                     getId.next();
                     lostId = getId.getInt("id");
-                }  catch(SQLException se) {
+                } catch (SQLException se) {
                     //Handle errors for JDBC
                     se.printStackTrace();
                 }
-                
+
                 screenThree();
             }
         });
     }
-    
-    
+
     private static void screenThree() {
         /* Clear grid */
         screen.getChildren().clear();
-        
+
         /* Get matched results */
         Database DB = new Database();
         DB.setConn();
         ResultSet labelMatch = DB.getQuery("SELECT * FROM lost WHERE labelNumber='" + labelNumberT.getText() + "' AND labelNumber <> ''");
-        
+
         try {
             if (labelMatch.next()) {
                 /* Create success message */
                 Text successTitle = new Text("There is a match with the label number");
                 successTitle.getStyleClass().add("subheading");
                 Text successText = new Text("Label numer '" + labelNumberT.getText() + "' has been found at airport " + labelMatch.getString("airport") + " on " + labelMatch.getString("date"));
-                
+
                 /* Create buttons */
                 HBox buttons = new HBox();
                 buttons.setPadding(new Insets(15, 12, 15, 12));
@@ -237,12 +234,12 @@ public class HB_CreateFound {
                 Button ignore = new Button("Ignore");
                 Button match = new Button("Match");
                 buttons.getChildren().addAll(ignore, match);
-                
+
                 /* Add all elements to the grid */
                 screen.add(successTitle, 0, 0);
                 screen.add(successText, 0, 1);
                 screen.add(buttons, 0, 3);
-                
+
                 // If ignore then go straight to the baggage list
                 ignore.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
@@ -250,7 +247,7 @@ public class HB_CreateFound {
                         Homepage_Baliemedewerker.pane.setCenter(HB_SearchBaggage.getScreen());
                     }
                 });
-                
+
                 // If match then update the status to matched and go to success screen
                 match.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
@@ -258,22 +255,22 @@ public class HB_CreateFound {
                         /* Update status to matched */
                         DB.setQuery("UPDATE lost SET status='matched' WHERE labelNumber='" + labelNumberT.getText() + "'");
                         DB.setQuery("UPDATE found SET status='matched' WHERE labelNumber='" + labelNumberT.getText() + "'");
-                        
+
                         /* Insert into matches table */
                         ResultSet getIds = DB.getQuery("SELECT lost.id AS lost_id, found.id AS found_id FROM lost, found WHERE lost.labelNumber='" + labelNumberT.getText() + "' AND found.labelNumber='" + labelNumberT.getText() + "'");
-                        
+
                         try {
                             getIds.next();
                             DB.setQuery("INSERT INTO matches(lost_id, found_id) VALUES ('" + getIds.getString("lost_id") + "', '" + getIds.getString("found_id") + "')");
-                            
-                        }  catch(SQLException se) {
+                            travellerLostId = getIds.getString("lost_id");
+                        } catch (SQLException se) {
                             //Handle errors for JDBC
                             se.printStackTrace();
                         }
-                        
+
                         /* Empty screen */
                         screen.getChildren().clear();
-                        
+
                         /* Create success message */
                         Text successTitle = new Text("The baggage has been matched!");
                         successTitle.getStyleClass().add("subheading");
@@ -282,9 +279,7 @@ public class HB_CreateFound {
                         /* Add all elements to the grid */
                         screen.add(successTitle, 0, 0);
                         screen.add(successText, 0, 1);
-                        
-                       
-                        
+
                         /* Sends email */
                         try {
                             ResultSet travelEmail = DB.getQuery("SELECT email FROM travellers WHERE lost_id='" + getIds.getString("lost_id") + "'");
@@ -295,6 +290,15 @@ public class HB_CreateFound {
                         } catch (SQLException ex) {
                             Logger.getLogger(HB_CreateFound.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                        
+                        /* makes label */
+                        try {
+                            ResultSet information = DB.getQuery("SELECT CONCAT ( firstName, ' ', lastName ) AS name, street, city, country, zipcode FROM travellers WHERE lost_id='" + travellerLostId + "'");
+                            information.next();
+                            MakePDF.createShippingLabel(information.getString("name"), information.getString("street"), information.getString("city"), information.getString("country"), information.getString("zipcode"), labelNumberT.getText());
+                        } catch (SQLException ex) {
+                            Logger.getLogger(HB_CreateFound.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 });
             } else {
@@ -302,17 +306,17 @@ public class HB_CreateFound {
                         + "OR color LIKE '%" + colorT.getText() + "%' "
                         + "OR type LIKE '%" + typeT.getText() + "%') "
                         + "AND status='open'");
-                
+
                 Text error = new Text("Label number not found, check if the following results have a match:");
-                                
+
                 /* Initialize table */
                 table = new TableView<>();
                 data.removeAll(data);
-                
+
                 /* Create columns and assign them the right values */
                 TableColumn id = new TableColumn("ID");
                 id.setCellValueFactory(new PropertyValueFactory<>("id"));
-                
+
                 TableColumn brand = new TableColumn("Brand");
                 brand.setCellValueFactory(new PropertyValueFactory<>("brand"));
 
@@ -324,7 +328,7 @@ public class HB_CreateFound {
 
                 TableColumn characteristics = new TableColumn("characteristics");
                 characteristics.setCellValueFactory(new PropertyValueFactory<>("characteristics"));
-                
+
                 /* For each row insert them into the data from the table */
                 while (otherMatch.next()) {
                     data.add(new HB_SearchBaggage.TableBaggage(
@@ -335,15 +339,15 @@ public class HB_CreateFound {
                             otherMatch.getString("characteristics"))
                     );
                 }
-                
-                if(data.size() > 0) {
+
+                if (data.size() > 0) {
                     HBox buttons = new HBox();
                     buttons.setPadding(new Insets(15, 12, 15, 12));
                     buttons.setSpacing(10);
                     Button ignore = new Button("Ignore");
                     Button match = new Button("Match");
                     buttons.getChildren().addAll(ignore, match);
-                    
+
                     /* Set table colums and rows */
                     table.setItems(data);
                     table.getColumns().addAll(id, brand, color, type, characteristics);
@@ -352,7 +356,7 @@ public class HB_CreateFound {
                     screen.add(error, 0, 0);
                     screen.add(table, 0, 1);
                     screen.add(buttons, 0, 3);
-                    
+
                     // If ignore then go straight to the baggage list
                     ignore.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
@@ -360,20 +364,29 @@ public class HB_CreateFound {
                             Homepage_Baliemedewerker.pane.setCenter(HB_SearchBaggage.getScreen());
                         }
                     });
-                    
+
                     // If match then update the status to matched and go to success screen
                     match.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
                             /* Get selected baggage */
                             HB_SearchBaggage.TableBaggage baggage = table.getSelectionModel().getSelectedItem();
-                            
+
                             /* Update status to matched */
                             DB.setQuery("UPDATE found SET status='matched' WHERE id='" + lostId + "'");
                             DB.setQuery("UPDATE lost SET status='matched' WHERE id='" + baggage.getId() + "'");
-                            
+
                             /* Insert into matches table */
                             DB.setQuery("INSERT INTO matches(lost_id, found_id) VALUES ('" + baggage.getId() + "', '" + lostId + "')");
+
+                            /* makes label */
+                            try {
+                                ResultSet information = DB.getQuery("SELECT CONCAT ( firstName, ' ', lastName ) AS name, street, city, country, zipcode FROM travellers WHERE lost_id='" + travellerLostId + "'");
+                                information.next();
+                                MakePDF.createShippingLabel(information.getString("name"), information.getString("street"), information.getString("city"), information.getString("country"), information.getString("zipcode"), labelNumberT.getText());
+                            } catch (SQLException ex) {
+                                Logger.getLogger(HB_CreateFound.class.getName()).log(Level.SEVERE, null, ex);
+                            }
 
                             /* Empty screen */
                             screen.getChildren().clear();
@@ -411,7 +424,7 @@ public class HB_CreateFound {
                     });
                 }
             }
-        }  catch(SQLException se) {
+        } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
         }

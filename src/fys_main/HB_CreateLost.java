@@ -373,7 +373,7 @@ public class HB_CreateLost {
                     se.printStackTrace();
                 }
                 
-                MakePDF.createPDF(dateFormat.format(date)
+                MakePDF.createRegistrationPDF(dateFormat.format(date)
                         , timeFormat.format(date), airportT.getText()
                         , (firstNameT.getText() + " " + lastNameT.getText())
                         , streetT.getText(), cityT.getText(), zipCodeT.getText()
@@ -462,6 +462,13 @@ public class HB_CreateLost {
                         } catch (MessagingException ex) {
                             Logger.getLogger(HB_CreateLost.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                        
+                        /* makes label */
+                        MakePDF.createShippingLabel((firstNameT.getText()
+                                    + " " + lastNameT.getText())
+                                    , streetT.getText(), cityT.getText()
+                                    , countryT.getText(), zipCodeT.getText()
+                                    , labelNumberT.getText());
                     }
                 });
             } else {
@@ -541,6 +548,13 @@ public class HB_CreateLost {
                             
                             /* Insert into matches table */
                             DB.setQuery("INSERT INTO matches(lost_id, found_id) VALUES ('" + lastId + "', '" + baggage.getId() + "')");
+                            
+                            /* makes label */
+                            MakePDF.createShippingLabel((firstNameT.getText()
+                                    + " " + lastNameT.getText())
+                                    , streetT.getText(), cityT.getText()
+                                    , countryT.getText(), zipCodeT.getText()
+                                    , labelNumberT.getText());
 
                             /* Empty screen */
                             screen.getChildren().clear();
