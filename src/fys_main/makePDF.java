@@ -5,12 +5,14 @@
  */
 package fys_main;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -22,15 +24,16 @@ import java.io.OutputStream;
  *
  * @author freek
  */
-public class makePDF {
+public class MakePDF {
 
-    public static void createPDF(String date, String time, String airport
-            , String name, String street, String city 
-            , String zipcode, String country, String telephone, String email 
-            , String lableNumber, String flightNumber, String destination 
-            , String type, String brand, String color, String characteristics) {
+    public static void createRegistrationPDF(String date, String time, String airport,
+            String name, String street, String city,
+            String zipcode, String country, String telephone, String email,
+            String labelNumber, String flightNumber, String destination,
+            String type, String brand, String color, String characteristics) {
+
         try {
-            OutputStream file = new FileOutputStream(new File("PDF/" + lableNumber + ".pdf"));
+            OutputStream file = new FileOutputStream(new File("registrationPDF/" + labelNumber + ".pdf"));
 
             //create document
             Document document = new Document(PageSize.A4);
@@ -128,10 +131,10 @@ public class makePDF {
             labelInfoTable.addCell(cell).setBorder(0);
 
             //create cells and add values
-            cell = new PdfPCell(new Phrase("Lable number:"));
+            cell = new PdfPCell(new Phrase("Label number:"));
             cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
             labelInfoTable.addCell(cell);
-            labelInfoTable.addCell(lableNumber);
+            labelInfoTable.addCell(labelNumber);
 
             cell = new PdfPCell(new Phrase("Flight number:"));
             cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -218,15 +221,76 @@ public class makePDF {
 
             document.close();
             file.close();
-            
+
             //auto opens file
-            String pdfFile = "C:/Users/freek/Documents/NetBeansProjects/FYSH-IS109-Groep-4-Applicatie/PDF/" + lableNumber + ".pdf";
+            String pdfFile = "C:/Program Files (x86)/FYSH-IS109-Groep-4-Applicatie/registrationPDF/" + labelNumber + ".pdf";
             if (pdfFile.endsWith(".pdf")) {
                 Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + pdfFile);
             } else {
-               //For cross platform use
-               
+                //For cross platform use
+
             }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+    }
+
+    public static void createShippingLabel(String name, String street, 
+            String city, String country, String zipcode, 
+            String labelNumber) {
+
+        StringBuilder from = new StringBuilder();
+        from.append("Corendon");
+        from.append("\n");
+        from.append("Singaporestraat 82");
+        from.append("\n");
+        from.append("1175 RA, Leinden, Netherlands");
+
+        StringBuilder to = new StringBuilder();
+        to.append(name);
+        to.append("\n");
+        to.append(street);
+        to.append("\n");
+        to.append(zipcode + ", " + city + ", " + country);
+
+        try {
+            OutputStream file = new FileOutputStream(new File("labelPDF/" + labelNumber + ".pdf"));
+
+            //create document
+            Document document = new Document();
+            PdfWriter.getInstance(document, file);
+            
+            Rectangle border = new Rectangle(415, 190);
+            border.setBorder(Rectangle.BOX);
+            border.setBorderWidth(2);
+            border.setBorderColor(BaseColor.BLACK);
+            document.setPageSize(border);
+            document.setMargins(4, 4, 4, 4);
+
+            //create image
+            com.itextpdf.text.Image image = com.itextpdf.text.Image.getInstance("src/logo.jpg");
+            image.scalePercent(15);
+
+            //Create Paragraph
+            Paragraph sender = new Paragraph(from.toString(), new Font(Font.FontFamily.TIMES_ROMAN, 8));
+            
+            Paragraph emptyLine = new Paragraph(" ");
+
+            Paragraph receiver = new Paragraph(to.toString(), new Font(Font.FontFamily.TIMES_ROMAN, 10));
+            receiver.setAlignment(Element.ALIGN_CENTER);
+
+            document.open();
+
+            document.add(image);
+            document.add(sender);
+            document.add(emptyLine);
+            document.add(receiver);
+
+            document.close();
+
+            file.close();
 
         } catch (Exception e) {
 
